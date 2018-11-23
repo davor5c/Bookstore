@@ -1,0 +1,91 @@
+﻿Module Bookstore
+{
+    Entity Book
+    {
+        ShortString Code { Unique; Required; }
+        ShortString Title { Required; }
+        Integer NumberOfPages;
+        Reference Author Bookstore.Person; // "1 : N" relation (the database foreign key column name is "AutorID")
+
+        ItemFilter CommonMisspelling 'item => item.Title.Contains("curiousity")';
+        InvalidData CommonMisspelling 'It is not allowed to enter misspelled word "curiousity". Please use "curiosity" instead.';
+    }
+
+    Entity Person
+    {
+        ShortString Name;
+    }
+
+    //==============================================================
+    // Detail is used instead of the simple Reference when the dependent entity is considered a part of the parent entity
+    // (the user enters the data together on the same form).
+    // It adds Required and CascadeDelete to the reference, and inherits parent's row permissions.
+
+    Entity Comment
+    {
+        Reference Book { Detail; }
+        LongString Text;
+    }
+
+    //==============================================================
+    // Any data structure can have multiple optional extensions.
+    // Not to be confused with inheritance, because the extensions are not mutually exclusive.
+
+    Entity ChildrensBook
+    {
+        Extends Bookstore.Book; // "0..1 : 1" relation (same ID)
+
+        Integer AgeFrom;
+        Integer AgeTo;
+        IntegerRange AgeFrom AgeTo; // A simple validation.
+    }
+
+    Entity ForeignBook
+    {
+        Extends Bookstore.Book; // "0..1 : 1" relation.
+
+        ShortString OriginalLanguage;
+        Reference Translator Bookstore.Person;
+    }
+
+    //==============================================================
+    // "N : N" relation is usually implemented as an associative table.
+
+    Entity Topic
+    {
+        ShortString Name { Unique; Required; }
+    }
+
+    Entity BookTopic
+    {
+        Reference Book { Detail; }
+        Reference Topic { Required; }
+
+        UniqueMultiple 'Book Topic';
+    }
+
+    //==============================================================
+    // There are different types of data structures (objects with properties)
+    // Entity is one of then, it is mapped to a database table.
+    // Browse and SqlQueryable are the examples of read-only data structures.
+    // SqlQueryable is mapped to a database view.
+    // Browse is internally represented as a single LINQ query.
+
+    Browse BookGrid Bookstore.Book
+    {
+        Take Code;
+        Take Title;
+        Take 'Author.Name';
+        Take TranslatorName 'Extension_ForeignBook.Translator.Name';
+        Take NumberOfComments 'Extension_BookInfo.NumberOfComments';
+    }
+
+    SqlQueryable BookInfo <SQL\BookInfo.sql>
+    {
+        Extends Bookstore.Book;
+
+        Integer NumberOfComments;
+        
+        AutodetectSqlDependencies;
+    }
+}
