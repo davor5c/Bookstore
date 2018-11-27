@@ -7,5 +7,6 @@ $vstest = 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common
 
 & $vstest 'test\Bookstore.Algorithms.Test\bin\Debug\Bookstore.Algorithms.Test.dll'
 
+& NuGet.exe restore 'test\Bookstore.ServerDom.Test\Bookstore.ServerDom.Test.sln' -NonInteractive
 & $msbuild 'test\Bookstore.ServerDom.Test\Bookstore.ServerDom.Test.sln' /target:rebuild /p:Configuration=Debug /verbosity:minimal
 & $vstest 'test\Bookstore.ServerDom.Test\bin\Debug\Bookstore.ServerDom.Test.dll'
