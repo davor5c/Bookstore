@@ -28,3 +28,27 @@ function Install-RhetosServer
     Write-Host "Rhetos server binaries are already downloaded at $destPath."
   }
 }
+
+function Test-Prerequisites
+{
+  $connectionStringsPath = '.\dist\BookstoreRhetosServer\bin\ConnectionStrings.config'
+  if (!(Test-Path $connectionStringsPath))
+  {
+    throw "Prerequisites: Database connection string is not configured. Please create a Bookstore database, copy 'Template.ConnectionStrings.config' file to '$connectionStringsPath', and setup the connection string in this file."
+  }
+
+
+  # sqllocaldb create RhetosLocalDB
+  # sqllocaldb start RhetosLocalDB
+  # sqllocaldb create RhetosLocalDB -s
+
+}
+
+function Build-RhetosServer
+{
+  & '.\dist\BookstoreRhetosServer\bin\DeployPackages.exe' /debug /nopause
+  if (-not $?)
+  {
+      throw 'Rhetos deployment failed. See "ERROR SUMMARY" above.'
+  }
+}
