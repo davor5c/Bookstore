@@ -1,0 +1,22 @@
+﻿Module Bookstore
+{
+    // ComputeBookInfo computes some information about the book by using SQL query.
+    // The result is persisted (as a cache) in Entity BookInfo, and updated automatically.
+
+    SqlQueryable ComputeBookInfo <SQL\ComputeBookInfo.sql>
+    {
+        Extends Bookstore.Book;
+        Integer NumberOfComments;
+
+        ChangesOnLinkedItems Bookstore.Comment.Book;
+    }
+
+    Entity BookInfo
+    {
+        ComputedFrom Bookstore.ComputeBookInfo
+        {
+            AllProperties;
+            KeepSynchronized;
+        }
+    }
+}

@@ -1,8 +1,10 @@
 ﻿Module Bookstore
 {
+    AutodetectSqlDependencies;
+
     Entity Book
     {
-        ShortString Code { Unique; Required; }
+        ShortString Code { AutoCode; }
         ShortString Title { Required; }
         Integer NumberOfPages;
         Reference Author Bookstore.Person; // "1 : N" relation (the database foreign key column name is "AutorID")
@@ -34,7 +36,6 @@
     Entity ChildrensBook
     {
         Extends Bookstore.Book; // "0..1 : 1" relation (same ID)
-
         Integer AgeFrom;
         Integer AgeTo;
         IntegerRange AgeFrom AgeTo; // A simple validation.
@@ -43,7 +44,6 @@
     Entity ForeignBook
     {
         Extends Bookstore.Book; // "0..1 : 1" relation.
-
         ShortString OriginalLanguage;
         Reference Translator Bookstore.Person;
     }
@@ -53,7 +53,7 @@
 
     Entity Topic
     {
-        ShortString Name { Unique; Required; }
+        ShortString Name { AutoCode; }
     }
 
     Entity BookTopic
@@ -77,15 +77,13 @@
         Take Title;
         Take 'Author.Name';
         Take TranslatorName 'Extension_ForeignBook.Translator.Name';
+        Take Description 'Extension_BookDescription.Description';
         Take NumberOfComments 'Extension_BookInfo.NumberOfComments';
     }
 
-    SqlQueryable BookInfo <SQL\BookInfo.sql>
+    SqlQueryable BookDescription <SQL\BookDescription.sql>
     {
         Extends Bookstore.Book;
-
-        Integer NumberOfComments;
-        
-        AutodetectSqlDependencies;
+        LongString Description;
     }
 }
