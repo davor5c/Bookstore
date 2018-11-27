@@ -1,0 +1,46 @@
+Module Bookstore
+{
+    // ComputeBookRating computes some information about the book by using C# implementation from an external dll.
+    // The result is persisted (as a cache) in Entity BookRating, and updated automatically.
+
+    Computed ComputeBookRating 'repository =>
+        {
+            var allBooksIds = repository.Bookstore.Book.Query().Select(b => b.ID).ToArray();
+            return this.Load(allBooksIds).ToArray();
+        }'
+    {
+        Extends Bookstore.Book;
+        Decimal Rating;
+
+        FilterBy 'IEnumerable<Guid>' '(repository, booksIds) =>
+            {
+                var ratingInput = repository.Bookstore.Book.Query(booksIds)
+                    .Select(b =>
+                        new Bookstore.Algorithms.RatingInput
+                        {
+                            BookId = b.ID,
+                            Title = b.Title,
+                            IsForeign = b.Extension_ForeignBook.ID != null
+                        });
+
+                var ratingSystem = new Bookstore.Algorithms.RatingSystem();
+                var ratings = ratingSystem.ComputeRating(ratingInput);
+
+                return ratings.Select(rating => new ComputeBookRating { ID = rating.BookId, Rating = rating.Value }).ToArray();
+            }';
+        
+        ChangesOnBaseItem;
+        ChangesOnChangedItems Bookstore.ForeignBook 'IEnumerable<Guid>' 'changedItems => changedItems.Select(fb => fb.ID)';
+    }
+
+    ExternalReference 'Bookstore.Algorithms.RatingSystem, Bookstore.Algorithms'; // One class per assembly is enough for external reference.
+
+    Entity BookRating
+    {
+        ComputedFrom Bookstore.ComputeBookRating
+        {
+            AllProperties;
+            KeepSynchronized;
+        }
+    }
+}
