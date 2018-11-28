@@ -26,23 +26,28 @@ namespace Bookstore.ServerDom.Test
                 var book = new Book { Title = Guid.NewGuid().ToString() };
                 repository.Bookstore.Book.Insert(book);
 
-                Assert.AreEqual(0, repository.Bookstore.Comment.Query(c => c.BookID == book.ID).Count());
+                int? readNumberOfComments() => repository.Bookstore.BookInfo
+                    .Query(bi => bi.ID == book.ID)
+                    .Select(bi => bi.NumberOfComments)
+                    .Single();
+
+                Assert.AreEqual(0, readNumberOfComments());
 
                 var c1 = new Comment { BookID = book.ID, Text = "c1" };
                 var c2 = new Comment { BookID = book.ID, Text = "c2" };
-                var c3 = new Comment { BookID = book.ID, Text = "c2" };
+                var c3 = new Comment { BookID = book.ID, Text = "c3" };
 
                 repository.Bookstore.Comment.Insert(c1);
-                Assert.AreEqual(1, repository.Bookstore.Comment.Query(c => c.BookID == book.ID).Count());
+                Assert.AreEqual(1, readNumberOfComments());
 
                 repository.Bookstore.Comment.Insert(c2, c3);
-                Assert.AreEqual(3, repository.Bookstore.Comment.Query(c => c.BookID == book.ID).Count());
+                Assert.AreEqual(3, readNumberOfComments());
 
                 repository.Bookstore.Comment.Delete(c1);
-                Assert.AreEqual(2, repository.Bookstore.Comment.Query(c => c.BookID == book.ID).Count());
+                Assert.AreEqual(2, readNumberOfComments());
 
                 repository.Bookstore.Comment.Delete(c2, c3);
-                Assert.AreEqual(0, repository.Bookstore.Comment.Query(c => c.BookID == book.ID).Count());
+                Assert.AreEqual(0, readNumberOfComments());
             }
         }
 
