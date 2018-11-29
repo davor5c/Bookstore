@@ -19,7 +19,7 @@ function Install-RhetosServer
       Invoke-WebRequest -Uri $uri -OutFile $zipDestPath
     }
 
-    Expand-Archive -Path $zipDestPath -DestinationPath $destPath
+    Expand-Archive -Path $zipDestPath -DestinationPath $destPath -Force
     Remove-Item $zipDestPath
     Write-Host "Downloaded Rhetos server binaries v$rhetosVersion to $destPath."
   }
