@@ -1,0 +1,54 @@
+Module Bookstore
+{
+    Computed ExpectedBookRating 'repository =>
+        {
+            var books = repository.Bookstore.Book.Query()
+                .Select(b =>
+                    new
+                    {
+                        b.ID,
+                        b.Title,
+                        IsForeign = b.Extension_ForeignBook.ID != null
+                    })
+                .ToList();
+
+            var ratings = new List<ExpectedBookRating>();
+            foreach (var book in books)
+            {
+                decimal rating = 0;
+
+                if (book.Title?.IndexOf("super", StringComparison.InvariantCultureIgnoreCase) >= 0)
+                    rating += 100;
+
+                if (book.Title?.IndexOf("great", StringComparison.InvariantCultureIgnoreCase) >= 0)
+                    rating += 50;
+
+                if (book.IsForeign)
+                    rating *= 1.2m;
+
+                ratings.Add(new ExpectedBookRating { ID = book.ID, Rating = rating });
+            }
+
+            return ratings.ToArray();
+        }'
+    {
+        Extends Bookstore.Book;
+        Decimal Rating;
+    }
+
+    Computed CustomerMasterData 'repository =>
+        {
+            // Gets a list of users from another web API and returns it as a Rhetos data structure.
+            var httpClient = new System.Net.Http.HttpClient();
+	        var usersJson = httpClient.GetStringAsync("https://jsonplaceholder.typicode.com/users").Result;
+	        var users = Newtonsoft.Json.JsonConvert.DeserializeObject<List<System.Dynamic.ExpandoObject>>(usersJson);
+	        var names = users.Select((dynamic user) => user.name);
+            return names.Select(name => new CustomerMasterData { Name = name }).ToArray();
+        }'
+    {
+        ShortString Name;
+    }
+
+    ExternalReference 'Newtonsoft.Json.JsonConvert, Newtonsoft.Json';
+    ExternalReference 'System.Net.Http.HttpClient, System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a';
+}
