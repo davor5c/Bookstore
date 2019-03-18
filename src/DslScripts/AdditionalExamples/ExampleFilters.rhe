@@ -1,0 +1,192 @@
+Module Bookstore
+{
+    Entity Book
+    {
+        ShortString Code { AutoCode; }
+        ShortString Title { Required; }
+        Integer NumberOfPages;
+        Reference Author Bookstore.Person;
+
+        // ItemFilter is the simplest concept for creating new filters.
+        // You can use it on Entity, Browse, SqlQueryable, or any other queryable data structure
+        // to filter the existing data with a simple lambda expression.
+        
+        ItemFilter CommonMisspelling 'book => book.Title.Contains("curiousity")';
+        InvalidData CommonMisspelling 'It is not allowed to enter misspelled word "curiousity". Please use "curiosity" instead.';
+
+        ItemFilter LongBooks 'item => item.NumberOfPages >= 500';
+
+        ItemFilter ForeignAuthorXWithComments 'item =>
+            item.Author.Name.StartsWith("X")
+            && item.Extension_ForeignBook.ID != null
+            && _domRepository.Bookstore.Comment.Subquery.Where(c => c.BookID == item.ID).Count() >= 3';
+    }
+
+    Entity Person
+    {
+        ShortString Name;
+    }
+
+    Entity ForeignBook
+    {
+        Extends Bookstore.Book;
+        ShortString OriginalLanguage;
+    }
+
+    Entity Comment
+    {
+        Reference Book { Detail; }
+        LongString Text;
+    }
+}
+
+Module Bookstore
+{
+    Entity Book
+    {
+        ShortString Code { AutoCode; }
+        ShortString Title { Required; }
+        Integer NumberOfPages;
+
+        ItemFilter LongBooks 'item => item.NumberOfPages >= 500';
+
+        // The ComposableFilterBy allows implementing more complex filters:
+        // Its function should return an IQueryable that filters the data provided by the `query` parameter.
+        // In practice this usually means that the function will end with `return query.Where(...);`.
+
+        ComposableFilterBy LongBooks2 '(query, repository, parameter) =>
+            {
+                return query.Where(item => item.NumberOfPages >= 500);
+            }';
+
+        ComposableFilterBy LongBooks3 '(query, repository, parameter) =>
+            {
+                var filtered = query.Where(item => item.NumberOfPages >= parameter.MinimumPages);
+                if (parameter.ForeignBooksOnly == true)
+                    filtered = filtered.Where(item => item.Extension_ForeignBook.ID != null);
+                return filtered;
+            }';
+
+        // FilterBy concept allows developers to write arbitrary C# code to provide the data.
+        // Its function must return an array of simple objects.
+
+        FilterBy ComplexSearch '(repository, parameter) =>
+        {
+            var query = repository.Bookstore.Book.Query(item => item.NumberOfPages >= parameter.MinimumPages);
+            if (parameter.ForeignBooksOnly == true)
+                query = query.Where(item => item.Extension_ForeignBook.ID != null);
+            Book[] books = query.ToSimple().ToArray();
+
+            if (parameter.MaskTitles == true)
+                foreach (var book in books.Where(b => !string.IsNullOrEmpty(b.Title)))
+                    book.Title = book.Title.First() + "***" + book.Title.Last();
+
+            return books;
+        }';
+    }
+
+    Parameter LongBooks2;
+
+    Parameter LongBooks3
+    {
+        Integer MinimumPages;
+        Bool ForeignBooksOnly;
+    }
+
+    Parameter ComplexSearch
+    {
+        Integer MinimumPages;
+        Bool ForeignBooksOnly;
+        Bool MaskTitles;
+    }
+
+    Entity ForeignBook
+    {
+        Extends Bookstore.Book;
+        ShortString OriginalLanguage;
+    }
+}
+
+
+Module Bookstore
+{
+    Entity Book
+    {
+        ShortString Code { AutoCode; }
+        ShortString Title { Required; }
+        Reference Author Bookstore.Person;
+    }
+
+    // WishList contains books that are not yet entered in the entity Book.
+    Entity WishList
+    {
+        ShortString BookTitle;
+        Bool HighPriority;
+    }
+
+    Browse BookGrid Bookstore.Book
+    {
+        Take Code;
+        Take Title;
+        Take 'Author.Name';
+        Take TranslatorName 'Extension_ForeignBook.Translator.Name';
+        Take Description 'Extension_BookDescription.Description';
+        Take NumberOfComments 'Extension_BookInfo.NumberOfComments';
+
+        // This query is an alternative data source for BookGrid.
+        // Instead of reading data from the `Bookstore.Book`, it provide the new data from WantedBooks.
+        Query 'Bookstore.WantedBooks' 'parameter =>
+            {
+                var wishList = _domRepository.Bookstore.WishList.Query();
+                if (parameter != null && parameter.HighPriorityOnly == true)
+                    wishList = wishList.Where(item => item.HighPriority == true);
+
+                var wantedBooks = wishList.Select(wish => new Common.Queryable.Bookstore_BookGrid
+                {
+                    // All properies must be declared here, otherwise EF will throw a NotSupportedException.
+                    ID = wish.ID,
+                    Code = null,
+                    Title = wish.BookTitle,
+                    AuthorName = "unknown",
+                    TranslatorName = null,
+                    Description = null,
+                    NumberOfComments = null
+                });
+                return wantedBooks;
+            }';
+    }
+
+    Parameter WantedBooks
+    {
+        Bool HighPriorityOnly;
+    }
+}
+
+Module Bookstore
+{
+    Entity Book
+    {
+        ShortString Code { AutoCode; }
+        ShortString Title { Required; }
+        Integer NumberOfPages;
+        Reference Author Bookstore.Person;
+
+        // Using a system type as a parameter.
+        ComposableFilterBy 'System.String[]' '(query, repository, titles) =>
+            {
+                return query.Where(book => titles.Contains(book.Title));
+            }';
+
+        // Using an instance of an entity as a parameter.
+        ComposableFilterBy 'Bookstore.Person' '(query, repository, author) =>
+            {
+                return query.Where(book => book.AuthorID == author.ID
+                    || book.Author.Name == author.Name);
+            }';
+    }
+
+    Entity Person
+    {
+        ShortString Name;
+    }
+}

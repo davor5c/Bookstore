@@ -9,7 +9,7 @@
         Integer NumberOfPages;
         Reference Author Bookstore.Person; // "1 : N" relation (the database foreign key column name is "AutorID")
 
-        ItemFilter CommonMisspelling 'item => item.Title.Contains("curiousity")';
+        ItemFilter CommonMisspelling 'book => book.Title.Contains("curiousity")';
         InvalidData CommonMisspelling 'It is not allowed to enter misspelled word "curiousity". Please use "curiosity" instead.';
     }
 

@@ -188,6 +188,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BookGridTest.cs" />
     <Compile Include="Tools\BookstoreRhetos.cs" />
     <Compile Include="BookTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
