@@ -17,10 +17,10 @@ Module Bookstore
             {
                 decimal rating = 0;
 
-                if (book.Title?.IndexOf("super", StringComparison.InvariantCultureIgnoreCase) >= 0)
+                if (book.Title != null && book.Title.IndexOf("super", StringComparison.InvariantCultureIgnoreCase) >= 0)
                     rating += 100;
 
-                if (book.Title?.IndexOf("great", StringComparison.InvariantCultureIgnoreCase) >= 0)
+                if (book.Title != null && book.Title.IndexOf("great", StringComparison.InvariantCultureIgnoreCase) >= 0)
                     rating += 50;
 
                 if (book.IsForeign)
