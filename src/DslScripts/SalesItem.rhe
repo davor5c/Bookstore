@@ -1,0 +1,75 @@
+// // Example of inheritance hierarchy (this is not an actual Rhetos object model)
+// public class SalesItem
+// {
+//     public string Code;
+//     public decimal Price;
+// }
+// public class Book : SalesItem
+// {
+//     public int NumberOfPages;
+// }
+// public class Food : SalesItem
+// {
+//     public int Calories;
+// }
+
+// // 1. Table per Hierarchy
+// CREATE TABLE SalesItem (ObjectType, Code, Price, NumberOfPages, Calories)
+
+// // 2. Table per Type
+// CREATE TABLE SalesItem (Code, Price)
+// CREATE TABLE Book (NumberOfPages) foreign key ID->SalesItem.ID
+// CREATE TABLE Food (Calories) foreign key ID->SalesItem.ID
+// // In Rhetos DSL: Extends
+
+// // 3. Table per Concrete Class
+// CREATE TABLE Book (Code, Price, NumberOfPages)
+// CREATE TABLE Food (Code, Price, Calories)
+// CRATE VIEW SalesItem
+//     SELECT Code, Price FROM Book
+//     UNION ALL
+//     SELECT Code, Price FROM Food
+// // In Rhetos DSL: Polymorphic
+
+Module Bookstore
+{
+    Polymorphic SalesItem
+    {
+        ShortString Code;
+        ShortString Description;
+        Money Price;
+    }
+
+    Browse SalesItemGrid Bookstore.SalesItem
+    {
+        Take Code;
+        Take Price;
+        Take 'Book.NumberOfPages';
+    }
+
+    Entity Food
+    {
+        ShortString Code { AutoCode; }
+        ShortString Description;
+        Money Price { Required; }
+        Integer Calories;
+
+        Is Bookstore.SalesItem;
+    }
+
+    Entity Book
+    {
+        ShortString Code { AutoCode; }
+        Money Price; // Not required. Some books are not on sale.
+        ShortString Title { Required; }
+        Integer NumberOfPages;
+
+        Is Bookstore.SalesItem
+        {
+            Implements Bookstore.SalesItem.Description "Title
+                + ISNULL(', ' + CAST(NumberOfPages AS NVARCHAR(10)) + ' pages', '')";
+                
+            Where 'Price IS NOT NULL';
+        }
+    }
+}
