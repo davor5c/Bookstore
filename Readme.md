@@ -4,16 +4,22 @@ Bookstore is a demo application for Rhetos development platform.
 
 ## Build
 
-To build the package from source, run `.\Build.ps1` in PowerShell console.
+To build this application from source, run `.\Build.ps1` in PowerShell console.
 
 * If the build fails, see the error description to setup any missing prerequisites.
-* If the build fails with an ConnectionString error, follow the instructions in "**Database setup**" chapter at the [Development Environment Setup](https://github.com/Rhetos/Rhetos/wiki/Development-Environment-Setup).
+* If the build fails with a **ConnectionString** error,
+  follow the instructions in "Database setup" chapter at the
+  [Development Environment Setup](https://github.com/Rhetos/Rhetos/wiki/Development-Environment-Setup#database-setup).
 
 The build output is a web application in `dist\BookstoreRhetosServer` subfolder.
 
+* To setup the **IIS web application** follow the instructions in "IIS setup" chapter at
+  [Development Environment Setup](https://github.com/Rhetos/Rhetos/wiki/Development-Environment-Setup),
+  using `dist\BookstoreRhetosServer` for Rhetos server folder.
+
 See `docs\Build process diagram.vsdx` for overview of build & testing.
 
-## Testing
+## Unit testing
 
 Automated tests are executed by running `.\Test.ps1` in PowerShell console.
 
@@ -29,7 +35,3 @@ There are some important considerations for the integration tests that we apply 
 * Each test should insert its own data and not rely on pre-existing data in the database, or on the data inserted by other tests.
 * Each test should clear its data when finished. This is done automatically by `RhetosTestContainer`, see that the constructor parameter `commitChanges` is `false` by default, which means that the SQL transaction will be rolled back at the end of the `using` block.
 * The tests should not be affected by the existing data in the database. They can be executed on an empty database (after the application is deployed to it), or on database with some user-entered data.
-
-## Web application setup
-
-To setup the IIS web application (`dist\BookstoreRhetosServer` folder) follow the instructions in "**IIS setup**" chapter at [Development Environment Setup](https://github.com/Rhetos/Rhetos/wiki/Development-Environment-Setup).
