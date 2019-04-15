@@ -53,7 +53,8 @@
 
     Entity Topic
     {
-        ShortString Name { AutoCode; }
+        ShortString Code { AutoCode; }
+        ShortString Name { Required; }
     }
 
     Entity BookTopic
