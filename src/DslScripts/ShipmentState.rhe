@@ -14,6 +14,8 @@ Module Bookstore
         ChangesOnLinkedItems Bookstore.ApproveShipment.Shipment;
         ChangesOnLinkedItems Bookstore.DeliveryStarted.Shipment;
         ChangesOnLinkedItems Bookstore.DeliveryFinished.Shipment;
+
+        AutodetectSqlDependencies;
     }
 
     Entity ShipmentCurrentState
