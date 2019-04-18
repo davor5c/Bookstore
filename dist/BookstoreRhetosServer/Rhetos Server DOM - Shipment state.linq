@@ -79,13 +79,18 @@ void Main()
 		    .ToArray();
 		needsUpdating.Dump("needsUpdating");
 		
+		// "needsUpdating" represents the resulting filter that is returned by ChangesOnChangedItems code snippet.
+		// KeepSynchronized concept will compare the source (ComputeShipmentCurrentState) and target (ShipmentCurrentState)
+		// date based on this filter:
+		
 		repository.Bookstore.ShipmentCurrentState.Load(needsUpdating).Dump("ShipmentCurrentState for sync");
 		repository.Bookstore.ComputeShipmentCurrentState.Load(needsUpdating).Dump("ComputeShipmentCurrentState for sync");
-		repository.Bookstore.ShipmentCurrentState.RecomputeFromComputeShipmentCurrentState(needsUpdating);
-		
+
+		// KeepSynchronized automatically calls the following recompute method when ApproveShipment is written.
 		// RecomputeFromComputeShipmentCurrentState method will:
 		// 1. Compare the 2 results (above), loaded with the filter that was provided by ChangesOnChangedItems.
-		// 2. Insert, update or delete records in ShipmentCurrentState to match the results from  ComputeShipmentCurrentState.
-		// KeepSynchronized automatically calls this recompute method when ApproveShipment is written.
+		// 2. Insert, update or delete records in ShipmentCurrentState to match the results from ComputeShipmentCurrentState.
+
+		repository.Bookstore.ShipmentCurrentState.RecomputeFromComputeShipmentCurrentState(needsUpdating);
 	}
 }
