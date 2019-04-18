@@ -1,0 +1,27 @@
+Module Bookstore
+{
+    SqlQueryable ComputeShipmentCurrentState <SQL\ComputeShipmentCurrentState.sql>
+    {
+        Extends Bookstore.Shipment;
+        ShortString Status; // Preparing => Approved => DeliveryInProgress => Delivered.
+
+        // ChangesOnChangedItems Bookstore.ApproveShipment
+        //     'Guid[]'
+        //     'changedItems => changedItems
+        //         .Select(item => item.ShipmentID.Value)
+        //         .ToArray()';
+
+        ChangesOnLinkedItems Bookstore.ApproveShipment.Shipment;
+        ChangesOnLinkedItems Bookstore.DeliveryStarted.Shipment;
+        ChangesOnLinkedItems Bookstore.DeliveryFinished.Shipment;
+    }
+
+    Entity ShipmentCurrentState
+    {
+        ComputedFrom Bookstore.ComputeShipmentCurrentState
+        {
+            KeepSynchronized;
+            AllProperties;
+        }
+    }
+}
