@@ -153,7 +153,7 @@ Module Bookstore
                 });
                 return wantedBooks;
             }';
-        ItemFilter LongDescription 'item => item.Description.Lenght() >= 100';  
+        ItemFilter LongDescription 'item => item.Description.Length >= 100';  
     }
 
     Parameter WantedBooks
