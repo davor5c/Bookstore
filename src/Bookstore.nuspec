@@ -17,6 +17,7 @@
   <files>
     <file src="..\Readme.md" target="" />
     <file src="DslScripts\**\*" target="DslScripts" />
+	<file src="DataMigration\**\*" target="DataMigration" />
     <file src="Bookstore.Algorithms\bin\Debug\Bookstore.Algorithms.pdb" target="lib\net451" />
     <file src="Bookstore.Algorithms\bin\Debug\Bookstore.Algorithms.dll" target="lib\net451" />
   </files>
