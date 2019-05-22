@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Bookstore.ServerDom.Test.Tools
 {
     [TestClass]
-    public class Profiling
+    public static class Profiling
     {
         [AssemblyInitialize]
         public static void StartupTime(TestContext testContext)

@@ -1,0 +1,99 @@
+Module Bookstore
+{
+    // This file contains examples of low-level feature implementation.
+    // Most examples here are not best practices for Rhetos application development,
+    // high-level concept should be used instead, for validations, default values and computatios.
+    Entity Review
+    {
+        Reference Book { Required; }
+        Integer Score { Required; MinValue 1; MaxValue 5; }
+        LongString Text;
+
+        SaveMethod
+        {
+            // Note: This is a just a demo for SaveMethod, not a best practice.
+            // The "DefaultValue" concept is much better approach for this feature.
+            Initialization DefaultTextFromScore
+                '
+                    foreach (var item in insertedNew)
+                        if (string.IsNullOrEmpty(item.Text) && item.Score != null)
+                            item.Text = item.Score.Value >= 3
+                                ? "I like it"
+                                : "I don''t like it";
+                ';
+
+            LoadOldItems
+            {
+                Take Score;
+                Take 'Book.Title';
+            }
+
+            //TODO: Switch to OldDataLoaded after upgrading to Rhetos v2.12.
+            OnSaveUpdate AppendTextIfScoreChanged
+                '
+                    var itemsWithModifiedScore = updatedOld
+                        .Zip(updatedNew, (oldValue, newValue) => new { oldValue, newValue })
+                        .Where(modified => modified.oldValue.Score == null && modified.newValue.Score != null
+                            || modified.oldValue.Score != null && !modified.oldValue.Score.Equals(modified.newValue.Score))
+                        .ToList();
+
+                    foreach (var item in itemsWithModifiedScore)
+                        item.newValue.Text += string.Format(" (changed from {0} to {1})",
+                            item.oldValue.Score,
+                            item.newValue.Score);
+                    
+                    // TODO: Remove this after switching to OldDataLoaded.
+                    this.Update(itemsWithModifiedScore.Select(item => item.newValue));
+                ';
+
+            // Note: This is just a demonstration of OnSaveValidate, not a best practice.
+            // "ComputedFrom" and "KeepSynchronized" concepts should be used instead of this low-level code,
+            // since this is a standard pattern of updating the computed data.
+            OnSaveUpdate UpdateNumberOfReviews
+                '
+                    var bookIds = insertedNew.Select(review => review.BookID.Value)
+                        .Concat(updatedNew.Select(review => review.BookID.Value))
+                        .Concat(deletedIds.Select(review => review.BookID.Value))
+                        .Distinct().ToList();
+
+                    var numberOfReviews = _domRepository.Bookstore.Book.Query(bookIds)
+                        .Select(book => new NumberOfReviews
+                        {
+                            ID = book.ID,
+                            Count = _domRepository.Bookstore.Review.Subquery.Where(r => r.BookID == book.ID).Count()
+                        })
+                        .ToList();
+
+                    var oldRecordIds = _domRepository.Bookstore.NumberOfReviews.Query(bookIds).Select(n => n.ID).ToList();
+                    _domRepository.Bookstore.NumberOfReviews.Insert(numberOfReviews.Where(r => !oldRecordIds.Contains(r.ID)));
+                    _domRepository.Bookstore.NumberOfReviews.Update(numberOfReviews.Where(r => oldRecordIds.Contains(r.ID)));
+                ';
+			
+            // Note: This is just a demonstration of OnSaveValidate, not a best practice.
+            // "Lock" concept (or one of the similar concepts) should be used instead of this low-level code,
+            // since this is a standard pattern.
+			OnSaveValidate DenyChangeOfLockedTitle
+                '
+                    var itemsWithModifiedScore = updatedOld
+                        .Zip(updatedNew, (oldValue, newValue) => new { oldValue, newValue })
+                        .Where(modified => modified.oldValue.Score == null && modified.newValue.Score != null
+                            || modified.oldValue.Score != null && !modified.oldValue.Score.Equals(modified.newValue.Score))
+                        .Where(modified => modified.oldValue.BookTitle.IndexOf("lock", StringComparison.InvariantCultureIgnoreCase) >= 0)
+                        .FirstOrDefault();
+                    
+                    if (itemsWithModifiedScore != null)
+                        throw new Rhetos.UserException(string.Format(
+                            "It is not allowed to modify score ({0} => {1}) for the book \"{2}\" because to contains \"lock\" in the title.",
+                            itemsWithModifiedScore.oldValue.Score,
+                            itemsWithModifiedScore.newValue.Score,
+                            itemsWithModifiedScore.oldValue.BookTitle));
+                ';
+        }
+    }
+    
+    Entity NumberOfReviews
+    {
+        Extends Bookstore.Book;
+        Integer Count;
+    }
+}

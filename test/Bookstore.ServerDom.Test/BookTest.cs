@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Bookstore.ServerDom.Test.Tools;
+﻿using Bookstore.ServerDom.Test.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhetos;
 using Rhetos.Dom.DefaultConcepts;
 using Rhetos.TestCommon;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Bookstore.ServerDom.Test
 {
