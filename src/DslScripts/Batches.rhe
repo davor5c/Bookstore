@@ -1,3 +1,5 @@
+// This is example for the article https://github.com/Rhetos/Rhetos/wiki/Using-the-Domain-Object-Model
+
 Module Bookstore
 {
     Action Insert5Books

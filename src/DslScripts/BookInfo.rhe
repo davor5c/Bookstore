@@ -1,4 +1,6 @@
-﻿Module Bookstore
+﻿// This is example for the article https://github.com/Rhetos/Rhetos/wiki/Read-only-data-structures
+
+Module Bookstore
 {
     // ComputeBookInfo computes some information about the book by using SQL query.
     // The result is persisted (as a cache) in Entity BookInfo, and updated automatically.

@@ -1,3 +1,5 @@
+// This is example for the article https://github.com/Rhetos/Rhetos/wiki/Low-level-object-model-concepts
+
 Module Bookstore
 {
     // This file contains examples of low-level feature implementation.
@@ -9,9 +11,8 @@ Module Bookstore
         Integer Score { Required; MinValue 1; MaxValue 5; }
         LongString Text;
 
-        //========================================
-        // SaveMethod example
-        //========================================
+        //=================================================
+        // SaveMethod example:
 
         SaveMethod
         {
@@ -94,9 +95,8 @@ Module Bookstore
                 ';
         }
 
-        //========================================
-        // RepositoryUses example
-        //========================================
+        //=================================================
+        // RepositoryUses example:
 
         RepositoryUses _configuration 'Rhetos.Utilities.IConfiguration, Rhetos.Utilities';
 
@@ -106,9 +106,8 @@ Module Bookstore
                 return query.Where(r => r.Text.Length >= minLength);
             }';
 
-        //========================================
-        // RepositoryMember example
-        //========================================
+        //=================================================
+        // RepositoryMember example:
 
 		RepositoryMember BetterReviews
 			'public IQueryable<Common.Queryable.Bookstore_Review> BetterReviews(int minScore)

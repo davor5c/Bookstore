@@ -1,3 +1,5 @@
+// This is example for the article https://github.com/Rhetos/Rhetos/wiki/Read-only-data-structures
+
 Module Bookstore
 {
     Computed ExpectedBookRating 'repository =>

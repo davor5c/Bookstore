@@ -1,3 +1,5 @@
+// This is example for the article https://github.com/Rhetos/Rhetos/wiki/Filters-and-other-read-methods
+
 Module Bookstore
 {
     Entity Book

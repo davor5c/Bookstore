@@ -1,4 +1,6 @@
-﻿Module Bookstore
+﻿// This is example for the article https://github.com/Rhetos/Rhetos/wiki/Data-model-and-relationships
+
+Module Bookstore
 {
     AutodetectSqlDependencies;
 
@@ -71,6 +73,7 @@
     // Browse and SqlQueryable are the examples of read-only data structures.
     // SqlQueryable is mapped to a database view.
     // Browse is internally represented as a single LINQ query.
+    // This is example for the article https://github.com/Rhetos/Rhetos/wiki/Read-only-data-structures
 
     Browse BookGrid Bookstore.Book
     {

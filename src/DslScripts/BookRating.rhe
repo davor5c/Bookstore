@@ -1,3 +1,5 @@
+// See more about Computed concept at https://github.com/Rhetos/Rhetos/wiki/Read-only-data-structures
+
 Module Bookstore
 {
     // ComputeBookRating computes some information about the book by using C# implementation from an external dll.
