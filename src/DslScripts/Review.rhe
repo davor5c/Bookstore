@@ -9,6 +9,10 @@ Module Bookstore
         Integer Score { Required; MinValue 1; MaxValue 5; }
         LongString Text;
 
+        //========================================
+        // SaveMethod example
+        //========================================
+
         SaveMethod
         {
             // Note: This is a just a demo for SaveMethod, not a best practice.
@@ -89,6 +93,33 @@ Module Bookstore
                             itemsWithModifiedScore.oldValue.BookTitle));
                 ';
         }
+
+        //========================================
+        // RepositoryUses example
+        //========================================
+
+        RepositoryUses _configuration 'Rhetos.Utilities.IConfiguration, Rhetos.Utilities';
+
+        ComposableFilterBy LongReviews '(query, repository, parameter) =>
+            {
+                int minLength = _configuration.GetInt("Bookstore.LongReviewsMinLength", 10).Value;
+                return query.Where(r => r.Text.Length >= minLength);
+            }';
+
+        //========================================
+        // RepositoryMember example
+        //========================================
+
+		RepositoryMember BetterReviews
+			'public IQueryable<Common.Queryable.Bookstore_Review> BetterReviews(int minScore)
+            {
+                return this.Query().Where(r => r.Score >= minScore);
+            }';
+
+		FilterBy BestReviews '(repository, parameter) =>
+			{
+				return BetterReviews(4).ToSimple().ToArray();
+			}';
     }
     
     Entity NumberOfReviews
@@ -96,4 +127,8 @@ Module Bookstore
         Extends Bookstore.Book;
         Integer Count;
     }
+
+    Parameter LongReviews;
+
+    Parameter BestReviews;
 }

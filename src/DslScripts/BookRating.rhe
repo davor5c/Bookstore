@@ -24,7 +24,7 @@ Module Bookstore
                             IsForeign = b.Extension_ForeignBook.ID != null
                         });
 
-                // Calling the algorithm implemented in the external class "RatingSystem":
+                // Calling the algorithm implemented in the external class "RatingSystem"
                 var ratingSystem = new Bookstore.Algorithms.RatingSystem();
                 var ratings = ratingSystem.ComputeRating(ratingInput);
 
@@ -38,7 +38,8 @@ Module Bookstore
         ChangesOnChangedItems Bookstore.ForeignBook 'IEnumerable<Guid>' 'changedItems => changedItems.Select(fb => fb.ID)';
     }
 
-    ExternalReference 'Bookstore.Algorithms.RatingSystem, Bookstore.Algorithms'; // One class per assembly is enough for external reference.
+    // The generated application must reference the external dll that contains RatingSystem class.
+    ExternalReference 'Bookstore.Algorithms.RatingSystem, Bookstore.Algorithms';
 
     Entity BookRating
     {
