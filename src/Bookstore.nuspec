@@ -20,5 +20,7 @@
     <file src="DataMigration\**\*" target="DataMigration" />
     <file src="Bookstore.Algorithms\bin\Debug\Bookstore.Algorithms.pdb" target="lib\net451" />
     <file src="Bookstore.Algorithms\bin\Debug\Bookstore.Algorithms.dll" target="lib\net451" />
+	<file src="Bookstore.Concepts\bin\Debug\Bookstore.Concepts.pdb" target="lib\net451" />
+    <file src="Bookstore.Concepts\bin\Debug\Bookstore.Concepts.dll" target="lib\net451" />
   </files>
 </package>
