@@ -1,0 +1,37 @@
+﻿Module Bookstore
+{
+    Entity Disposal
+    {
+        Reference Book;
+        Date Date;
+        LongString Reason;
+
+        ItemFilter NotEnoughReason 'item => item.Extension_DisposalError.ErrorMessage != null';
+        InvalidData NotEnoughReason 'Disposal is not allowed: {0}'
+        {
+            MessageParametersItem 'item => new
+                {
+                    item.ID,
+                    //P0 = item.Extension_DisposalError.ErrorMessage
+                    P0 = _domRepository.Bookstore.DisposalError.Subquery.Where(de => de.ID == item.ID).Select(de => de.ErrorMessage).FirstOrDefault()
+                }';
+        }
+    }
+
+    SqlQueryable DisposalError
+        "
+            SELECT
+                d.ID,
+                ErrorMessage = 'The Reason text length is ' + ISNULL(CAST(LEN(d.Reason) AS NVARCHAR(100)), '0') + '. It should be at least 10 characters.'
+            FROM
+                Bookstore.Disposal d
+            WHERE
+                d.Reason IS NULL OR LEN(d.Reason) < 10
+        "
+    {
+        Extends Bookstore.Disposal;
+        LongString ErrorMessage;
+
+        AutodetectSqlDependencies;
+    }
+}
