@@ -180,7 +180,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeactivateOnDeleteCodeGenerator .cs" />
+    <Compile Include="DeactivateOnDeleteCodeGenerator.cs" />
     <Compile Include="DeactivateOnDeleteInfo.cs" />
     <Compile Include="PhoneNumberInfo.cs" />
     <Compile Include="PhoneNumberMacro .cs" />
