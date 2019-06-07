@@ -107,7 +107,7 @@
       <HintPath>..\..\packages\Rhetos.2.11.0\lib\net451\Rhetos.Dsl.dll</HintPath>
     </Reference>
     <Reference Include="Rhetos.Dsl.DefaultConcepts, Version=2.11.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Rhetos.CommonConcepts.2.11.0\lib\net451\Rhetos.Dsl.DefaultConcepts.dll</HintPath>
+      <HintPath>..\..\packages\Rhetos.CommonConcepts.2.11.0\lib\net451\Rhetos.Dsl.DefaultConcepts.dll</HintPath>
     </Reference>
     <Reference Include="Rhetos.Dsl.Interfaces, Version=2.11.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Rhetos.2.11.0\lib\net451\Rhetos.Dsl.Interfaces.dll</HintPath>
