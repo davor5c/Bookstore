@@ -25,13 +25,29 @@ Automated tests are executed by running `.\Test.ps1` in PowerShell console.
 
 There are two kinds of tests in this project:
 
-1. **Standard unit tests** (`test\Bookstore.Algorithms.Test`, part of `Bookstore.sln`) that test the algorithm implemented in external assembly.
+1. **Standard unit tests** (`test\Bookstore.Algorithms.Test`, part of `Bookstore.sln`)
+   that test the algorithm implemented in external assembly.
     * These tests are very fast and independent of the deployment environment.
-2. **Integration tests** (`test\Bookstore.ServerDom.Test\Bookstore.ServerDom.Test.sln`) that test the generated applications together with the database.
-    * These tests can test full business processes, including the business logic that is implemented in the database, but are slower and need a database to run (the database connection is set up earlier during the Build).
+2. **Integration tests** (`test\Bookstore.ServerDom.Test\Bookstore.ServerDom.Test.sln`)
+   that test the generated applications together with the database.
+    * These tests can test full business processes, including the business logic
+      that is implemented in the database, but are slower and need a database to run
+      (the database connection is set up earlier during the Build).
 
-There are some important considerations for the integration tests that we apply to keep their complexity under control:
+There are some important considerations for the integration tests
+that we apply to keep their complexity under control:
 
-* Each test should insert its own data and not rely on pre-existing data in the database, or on the data inserted by other tests.
-* Each test should clear its data when finished. This is done automatically by `RhetosTestContainer`, see that the constructor parameter `commitChanges` is `false` by default, which means that the SQL transaction will be rolled back at the end of the `using` block.
-* The tests should not be affected by the existing data in the database. They can be executed on an empty database (after the application is deployed to it), or on database with some user-entered data.
+* Each test should insert its own data and not rely on pre-existing data in the database,
+  or on the data inserted by other tests.
+* Each test should clear its data when finished.
+  This is done automatically by `RhetosTestContainer`,
+  see that the constructor parameter `commitChanges` is `false` by default,
+  which means that the SQL transaction will be rolled back at the end of the `using` block.
+* The tests should not be affected by the existing data in the database.
+  They can be executed on an empty database (after the application is deployed to it),
+  or on database with some user-entered data.
+
+## Contributions
+
+Before creating a pull request, please run `tools\Build\CleanBuildTest.ps1` in PowerShell console,
+to make sure there are not any errors when running a clean full build without cached output binaries.
