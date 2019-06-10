@@ -16,17 +16,37 @@ namespace Bookstore.Playground
     {
         static void Main(string[] args)
         {
-            ConsoleLogger.MinLevel = EventType.Info; // Use "Trace" for more details log.
-            var rhetosServerPath = @"C:\Bojan\Bookstore\dist\BookstoreRhetosServer";
-            Directory.SetCurrentDirectory(rhetosServerPath);
-            using (var container = new RhetosTestContainer(commitChanges: false)) // Use this parameter to COMMIT or ROLLBACK the data changes.
+            ConsoleLogger.MinLevel = EventType.Info; // Use EventType.Trace for more detailed log.
+            Directory.SetCurrentDirectory(FindRhetosServerFolder());
+            // Set commitChanges parameter to COMMIT or ROLLBACK the data changes.
+            using (var container = new RhetosTestContainer(commitChanges: false))
             {
                 var context = container.Resolve<Common.ExecutionContext>();
                 var repository = context.Repository;
 
-                repository.Bookstore.Book.Load().Dump();
-                repository.Bookstore.Book.Query().ToList().Dump();
+                // See usage examples on Rhetos wiki:
+                // https://github.com/Rhetos/Rhetos/wiki/Using-the-Domain-Object-Model
+
+                repository.Bookstore.Book.Query().Take(3).ToList().Dump();
+                repository.Bookstore.Book.Load().Take(3).Dump();
             }
+        }
+
+        private static string FindRhetosServerFolder()
+        {
+            string rhetosServerSubfolder = @"dist\BookstoreRhetosServer";
+
+            var startingFolder = new DirectoryInfo(Environment.CurrentDirectory);
+            var folder = startingFolder;
+            while (!Directory.Exists(Path.Combine(folder.FullName, rhetosServerSubfolder)))
+            {
+                if (folder.Parent == null)
+                    throw new ApplicationException($"Cannot find the Rhetos server folder '{rhetosServerSubfolder}' in '{startingFolder}' or any of its parent folders.");
+
+                folder = folder.Parent;
+            }
+
+            return Path.Combine(folder.FullName, rhetosServerSubfolder);
         }
     }
 }
