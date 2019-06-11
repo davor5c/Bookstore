@@ -6,6 +6,8 @@ Module Bookstore
 
     Entity Book
     {
+        Deactivatable { DeactivateOnDelete; }
+
         ShortString Code { AutoCode; }
         ShortString Title { Required; }
         Integer NumberOfPages;
@@ -18,6 +20,7 @@ Module Bookstore
     Entity Person
     {
         ShortString Name;
+        PhoneNumber MobilePhone;
     }
 
     //==============================================================

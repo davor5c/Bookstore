@@ -189,6 +189,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BookGridTest.cs" />
+    <Compile Include="DeactivateOnDeleteTest.cs" />
+    <Compile Include="PhoneNumberTest.cs" />
     <Compile Include="ReviewTest.cs" />
     <Compile Include="Tools\BookstoreRhetos.cs" />
     <Compile Include="BookTest.cs" />

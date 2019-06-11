@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookstore.Algorithms", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookstore.Algorithms.Test", "test\Bookstore.Algorithms.Test\Bookstore.Algorithms.Test.csproj", "{8828A480-A393-44B1-9565-BF33FE30278B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookstore.Concepts", "src\Bookstore.Concepts\Bookstore.Concepts.csproj", "{1FC8A5E9-CEEF-4FDB-B781-EDA06B14817C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{8828A480-A393-44B1-9565-BF33FE30278B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8828A480-A393-44B1-9565-BF33FE30278B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8828A480-A393-44B1-9565-BF33FE30278B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FC8A5E9-CEEF-4FDB-B781-EDA06B14817C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FC8A5E9-CEEF-4FDB-B781-EDA06B14817C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FC8A5E9-CEEF-4FDB-B781-EDA06B14817C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FC8A5E9-CEEF-4FDB-B781-EDA06B14817C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
