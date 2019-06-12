@@ -1,20 +1,77 @@
-﻿Module Bookstore
+﻿// This script contains examples for the article https://github.com/Rhetos/Rhetos/wiki/Validations
+
+Module Bookstore
 {
     Entity Disposal
     {
         Reference Book { Required; }
-        DateTime EffectiveSince { CreationTime; }
         LongString Explanation { Required; }
+        DateTime EffectiveSince { CreationTime; }
 
         //=================================================================
         // Simple validations:
 
-        // Note that you can use navigation properties to read data from the referenced objects and extensions.
-
         ItemFilter ImportantBookExplanation 'item => item.Book.Title.Contains("important") && item.Explanation.Length < 50';
-        InvalidData ImportantBookExplanation 'When disposing an important book, the explanation should be at least 50 characters long.';
+        InvalidData ImportantBookExplanation 'When disposing an important book, the explanation should be at least 50 characters long.'
+        {
+            // Additional error metadata:
+            MarkProperty Bookstore.Disposal.Explanation; // Property that caused the error.
+            ErrorMetadata 'Severity' 'Low'; // Additional custom error metadata.
+        }
 
+        // ItemFilter can use references and extensions:
         ItemFilter HighRating 'item => item.Book.Extension_BookRating.Rating > 100';
         InvalidData HighRating 'You are not allowed to dispose a book with rating above 100.';
+
+        //=================================================================
+        // Complex validations and error messages:
+
+        // ItemFilter can contain subqueries. All repository members are available (_domRepository e.g.).
+        ItemFilter UncertainExplanations 'disposal => _domRepository.Bookstore.UncertainWord.Subquery
+            .Any(uncertain => disposal.Explanation.Contains(uncertain.Word))';
+        InvalidData UncertainExplanations 'The explanation "{0}{1}" should not contain word "{2}". Book: {3}.'
+        {
+            MessageParametersItem 'item => new
+                {
+                    item.ID,
+                    P0 = item.Explanation.Substring(0, 10),
+                    P1 = item.Explanation.Length > 10 ? "..." : "",
+                    P2 = _domRepository.Bookstore.UncertainWord.Subquery
+                        .Where(uncertain => item.Explanation.Contains(uncertain.Word))
+                        .Select(uncertain => uncertain.Word).FirstOrDefault(),
+                    P3 = item.Book.Title
+                }';
+        }
+
+        ItemFilter ExplanationTooLong 'item => item.Explanation.Length > 500';
+        InvalidData ExplanationTooLong 'The {0} cannot be longer then {1} characters.'
+        {
+            // Simple message parameters for localization:
+            MessageParametersConstant '"Explanation", 500';
+        }
+
+        ItemFilter ExplanationSpecialCharacters 'item => item.Explanation.Contains("#") || item.Explanation.Contains("$")';
+        InvalidData ExplanationSpecialCharacters 'The explanation should not contain special characters.'
+        {
+            // Full control over validation's error message and metadata:
+            MessageFunction 'ids => this.Query(ids)
+                .Select(item => new { item.ID, BookTitle = item.Book.Title })
+                .ToList()
+                .Select(item => new InvalidDataMessage
+                {
+                    ID = item.ID,
+                    Message = "The explanation for \"{0}\" contains character \"#\" or \"$\".",
+                    MessageParameters = new object[] { item.BookTitle },
+                    Metadata = metadata
+                })';
+        }
+    }
+
+    // ComposableFilterBy for data validation should have empty parameters.
+    Parameter UncertainExplanations;
+
+    Entity UncertainWord
+    {
+        ShortString Word;
     }
 }

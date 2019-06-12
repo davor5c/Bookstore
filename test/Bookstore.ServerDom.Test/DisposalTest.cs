@@ -58,5 +58,67 @@ namespace Bookstore.ServerDom.Test
                     "rating above 100");
             }
         }
+
+        [TestMethod]
+        public void UncertainWords()
+        {
+            using (var rhetos = new BookstoreRhetos())
+            {
+                var repository = rhetos.Resolve<Common.DomRepository>();
+
+                // Removing old data to make this test independent.
+                var old = repository.Bookstore.UncertainWord.Load();
+                repository.Bookstore.UncertainWord.Delete(old);
+
+                var uncertain = new[] { "sometimes", "maybe", "someone" };
+                repository.Bookstore.UncertainWord.Insert(
+                    uncertain.Select(word => new UncertainWord { Word = word }));
+
+                var book = new Book { Title = "Some book title" };
+                repository.Bookstore.Book.Insert(book);
+
+                var disposal1 = new Disposal { BookID = book.ID, Explanation = "It was damaged" };
+                repository.Bookstore.Disposal.Insert(disposal1);
+
+                var disposal2 = new Disposal { BookID = book.ID, Explanation = "Maybe it was damaged" };
+                TestUtility.ShouldFail<UserException>(
+                    () => repository.Bookstore.Disposal.Insert(disposal2),
+                    @"The explanation ""Maybe it w..."" should not contain word ""maybe"". Book: Some book title.");
+            }
+        }
+
+        [TestMethod]
+        public void ExplanationTooLong()
+        {
+            using (var rhetos = new BookstoreRhetos())
+            {
+                var repository = rhetos.Resolve<Common.DomRepository>();
+
+                var book = new Book { Title = "Some book" };
+                repository.Bookstore.Book.Insert(book);
+
+                TestUtility.ShouldFail<UserException>(
+                    () => repository.Bookstore.Disposal.Insert(
+                        new Disposal { BookID = book.ID, Explanation = "explanation" + new string('x', 500) }),
+                    "Explanation", "longer then", "500");
+            }
+        }
+
+        [TestMethod]
+        public void ExplanationSpecialCharacters()
+        {
+            using (var rhetos = new BookstoreRhetos())
+            {
+                var repository = rhetos.Resolve<Common.DomRepository>();
+
+                var book = new Book { Title = "Some book" };
+                repository.Bookstore.Book.Insert(book);
+
+                TestUtility.ShouldFail<UserException>(
+                    () => repository.Bookstore.Disposal.Insert(
+                        new Disposal { BookID = book.ID, Explanation = "explanation#" }),
+                    book.Title, "contains character");
+            }
+        }
     }
 }
