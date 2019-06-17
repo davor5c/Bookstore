@@ -1,4 +1,4 @@
-﻿// This is example for the article https://github.com/Rhetos/Rhetos/wiki/Data-model-and-relationships
+﻿// This script contains examples for the article https://github.com/Rhetos/Rhetos/wiki/Data-model-and-relationships
 
 Module Bookstore
 {

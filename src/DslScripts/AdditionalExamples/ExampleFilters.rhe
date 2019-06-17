@@ -1,4 +1,4 @@
-// This is example for the article https://github.com/Rhetos/Rhetos/wiki/Filters-and-other-read-methods
+// This script contains examples for the article https://github.com/Rhetos/Rhetos/wiki/Filters-and-other-read-methods
 
 Module Bookstore
 {

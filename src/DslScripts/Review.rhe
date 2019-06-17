@@ -1,4 +1,4 @@
-// This is example for the article https://github.com/Rhetos/Rhetos/wiki/Low-level-object-model-concepts
+// This script contains examples for the article https://github.com/Rhetos/Rhetos/wiki/Low-level-object-model-concepts
 
 Module Bookstore
 {
