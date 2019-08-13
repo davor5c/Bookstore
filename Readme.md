@@ -2,6 +2,26 @@
 
 Bookstore is a demo application for Rhetos development platform.
 
+You can use it as a *prototype* for a new Rhetos application.
+Aside from the project structure, please note the following key components that
+most Rhetos applications should contain:
+
+1. The build script `Build.ps1`, that does everything needed to produce the application binaries from the source:
+   1. It checks for installed prerequisites (MSBuild, NuGet, database connection string, ...).
+   2. Automatically downloads the Rhetos server binaries.
+      This help us to avoid committing any binaries into the source repository.
+      The download is optimized to occur only on the first build or when changing the version
+      of the Rhetos server (defined in `Build.ps1`).
+   3. Runs MSBuild to build all application components (new custom DSL concepts,
+      and an external algorithm implemented in a separate dll).
+   4. Runs DeployPackages to generate a working application in `dist\BookstoreRhetosServer` subfolder.
+2. The NuGet specification file `src\Bookstore.nuspec`.
+   It specifies the list of application components that will be deployed to the Rhetos server.
+   More info at [Creating a Rhetos package](https://github.com/Rhetos/Rhetos/wiki/Creating-a-Rhetos-package)
+3. The test script `Test.ps1`. It builds and runs the automated unit tests and the integration tests.
+
+See `docs\Build process diagram.vsdx` for an overview of build & testing.
+
 ## Build
 
 To build this application from source, run `.\Build.ps1` in PowerShell console.
@@ -16,8 +36,6 @@ The build output is a web application in `dist\BookstoreRhetosServer` subfolder.
 * To setup the **IIS web application** follow the instructions in "IIS setup" chapter at
   [Development Environment Setup](https://github.com/Rhetos/Rhetos/wiki/Development-Environment-Setup),
   using `dist\BookstoreRhetosServer` for Rhetos server folder.
-
-See `docs\Build process diagram.vsdx` for overview of build & testing.
 
 ## Unit testing
 
