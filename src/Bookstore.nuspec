@@ -11,7 +11,7 @@
     <copyright>Copyright Omega software 2018</copyright>
     <tags>Rhetos plugin</tags>
     <dependencies>
-      <dependency id="Rhetos.CommonConcepts" version="2.11.0" />
+      <dependency id="Rhetos.CommonConcepts" version="2.12.0" />
     </dependencies>
   </metadata>
   <files>
@@ -20,7 +20,7 @@
     <file src="DataMigration\**\*" target="DataMigration" />
     <file src="Bookstore.Algorithms\bin\Debug\Bookstore.Algorithms.pdb" target="lib\net451" />
     <file src="Bookstore.Algorithms\bin\Debug\Bookstore.Algorithms.dll" target="lib\net451" />
-	<file src="Bookstore.Concepts\bin\Debug\Bookstore.Concepts.pdb" target="lib\net451" />
+    <file src="Bookstore.Concepts\bin\Debug\Bookstore.Concepts.pdb" target="lib\net451" />
     <file src="Bookstore.Concepts\bin\Debug\Bookstore.Concepts.dll" target="lib\net451" />
   </files>
 </package>

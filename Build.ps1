@@ -14,6 +14,6 @@ if ($LastExitCode -ne 0) { throw "NuGet restore failed." }
 if ($LastExitCode -ne 0) { throw "MSBuild failed." }
 
 # Deploy:
-.\tools\Build\Install-RhetosServer.ps1 2.11.0
+.\tools\Build\Install-RhetosServer.ps1 2.12.0
 & '.\dist\BookstoreRhetosServer\bin\DeployPackages.exe' /debug /nopause
 if ($LastExitCode -ne 0) { throw "DeployPackages failed." }
