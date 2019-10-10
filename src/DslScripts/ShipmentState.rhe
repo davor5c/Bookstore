@@ -1,9 +1,17 @@
 Module Bookstore
 {
+    Hardcoded ShipmentStatus
+    {
+        Entry Preparing;
+        Entry Approved;
+        Entry DeliveryInProgress;
+        Entry Delivered;
+    }
+
     SqlQueryable ComputeShipmentCurrentState <SQL\ComputeShipmentCurrentState.sql>
     {
         Extends Bookstore.Shipment;
-        ShortString Status; // Preparing => Approved => DeliveryInProgress => Delivered.
+        Reference Status Bookstore.ShipmentStatus; // Preparing => Approved => DeliveryInProgress => Delivered.
 
         // ChangesOnChangedItems Bookstore.ApproveShipment
         //     'Guid[]'

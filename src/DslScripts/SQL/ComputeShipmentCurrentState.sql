@@ -1,6 +1,6 @@
 SELECT
     s.ID,
-    Status = lastEvent.NewStatus
+    StatusID = lastEvent.NewStatusID
 FROM
     Bookstore.Shipment s
     OUTER APPLY

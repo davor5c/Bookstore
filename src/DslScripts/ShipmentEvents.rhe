@@ -4,7 +4,7 @@ Module Bookstore
     {
         DateTime EffectiveSince;
         Reference Shipment;
-        ShortString NewStatus;
+        Reference NewStatus Bookstore.ShipmentStatus;
     }
 
     Entity ApproveShipment
@@ -16,8 +16,7 @@ Module Bookstore
 
         Is Bookstore.ShipmentEvent
         {
-            Implements Bookstore.ShipmentEvent.NewStatus
-                "'Approved'";
+            Implements Bookstore.ShipmentEvent.NewStatus "Bookstore.ShipmentStatus_Approved()";
         }
     }
 
@@ -28,8 +27,7 @@ Module Bookstore
 
         Is Bookstore.ShipmentEvent
         {            
-            Implements Bookstore.ShipmentEvent.NewStatus
-                "'DeliveryInProgress'";
+            Implements Bookstore.ShipmentEvent.NewStatus "Bookstore.ShipmentStatus_DeliveryInProgress()";
         }
     }
 
@@ -40,8 +38,7 @@ Module Bookstore
 
         Is Bookstore.ShipmentEvent
         {            
-            Implements Bookstore.ShipmentEvent.NewStatus
-                "'Delivered'";
+            Implements Bookstore.ShipmentEvent.NewStatus "Bookstore.ShipmentStatus_Delivered()";
         }
     }
 }

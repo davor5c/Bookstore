@@ -8,12 +8,9 @@ Module Bookstore
 
         Is Bookstore.ShipmentEvent 'Creating'
         {
-            Implements Bookstore.ShipmentEvent.EffectiveSince
-                "CreatedAt";
-            Implements Bookstore.ShipmentEvent.Shipment
-                "ID";
-            Implements Bookstore.ShipmentEvent.NewStatus
-                "'Preparing'";
+            Implements Bookstore.ShipmentEvent.EffectiveSince "CreatedAt";
+            Implements Bookstore.ShipmentEvent.Shipment "ID";
+            Implements Bookstore.ShipmentEvent.NewStatus "Bookstore.ShipmentStatus_Preparing()";
         }
     }
 
@@ -27,6 +24,6 @@ Module Bookstore
     {
         Take TargetAddress;
         Take DeliveryDate;
-        Take CurrentState 'Extension_ShipmentCurrentState.Status';
+        Take CurrentStatus 'Extension_ShipmentCurrentState.Status.Name';
     }
 }
