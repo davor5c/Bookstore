@@ -10,8 +10,8 @@ Module Bookstore
         {
             Implements Bookstore.ShipmentEvent.EffectiveSince "CreatedAt";
             Implements Bookstore.ShipmentEvent.Shipment "ID";
-            Implements Bookstore.ShipmentEvent.NewStatus "Bookstore.ShipmentStatus_Preparing()";
-            SqlDependsOnFunction Bookstore.ShipmentStatus_Preparing;
+            Implements Bookstore.ShipmentEvent.NewStatus Bookstore.ShipmentStatus.Preparing;
+            // Note: "Implements" can contain custom SQL code, or a reference to hardcoded entry (see ShipmentStatus).
         }
     }
 
