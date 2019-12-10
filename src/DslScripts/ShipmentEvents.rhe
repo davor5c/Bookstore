@@ -17,6 +17,7 @@ Module Bookstore
         Is Bookstore.ShipmentEvent
         {
             Implements Bookstore.ShipmentEvent.NewStatus "Bookstore.ShipmentStatus_Approved()";
+            SqlDependsOnFunction Bookstore.ShipmentStatus_Approved;
         }
     }
 
@@ -28,6 +29,7 @@ Module Bookstore
         Is Bookstore.ShipmentEvent
         {            
             Implements Bookstore.ShipmentEvent.NewStatus "Bookstore.ShipmentStatus_DeliveryInProgress()";
+            SqlDependsOnFunction Bookstore.ShipmentStatus_DeliveryInProgress;
         }
     }
 
@@ -39,6 +41,7 @@ Module Bookstore
         Is Bookstore.ShipmentEvent
         {            
             Implements Bookstore.ShipmentEvent.NewStatus "Bookstore.ShipmentStatus_Delivered()";
+            SqlDependsOnFunction Bookstore.ShipmentStatus_Delivered;
         }
     }
 }
