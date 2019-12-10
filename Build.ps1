@@ -12,6 +12,7 @@ $msbuild, $vstest = .\tools\Build\Find-VisualStudio.ps1
 if ($LastExitCode -ne 0) { throw "NuGet restore failed." }
 & $msbuild 'Bookstore.sln' /target:rebuild /p:Configuration=Debug /verbosity:minimal
 if ($LastExitCode -ne 0) { throw "MSBuild failed." }
+.\tools\Build\New-BookstoreNuGetPackage.ps1
 
 # Deploy:
 .\tools\Build\Install-RhetosServer.ps1 2.12.0
