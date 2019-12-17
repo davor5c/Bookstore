@@ -1,4 +1,4 @@
-# Deletes all cached binaries and runs the build and tests from scratch.
+# Deletes all cached binaries and runs the full rebuild and tests from scratch.
 
 $ErrorActionPreference = 'Stop'
 
