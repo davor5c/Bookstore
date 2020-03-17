@@ -1,0 +1,21 @@
+Module Warehouse1
+{
+    Entity Warehouse
+    {
+        Shortstring Name;
+        DateTime CreatedAt { CreationTime; }
+    }
+
+    Entity WarehouseItem
+    {
+        Reference Warehouse { Detail; }
+        ShortString Name;
+    }
+
+    Browse WarehouseGrid Warehouse1.Warehouse
+    {
+        Take Name;
+        Take WarehouseItem 'Extension_WarehouseCurrentState.WarehouseItem';
+        Take CurrentQuantity 'Extension_WarehouseCurrentState.Quantity';
+    }
+}

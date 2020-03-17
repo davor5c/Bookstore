@@ -1,0 +1,25 @@
+Module Warehouse1
+{
+    SqlQueryable ComputeWarehouseCurrentQuantity <SQL\ComputeWarehouseCurrentState.sql>
+    {
+        Extends Warehouse1.Warehouse;
+        Reference WarehouseItem Warehouse1.WarehouseItem;
+        Integer Quantity;
+
+        ChangesOnLinkedItems Warehouse1.GoodsReceival.Warehouse;
+        ChangesOnLinkedItems Warehouse1.GoodsDisptach.Warehouse;
+        ChangesOnLinkedItems Warehouse1.GoodsRelocation.WarehouseFrom;
+        ChangesOnLinkedItems Warehouse1.GoodsRelocation.WarehouseTo;
+
+        AutodetectSqlDependencies;
+    }
+
+    Entity WarehouseCurrentState
+    {
+        ComputedFrom Warehouse1.ComputeWarehouseCurrentQuantity
+        {
+            //KeepSynchronized;
+            AllProperties;
+        }
+    }
+}

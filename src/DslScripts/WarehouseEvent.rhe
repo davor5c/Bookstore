@@ -1,0 +1,54 @@
+Module Warehouse1
+{
+    Polymorphic WarehouseEvent
+    {
+        DateTime EffectiveSince;
+        Reference WarehouseItem;
+        Reference Warehouse;
+        Integer Quantity;
+    }
+
+    Entity GoodsReceival
+    {
+        DateTime EffectiveSince { CreationTime; }
+        Reference WarehouseItem;
+        Reference Warehouse;
+        Integer Quantity;
+
+        Is Warehouse1.WarehouseEvent;
+    }
+
+    Entity GoodsDisptach
+    {
+        DateTime EffectiveSince { CreationTime; }
+        Reference WarehouseItem;
+        Reference Warehouse;
+        Integer Quantity;
+
+        Is Warehouse1.WarehouseEvent
+        {
+            Implements Warehouse1.WarehouseEvent.Quantity '-Quantity';
+        }
+    }
+
+    Entity GoodsRelocation
+    {
+        DateTime EffectiveSince { CreationTime; }
+        Reference WarehouseItem;
+        Reference WarehouseFrom Warehouse1.Warehouse;
+        Reference WarehouseTo Warehouse1.Warehouse;
+        Integer Quantity;
+
+        Is Warehouse1.WarehouseEvent 'Removing'
+        {
+            Implements Warehouse1.WarehouseEvent.Warehouse 'WarehouseFromID';
+            Implements Warehouse1.WarehouseEvent.Quantity '-Quantity';
+        }
+
+        Is Warehouse1.WarehouseEvent 'Adding'
+        {
+            Implements Warehouse1.WarehouseEvent.Warehouse 'WarehouseToID';
+            Implements Warehouse1.WarehouseEvent.Quantity 'Quantity';
+        }
+    }
+}
