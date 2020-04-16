@@ -342,3 +342,10 @@ ASALocalRun/
 
 # Project build output
 dist/*
+
+# Rhetos
+src/Bookstore.RhetosServer/rhetos-app.local.settings.json
+src/Bookstore.RhetosServer/Logs
+src/Bookstore.RhetosServer/Resources
+src/Bookstore.RhetosServer/ConnectionStrings.config
+src/Bookstore.RhetosServer/ExternalAppSettings.config

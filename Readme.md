@@ -8,13 +8,9 @@ most Rhetos applications should contain:
 
 1. The build script `Build.ps1`, that does everything needed to produce the application binaries from the source:
    1. It checks for installed prerequisites (MSBuild, NuGet, database connection string, ...).
-   2. Automatically downloads the Rhetos server binaries.
-      This help us to avoid committing any binaries into the source repository.
-      The download is optimized to occur only on the first build or when changing the version
-      of the Rhetos server (defined in `Build.ps1`).
-   3. Runs MSBuild to build all application components (new custom DSL concepts,
+   2. Runs MSBuild to build all application components (new custom DSL concepts,
       and an external algorithm implemented in a separate dll).
-   4. Runs DeployPackages to generate a working application in `dist\BookstoreRhetosServer` subfolder.
+   3. Runs rhetos.exe dbupdate command to update the databse
 2. The NuGet specification file `src\Bookstore.nuspec`.
    It specifies the list of application components that will be deployed to the Rhetos server.
    More info at [Creating a Rhetos package](https://github.com/Rhetos/Rhetos/wiki/Creating-a-Rhetos-package)
@@ -31,11 +27,11 @@ To build this application from source, run `.\Build.ps1` in PowerShell console.
   follow the instructions in "Database setup" chapter at the
   [Development Environment Setup](https://github.com/Rhetos/Rhetos/wiki/Development-Environment-Setup#database-setup).
 
-The build output is a web application in `dist\BookstoreRhetosServer` subfolder.
+The build output is a web application in `src\Bookstore.RhetosServer` subfolder.
 
 * To setup the **IIS web application** follow the instructions in "IIS setup" chapter at
   [Development Environment Setup](https://github.com/Rhetos/Rhetos/wiki/Development-Environment-Setup),
-  using `dist\BookstoreRhetosServer` for Rhetos server folder.
+  using `src\Bookstore.RhetosServer` for Rhetos server folder.
 
 ## Unit testing
 
@@ -43,10 +39,10 @@ Automated tests are executed by running `.\Test.ps1` in PowerShell console.
 
 There are two kinds of tests in this project:
 
-1. **Standard unit tests** (`test\Bookstore.Algorithms.Test`, part of `Bookstore.sln`)
+1. **Standard unit tests** (`test\Bookstore.Algorithms.Test`)
    that test the algorithm implemented in external assembly.
     * These tests are very fast and independent of the deployment environment.
-2. **Integration tests** (`test\Bookstore.ServerDom.Test\Bookstore.ServerDom.Test.sln`)
+2. **Integration tests** (`test\Bookstore.ServerDom.Test`)
    that test the generated applications together with the database.
     * These tests can test full business processes, including the business logic
       that is implemented in the database, but are slower and need a database to run
@@ -67,5 +63,5 @@ that we apply to keep their complexity under control:
 
 ## Contributions
 
-Before creating a pull request, please run `tools\Build\CleanBuildTest.ps1` in PowerShell console,
+Before creating a pull request, please run `tools\Build\Test-CleanBuild.ps1` in PowerShell console,
 to make sure there are not any errors when running a clean full build without cached output binaries.

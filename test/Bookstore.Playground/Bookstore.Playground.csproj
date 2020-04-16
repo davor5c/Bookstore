@@ -8,10 +8,11 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Bookstore.Playground</RootNamespace>
     <AssemblyName>Bookstore.Playground</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,148 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Autofac.dll</HintPath>
-    </Reference>
-    <Reference Include="Bookstore.Algorithms">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Plugins\Bookstore.Algorithms.dll</HintPath>
-    </Reference>
-    <Reference Include="ConsoleDump, Version=0.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\ConsoleDump.0.7.0\lib\net45\ConsoleDump.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\dist\BookstoreRhetosServer\bin\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\NLog.dll</HintPath>
-    </Reference>
-    <Reference Include="NuGet.Core">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\NuGet.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Oracle.ManagedDataAccess">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Oracle.ManagedDataAccess.dll</HintPath>
-    </Reference>
-    <Reference Include="RestService">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Generated\RestService.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Compiler">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.Compiler.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Compiler.Interfaces">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.Compiler.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Configuration.Autofac">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.Configuration.Autofac.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.DatabaseGenerator">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.DatabaseGenerator.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.DatabaseGenerator.DefaultConcepts">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Plugins\Rhetos.DatabaseGenerator.DefaultConcepts.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.DatabaseGenerator.Interfaces">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.DatabaseGenerator.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Deployment">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Deployment.Interfaces">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.Deployment.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Dom">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.Dom.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Dom.DefaultConcepts">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Plugins\Rhetos.Dom.DefaultConcepts.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Dom.DefaultConcepts.Interfaces">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Plugins\Rhetos.Dom.DefaultConcepts.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Dom.Interfaces">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.Dom.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Dsl">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.Dsl.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Dsl.DefaultConcepts">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Plugins\Rhetos.Dsl.DefaultConcepts.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Dsl.Interfaces">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.Dsl.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Extensibility">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.Extensibility.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Extensibility.Interfaces">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.Extensibility.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Interfaces">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Logging">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Logging.Interfaces">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.Logging.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Persistence">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.Persistence.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Persistence.Interfaces">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.Persistence.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Processing">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.Processing.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Processing.DefaultCommands">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Plugins\Rhetos.Processing.DefaultCommands.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Processing.DefaultCommands.Interfaces">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Plugins\Rhetos.Processing.DefaultCommands.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Processing.Interfaces">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.Processing.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.RestGenerator">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Plugins\Rhetos.RestGenerator.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Security">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Security.Interfaces">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.Security.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.TestCommon">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.TestCommon.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Utilities">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.Utilities.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.Web">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.Web.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhetos.XmlSerialization">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Rhetos.XmlSerialization.dll</HintPath>
-    </Reference>
-    <Reference Include="ServerDom.Model">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Generated\ServerDom.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="ServerDom.Orm">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Generated\ServerDom.Orm.dll</HintPath>
-    </Reference>
-    <Reference Include="ServerDom.Repositories">
-      <HintPath>..\..\dist\BookstoreRhetosServer\bin\Generated\ServerDom.Repositories.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -191,7 +53,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="ConsoleDump">
+      <Version>0.7.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Bookstore.RhetosServer\Bookstore.RhetosServer.csproj">
+      <Project>{e3ea6b67-e61d-456b-90e5-1d8fdf9e0962}</Project>
+      <Name>Bookstore.RhetosServer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

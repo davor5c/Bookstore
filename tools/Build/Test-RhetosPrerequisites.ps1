@@ -1,4 +1,4 @@
-$connectionStringsPath = "$PSScriptRoot\..\..\dist\BookstoreRhetosServer\bin\ConnectionStrings.config"
+$connectionStringsPath = "$PSScriptRoot\..\..\src\Bookstore.RhetosServer\ConnectionStrings.config"
 
 if (!(Test-Path $connectionStringsPath))
 {

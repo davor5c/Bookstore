@@ -1,0 +1,6 @@
+{
+  "GenerateAppSettings": true,
+  "Legacy": {
+    "BuildResourcesFolder": true
+  }
+}

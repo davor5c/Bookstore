@@ -1,0 +1,10 @@
+{
+  "RhetosRuntimePath": "bin\\BookstoreRhetosServer.dll",
+  "AssetsFolder": "bin\\RhetosAssets",
+  "DatabaseLanguage": "MsSql",
+  "Legacy": {
+    "Paths": {
+      "ResourcesFolder": "Resources"
+    }
+  }
+}
