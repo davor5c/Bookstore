@@ -8,24 +8,18 @@ most Rhetos applications should contain:
 
 1. The build script `Build.ps1`, that does everything needed to produce the application binaries from the source:
    1. It checks for installed prerequisites (MSBuild, NuGet, database connection string, ...).
-   2. Runs MSBuild to build all application components (new custom DSL concepts,
-      and an external algorithm implemented in a separate dll).
-   3. Runs rhetos.exe dbupdate command to update the databse
-2. The NuGet specification file `src\Bookstore.nuspec`.
-   It specifies the list of application components that will be deployed to the Rhetos server.
-   More info at [Creating a Rhetos package](https://github.com/Rhetos/Rhetos/wiki/Creating-a-Rhetos-package)
-3. The test script `Test.ps1`. It builds and runs the automated unit tests and the integration tests.
-
-See `docs\Build process diagram.vsdx` for an overview of build & testing.
+   2. Runs `MSBuild` to build all application components (new custom DSL concepts,
+      and an external algorithm implemented in a separate DLL).
+   3. Runs `rhetos.exe dbupdate` command to update the database.
+2. The test script `Test.ps1`. It builds and runs the automated unit tests and the integration tests.
 
 ## Build
 
 To build this application from source, run `.\Build.ps1` in PowerShell console.
 
-* If the build fails, see the error description to setup any missing prerequisites.
-* If the build fails with a **ConnectionString** error,
-  follow the instructions in "Database setup" chapter at the
-  [Development Environment Setup](https://github.com/Rhetos/Rhetos/wiki/Development-Environment-Setup#database-setup).
+* If the build fails, check the error message for instructions to setup any missing prerequisites.
+* For additional information on build and development environment see
+  [Development Environment Setup](https://github.com/Rhetos/Rhetos/wiki/Development-Environment-Setup).
 
 The build output is a web application in `src\Bookstore.RhetosServer` subfolder.
 
