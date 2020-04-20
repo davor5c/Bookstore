@@ -1,25 +1,24 @@
 <Query Kind="Program">
+  <Reference Relative="..\bin\Autofac.dll">..\bin\Autofac.dll</Reference>
   <Reference Relative="..\bin\EntityFramework.dll">..\bin\EntityFramework.dll</Reference>
   <Reference Relative="..\bin\EntityFramework.SqlServer.dll">..\bin\EntityFramework.SqlServer.dll</Reference>
   <Reference Relative="..\bin\NLog.dll">..\bin\NLog.dll</Reference>
   <Reference Relative="..\bin\Oracle.ManagedDataAccess.dll">..\bin\Oracle.ManagedDataAccess.dll</Reference>
-  <Reference Relative="..\bin\Plugins\Rhetos.AspNetFormsAuth.dll">..\bin\Plugins\Rhetos.AspNetFormsAuth.dll</Reference>
   <Reference Relative="..\bin\Rhetos.Configuration.Autofac.dll">..\bin\Rhetos.Configuration.Autofac.dll</Reference>
-  <Reference Relative="..\bin\Plugins\Rhetos.Dom.DefaultConcepts.dll">..\bin\Plugins\Rhetos.Dom.DefaultConcepts.dll</Reference>
-  <Reference Relative="..\bin\Plugins\Rhetos.Dom.DefaultConcepts.Interfaces.dll">..\bin\Plugins\Rhetos.Dom.DefaultConcepts.Interfaces.dll</Reference>
+  <Reference Relative="..\bin\Rhetos.Dom.DefaultConcepts.dll">..\bin\Rhetos.Dom.DefaultConcepts.dll</Reference>
+  <Reference Relative="..\bin\Rhetos.Dom.DefaultConcepts.Interfaces.dll">..\bin\Rhetos.Dom.DefaultConcepts.Interfaces.dll</Reference>
   <Reference Relative="..\bin\Rhetos.Dom.Interfaces.dll">..\bin\Rhetos.Dom.Interfaces.dll</Reference>
-  <Reference Relative="..\bin\Plugins\Rhetos.Dsl.DefaultConcepts.dll">..\bin\Plugins\Rhetos.Dsl.DefaultConcepts.dll</Reference>
+  <Reference Relative="..\bin\Rhetos.Dsl.DefaultConcepts.dll">..\bin\Rhetos.Dsl.DefaultConcepts.dll</Reference>
   <Reference Relative="..\bin\Rhetos.Dsl.Interfaces.dll">..\bin\Rhetos.Dsl.Interfaces.dll</Reference>
   <Reference Relative="..\bin\Rhetos.Interfaces.dll">..\bin\Rhetos.Interfaces.dll</Reference>
   <Reference Relative="..\bin\Rhetos.Logging.Interfaces.dll">..\bin\Rhetos.Logging.Interfaces.dll</Reference>
   <Reference Relative="..\bin\Rhetos.Persistence.Interfaces.dll">..\bin\Rhetos.Persistence.Interfaces.dll</Reference>
-  <Reference Relative="..\bin\Plugins\Rhetos.Processing.DefaultCommands.Interfaces.dll">..\bin\Plugins\Rhetos.Processing.DefaultCommands.Interfaces.dll</Reference>
+  <Reference Relative="..\bin\Rhetos.Processing.DefaultCommands.Interfaces.dll">..\bin\Rhetos.Processing.DefaultCommands.Interfaces.dll</Reference>
   <Reference Relative="..\bin\Rhetos.Processing.Interfaces.dll">..\bin\Rhetos.Processing.Interfaces.dll</Reference>
   <Reference Relative="..\bin\Rhetos.Security.Interfaces.dll">..\bin\Rhetos.Security.Interfaces.dll</Reference>
+  <Reference Relative="..\bin\Rhetos.TestCommon.dll">..\bin\Rhetos.TestCommon.dll</Reference>
   <Reference Relative="..\bin\Rhetos.Utilities.dll">..\bin\Rhetos.Utilities.dll</Reference>
-  <Reference Relative="..\bin\Generated\ServerDom.Model.dll">..\bin\Generated\ServerDom.Model.dll</Reference>
-  <Reference Relative="..\bin\Generated\ServerDom.Orm.dll">..\bin\Generated\ServerDom.Orm.dll</Reference>
-  <Reference Relative="..\bin\Generated\ServerDom.Repositories.dll">..\bin\Generated\ServerDom.Repositories.dll</Reference>
+  <Reference Relative="..\bin\BookstoreRhetosServer.dll">..\bin\BookstoreRhetosServer.dll</Reference>
   <Reference>&lt;RuntimeDirectory&gt;\System.DirectoryServices.AccountManagement.dll</Reference>
   <Reference>&lt;RuntimeDirectory&gt;\System.DirectoryServices.dll</Reference>
   <Reference>&lt;RuntimeDirectory&gt;\System.Runtime.Serialization.dll</Reference>
@@ -45,6 +44,9 @@
   <Namespace>System.Text</Namespace>
   <Namespace>System.Xml</Namespace>
   <Namespace>System.Xml.Serialization</Namespace>
+  <Namespace>Autofac</Namespace>
+  <Namespace>Rhetos.TestCommon</Namespace>
+  <Namespace>Rhetos</Namespace>
 </Query>
 
 void Main()
