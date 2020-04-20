@@ -55,6 +55,36 @@ that we apply to keep their complexity under control:
   They can be executed on an empty database (after the application is deployed to it),
   or on database with some user-entered data.
 
+## Run the application
+
+Configure user authentication for your application:
+
+* Option A) *(Recommended for quick-start)* Enable **anonymous access** by creating
+ `rhetos-app.local.settings.json` in Bookstore.RhetosServer project folder, with the following content:
+ `{ "Security" { "AllClaimsForAnonymous": true } }`.
+* Option B) If you want to use **Windows authentication with IIS**:
+  * Run Visual Studio *as Administrator*. Open project properties => Web => Change from "ISS Express" to "Local IIS". On save answer Yes.
+  * Open IIS Manager => Find your application => Authentication => Disable Anonymous, Enable Windows Authentication.
+  * Open IIS Manager => Find your application => Basic settings => Change application pool to new RhetosAppPool that is configured to run with your development account (see IIS Setup)
+  * Add `Security.AllClaimsForUsers` configuration setting for your account and your
+    machine name, to simplify testing. See instructions in
+    [Suppressing permissions in a development environment](Basic-permissions#suppressing-permissions-in-a-development-environment).
+* Option C) If you want to use **Windows authentication with IIS Express**:
+  * Edit `.vs\<solution name>\config\applicationhost.config`
+    * in element `anonymousAuthentication` set `enabled` attribute to `false`.
+    * in element `windowsAuthentication` set `enabled` attribute to `true`.
+  * Add `Security.AllClaimsForUsers` configuration setting for your account and your
+    machine name, to simplify testing. See instructions in
+    [Suppressing permissions in a development environment](Basic-permissions#suppressing-permissions-in-a-development-environment).
+
+Open Bookstore.sln in Visual Studio, right-click project "Bookstore.RhetosServer" and select "Set as Startup Project".
+
+Start the web application with Debug => Start Debugging **(F5)**.
+
+* Rhetos application homepage should open in browser, displaying Installed packages and Server status.
+* In the browser address bar append `/rest/Bookstore/Book/` to display the list of records from the database table Bookstore.Book.
+* See [Troubleshooting](https://github.com/Rhetos/Rhetos/wiki/Creating-new-WCF-Rhetos-application#troubleshooting) section to resolve any errors.
+
 ## Contributions
 
 Before creating a pull request, please run `tools\Build\Test-CleanBuild.ps1` in PowerShell console,

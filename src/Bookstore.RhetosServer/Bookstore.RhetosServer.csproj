@@ -114,6 +114,9 @@
     <PackageReference Include="Rhetos.CommonConcepts">
       <Version>4.0.0-dev*</Version>
     </PackageReference>
+    <PackageReference Include="Rhetos.RestGenerator">
+      <Version>3.0.0-dev*</Version>
+    </PackageReference>
     <PackageReference Include="Rhetos.Wcf">
       <Version>4.0.0-dev*</Version>
     </PackageReference>
