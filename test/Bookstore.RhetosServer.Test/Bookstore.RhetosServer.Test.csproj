@@ -7,8 +7,8 @@
     <ProjectGuid>{72873535-E3FB-442F-BDEB-E364D502E472}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bookstore.ServerDom.Test</RootNamespace>
-    <AssemblyName>Bookstore.ServerDom.Test</AssemblyName>
+    <RootNamespace>Bookstore.RhetosServer.Test</RootNamespace>
+    <AssemblyName>Bookstore.RhetosServer.Test</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

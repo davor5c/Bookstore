@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookstore.Concepts", "src\B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookstore.RhetosServer", "src\Bookstore.RhetosServer\Bookstore.RhetosServer.csproj", "{E3EA6B67-E61D-456B-90E5-1D8FDF9E0962}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookstore.ServerDom.Test", "test\Bookstore.ServerDom.Test\Bookstore.ServerDom.Test.csproj", "{72873535-E3FB-442F-BDEB-E364D502E472}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookstore.RhetosServer.Test", "test\Bookstore.RhetosServer.Test\Bookstore.RhetosServer.Test.csproj", "{72873535-E3FB-442F-BDEB-E364D502E472}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookstore.Playground", "test\Bookstore.Playground\Bookstore.Playground.csproj", "{EDC6CD1F-515B-4719-8429-27CF4E4EBB7E}"
 EndProject

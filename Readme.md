@@ -36,7 +36,7 @@ There are two kinds of tests in this project:
 1. **Standard unit tests** (`test\Bookstore.Algorithms.Test`)
    that test the algorithm implemented in external assembly.
     * These tests are very fast and independent of the deployment environment.
-2. **Integration tests** (`test\Bookstore.ServerDom.Test`)
+2. **Integration tests** (`test\Bookstore.RhetosServer.Test`)
    that test the generated applications together with the database.
     * These tests can test full business processes, including the business logic
       that is implemented in the database, but are slower and need a database to run

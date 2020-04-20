@@ -11,5 +11,5 @@ $msbuild, $vstest = .\tools\Build\Find-VisualStudio.ps1
 if ($LastExitCode -ne 0) { throw "vstest failed." }
 
 "=== Integration tests ==="
-& $vstest 'test\Bookstore.ServerDom.Test\bin\Debug\Bookstore.ServerDom.Test.dll'
+& $vstest 'test\Bookstore.RhetosServer.Test\bin\Debug\Bookstore.RhetosServer.Test.dll'
 if ($LastExitCode -ne 0) { throw "vstest failed." }

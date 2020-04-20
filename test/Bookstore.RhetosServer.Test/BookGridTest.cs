@@ -1,4 +1,4 @@
-﻿using Bookstore.ServerDom.Test.Tools;
+﻿using Bookstore.RhetosServer.Test.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhetos.Dom.DefaultConcepts;
 using Rhetos.TestCommon;
@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Bookstore.ServerDom.Test
+namespace Bookstore.RhetosServer.Test
 {
     [TestClass]
     public class BookGridTest
