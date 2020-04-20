@@ -75,9 +75,6 @@
     <PackageReference Include="Rhetos.CommonConcepts">
       <Version>4.0.0-dev*</Version>
     </PackageReference>
-    <PackageReference Include="System.Memory">
-      <Version>4.5.3</Version>
-    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
