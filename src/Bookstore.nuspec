@@ -1,0 +1,31 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+
+  <!-- This nuspec file in only for testing and debugging usage.
+  It allows the Bookstore application to be deployed as one of the modules
+  of a larger test application. -->
+
+  <metadata>
+    <id>Bookstore</id>
+    <version>1.0.0-dev</version>
+    <authors>Omega software</authors>
+    <owners>Omega software</owners>
+    <licenseUrl>http://opensource.org/licenses/AGPL-3.0</licenseUrl>
+    <projectUrl>https://github.com/rhetos/bookstore</projectUrl>
+    <description>Bookstore is a demo application for Rhetos development platform.</description>
+    <copyright>Copyright Omega software 2018</copyright>
+    <tags>Rhetos plugin</tags>
+    <dependencies>
+      <dependency id="Rhetos.CommonConcepts" version="2.12.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\Readme.md" target="" />
+    <file src="Bookstore.RhetosServer\DslScripts\**\*" target="DslScripts" />
+    <file src="Bookstore.RhetosServer\DataMigration\**\*" target="DataMigration" />
+    <file src="Bookstore.Algorithms\bin\Debug\Bookstore.Algorithms.pdb" target="lib\net451" />
+    <file src="Bookstore.Algorithms\bin\Debug\Bookstore.Algorithms.dll" target="lib\net451" />
+    <file src="Bookstore.Concepts\bin\Debug\Bookstore.Concepts.pdb" target="lib\net451" />
+    <file src="Bookstore.Concepts\bin\Debug\Bookstore.Concepts.dll" target="lib\net451" />
+  </files>
+</package>
