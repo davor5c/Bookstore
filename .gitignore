@@ -344,8 +344,8 @@ ASALocalRun/
 dist/*
 
 # Rhetos
-src/Bookstore.RhetosServer/rhetos-app.local.settings.json
-src/Bookstore.RhetosServer/Logs
-src/Bookstore.RhetosServer/Resources
-src/Bookstore.RhetosServer/ConnectionStrings.config
-src/Bookstore.RhetosServer/ExternalAppSettings.config
+src/Bookstore.Service/rhetos-app.local.settings.json
+src/Bookstore.Service/Logs
+src/Bookstore.Service/Resources
+src/Bookstore.Service/ConnectionStrings.config
+src/Bookstore.Service/ExternalAppSettings.config

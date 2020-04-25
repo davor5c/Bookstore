@@ -18,7 +18,7 @@
   <Reference Relative="..\bin\Rhetos.Security.Interfaces.dll">..\bin\Rhetos.Security.Interfaces.dll</Reference>
   <Reference Relative="..\bin\Rhetos.TestCommon.dll">..\bin\Rhetos.TestCommon.dll</Reference>
   <Reference Relative="..\bin\Rhetos.Utilities.dll">..\bin\Rhetos.Utilities.dll</Reference>
-  <Reference Relative="..\bin\BookstoreRhetosServer.dll">..\bin\BookstoreRhetosServer.dll</Reference>
+  <Reference Relative="..\bin\Bookstore.Service.dll">..\bin\Bookstore.Service.dll</Reference>
   <Reference>&lt;RuntimeDirectory&gt;\System.DirectoryServices.AccountManagement.dll</Reference>
   <Reference>&lt;RuntimeDirectory&gt;\System.DirectoryServices.dll</Reference>
   <Reference>&lt;RuntimeDirectory&gt;\System.Runtime.Serialization.dll</Reference>

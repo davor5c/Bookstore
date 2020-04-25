@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("BookstoreRhetosServer")]
+[assembly: AssemblyTitle("Bookstore.Service")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Omega software d.o.o.")]
-[assembly: AssemblyProduct("BookstoreRhetosServer")]
+[assembly: AssemblyProduct("Bookstore.Service")]
 [assembly: AssemblyCopyright("Copyright © Omega software d.o.o. 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

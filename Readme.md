@@ -21,11 +21,11 @@ To build this application from source, run `.\Build.ps1` in PowerShell console.
 * For additional information on build and development environment see
   [Development Environment Setup](https://github.com/Rhetos/Rhetos/wiki/Development-Environment-Setup).
 
-The build output is a web application in `src\Bookstore.RhetosServer` subfolder.
+The build output is a web application in `src\Bookstore.Service` subfolder.
 
 * To setup the **IIS web application** follow the instructions in "IIS setup" chapter at
   [Development Environment Setup](https://github.com/Rhetos/Rhetos/wiki/Development-Environment-Setup),
-  using `src\Bookstore.RhetosServer` for Rhetos server folder.
+  using `src\Bookstore.Service` for Rhetos server folder.
 
 ## Unit testing
 
@@ -36,7 +36,7 @@ There are two kinds of tests in this project:
 1. **Standard unit tests** (`test\Bookstore.Algorithms.Test`)
    that test the algorithm implemented in external assembly.
     * These tests are very fast and independent of the deployment environment.
-2. **Integration tests** (`test\Bookstore.RhetosServer.Test`)
+2. **Integration tests** (`test\Bookstore.Service.Test`)
    that test the generated applications together with the database.
     * These tests can test full business processes, including the business logic
       that is implemented in the database, but are slower and need a database to run
@@ -60,7 +60,7 @@ that we apply to keep their complexity under control:
 Configure user authentication for your application:
 
 * Option A) *(Recommended for quick-start)* Enable **anonymous access** by creating
- `rhetos-app.local.settings.json` in Bookstore.RhetosServer project folder, with the following content:
+ `rhetos-app.local.settings.json` in Bookstore.Service project folder, with the following content:
  `{ "Security" { "AllClaimsForAnonymous": true } }`.
 * Option B) If you want to use **Windows authentication with IIS**:
   * Run Visual Studio *as Administrator*. Open project properties => Web => Change from "ISS Express" to "Local IIS". On save answer Yes.
@@ -77,7 +77,7 @@ Configure user authentication for your application:
     machine name, to simplify testing. See instructions in
     [Suppressing permissions in a development environment](Basic-permissions#suppressing-permissions-in-a-development-environment).
 
-Open Bookstore.sln in Visual Studio, right-click project "Bookstore.RhetosServer" and select "Set as Startup Project".
+Open Bookstore.sln in Visual Studio, right-click project "Bookstore.Service" and select "Set as Startup Project".
 
 Start the web application with Debug => Start Debugging **(F5)**.
 

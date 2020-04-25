@@ -56,9 +56,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Bookstore.RhetosServer\Bookstore.RhetosServer.csproj">
+    <ProjectReference Include="..\..\src\Bookstore.Service\Bookstore.Service.csproj">
       <Project>{e3ea6b67-e61d-456b-90e5-1d8fdf9e0962}</Project>
-      <Name>Bookstore.RhetosServer</Name>
+      <Name>Bookstore.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

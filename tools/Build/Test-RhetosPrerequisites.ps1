@@ -1,5 +1,5 @@
 $templateConnectionStringsPath = Resolve-Path "$PSScriptRoot\..\Configs\Templates\Template.ConnectionStrings.config"
-$serverFolderLocation = Resolve-Path "$PSScriptRoot\..\..\src\Bookstore.RhetosServer"
+$serverFolderLocation = Resolve-Path "$PSScriptRoot\..\..\src\Bookstore.Service"
 $connectionStringsPath = "$serverFolderLocation\ConnectionStrings.config"
 
 if (!(Test-Path $connectionStringsPath))

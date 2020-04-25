@@ -12,5 +12,5 @@ $msbuild, $vstest = .\tools\Build\Find-VisualStudio.ps1
 if ($LastExitCode -ne 0) { throw "MSBuild failed." }
 
 "=== Deploy ==="
-& '.\src\Bookstore.RhetosServer\bin\rhetos.exe' dbupdate
+& '.\src\Bookstore.Service\bin\rhetos.exe' dbupdate
 if ($LastExitCode -ne 0) { throw "rhetos dbupdate failed." }

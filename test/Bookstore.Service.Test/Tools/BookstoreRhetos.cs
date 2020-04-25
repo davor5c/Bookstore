@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bookstore.RhetosServer.Test.Tools
+namespace Bookstore.Service.Test.Tools
 {
     public class BookstoreRhetos : RhetosTestContainer
     {
@@ -23,7 +23,7 @@ namespace Bookstore.RhetosServer.Test.Tools
 
         private static string FindRhetosServerFolder()
         {
-            string rhetosServerSubfolder = @"src\Bookstore.RhetosServer";
+            string rhetosServerSubfolder = @"src\Bookstore.Service";
 
             var startingFolder = new DirectoryInfo(Environment.CurrentDirectory);
             var folder = startingFolder;

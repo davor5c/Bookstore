@@ -1,5 +1,5 @@
 {
-  "RhetosRuntimePath": "bin\\BookstoreRhetosServer.dll",
+  "RhetosRuntimePath": "bin\\Bookstore.Service.dll",
   "AssetsFolder": "bin\\RhetosAssets",
   "DatabaseLanguage": "MsSql",
   "LegacyPaths": {

@@ -1,4 +1,4 @@
-﻿using Bookstore.RhetosServer.Test.Tools;
+﻿using Bookstore.Service.Test.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhetos;
 using Rhetos.Dom.DefaultConcepts;
@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Bookstore.RhetosServer.Test
+namespace Bookstore.Service.Test
 {
     [TestClass]
     public class BookTest

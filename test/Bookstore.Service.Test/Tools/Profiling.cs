@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bookstore.RhetosServer.Test.Tools
+namespace Bookstore.Service.Test.Tools
 {
     [TestClass]
     public static class Profiling

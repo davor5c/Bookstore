@@ -5,7 +5,7 @@
   <Reference Relative="bin\Rhetos.Processing.DefaultCommands.Interfaces.dll">bin\Rhetos.Processing.DefaultCommands.Interfaces.dll</Reference>
   <Reference Relative="bin\Rhetos.Processing.Interfaces.dll">bin\Rhetos.Processing.Interfaces.dll</Reference>
   <Reference Relative="bin\Rhetos.Security.Interfaces.dll">bin\Rhetos.Security.Interfaces.dll</Reference>
-  <Reference Relative="bin\BookstoreRhetosServer.dll">bin\BookstoreRhetosServer.dll</Reference>
+  <Reference Relative="bin\Bookstore.Service.dll">bin\Bookstore.Service.dll</Reference>
   <Reference>&lt;RuntimeDirectory&gt;\System.DirectoryServices.AccountManagement.dll</Reference>
   <Reference>&lt;RuntimeDirectory&gt;\System.DirectoryServices.dll</Reference>
   <Reference>&lt;RuntimeDirectory&gt;\System.Runtime.Serialization.dll</Reference>
@@ -201,7 +201,7 @@ void Main()
                 if (type != null)
                     return type;
 					
-				type = Type.GetType(decodedTypeName + ", BookstoreRhetosServer");
+				type = Type.GetType(decodedTypeName + ", Bookstore.Service");
                 if (type != null)
                     return type;
 

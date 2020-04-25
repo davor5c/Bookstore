@@ -18,7 +18,7 @@
   <Reference Relative="..\bin\Rhetos.Security.Interfaces.dll">..\bin\Rhetos.Security.Interfaces.dll</Reference>
   <Reference Relative="..\bin\Rhetos.TestCommon.dll">..\bin\Rhetos.TestCommon.dll</Reference>
   <Reference Relative="..\bin\Rhetos.Utilities.dll">..\bin\Rhetos.Utilities.dll</Reference>
-  <Reference Relative="..\bin\BookstoreRhetosServer.dll">..\bin\BookstoreRhetosServer.dll</Reference>
+  <Reference Relative="..\bin\Bookstore.Service.dll">..\bin\Bookstore.Service.dll</Reference>
   <Reference>&lt;RuntimeDirectory&gt;\System.DirectoryServices.AccountManagement.dll</Reference>
   <Reference>&lt;RuntimeDirectory&gt;\System.DirectoryServices.dll</Reference>
   <Reference>&lt;RuntimeDirectory&gt;\System.Runtime.Serialization.dll</Reference>
@@ -51,7 +51,7 @@
 
 void Main()
 {
-    ConsoleLogger.MinLevel = EventType.Info; // Use "Trace" for more details log.
+    ConsoleLogger.MinLevel = EventType.Trace; // Use "Trace" for more details log.
     var rhetosServerPath = Path.Combine(Path.GetDirectoryName(Util.CurrentQueryPath), "..");
     Directory.SetCurrentDirectory(rhetosServerPath);
     using (var container = new RhetosTestContainer(commitChanges: false)) // Use this parameter to COMMIT or ROLLBACK the data changes.
@@ -59,21 +59,14 @@ void Main()
         var context = container.Resolve<Common.ExecutionContext>();
         var repository = context.Repository;
 
-        repository.Bookstore.Book.Insert(new Bookstore.Book { Title = "abc", NumberOfPages = 700, Price = 123, Code = "B+" });
-        
-        repository.Bookstore.Food.Insert(new Bookstore.Food { Price = 456, Code = "F+++", Description = "tasty" });
-        
-        var salesItems = repository.Bookstore.SalesItem.Load().Dump();
+        repository.Bookstore.BookRating.Load().Dump();
+        repository.Bookstore.ComputeBookRating.Load().Dump();
 
-        repository.Bookstore.SalesItemComment.Insert(
-            salesItems.SelectMany(si =>
-                new[] { 1, 2, 3 }.Select(x =>
-                    new Bookstore.SalesItemComment
-                    {
-                        SalesItemID = si.ID,
-                        Comment = $"{x}-{si.Description}"
-                    })));
-                        
-        repository.Bookstore.SalesItemComment.Load().Dump();
+        var book = repository.Bookstore.Book.Load().First();
+        book.Title += " great";
+        repository.Bookstore.Book.Update(book);
+        
+        repository.Bookstore.BookRating.Load().Dump();
+        repository.Bookstore.ComputeBookRating.Load().Dump();
     }
 }

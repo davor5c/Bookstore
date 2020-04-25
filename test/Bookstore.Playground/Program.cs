@@ -34,7 +34,7 @@ namespace Bookstore.Playground
 
         private static string FindRhetosServerFolder()
         {
-            string rhetosServerSubfolder = @"src\Bookstore.RhetosServer";
+            string rhetosServerSubfolder = @"src\Bookstore.Service";
 
             var startingFolder = new DirectoryInfo(Environment.CurrentDirectory);
             var folder = startingFolder;

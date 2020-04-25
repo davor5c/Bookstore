@@ -7,8 +7,8 @@
     <ProjectGuid>{72873535-E3FB-442F-BDEB-E364D502E472}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bookstore.RhetosServer.Test</RootNamespace>
-    <AssemblyName>Bookstore.RhetosServer.Test</AssemblyName>
+    <RootNamespace>Bookstore.Service.Test</RootNamespace>
+    <AssemblyName>Bookstore.Service.Test</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -62,9 +62,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Bookstore.RhetosServer\Bookstore.RhetosServer.csproj">
+    <ProjectReference Include="..\..\src\Bookstore.Service\Bookstore.Service.csproj">
       <Project>{e3ea6b67-e61d-456b-90e5-1d8fdf9e0962}</Project>
-      <Name>Bookstore.RhetosServer</Name>
+      <Name>Bookstore.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
