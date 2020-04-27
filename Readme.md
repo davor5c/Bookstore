@@ -4,8 +4,8 @@ Bookstore is a demo application for Rhetos development platform.
 This project can be used as a *prototype* for new Rhetos applications,
 regarding its project structure and content.
 
-* For the most part, this application is developed by following tutorial articles
-  from official [Rhetos Wiki](https://github.com/Rhetos/Rhetos/wiki).
+For the most part, this application is developed by following tutorial articles
+from official [Rhetos Wiki](https://github.com/Rhetos/Rhetos/wiki).
 
 The Bookstore application in this demo is **a business service** (Bookstore.Service)
 that implements business features and database.
