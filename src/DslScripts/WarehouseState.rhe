@@ -1,25 +1,36 @@
 Module Warehouse1
 {
-    SqlQueryable ComputeWarehouseCurrentQuantity <SQL\ComputeWarehouseCurrentState.sql>
+    SqlQueryable ComputeWarehouseCurrentState <SQL\ComputeWarehouseCurrentState.sql>
     {
-        Extends Warehouse1.Warehouse;
+        Reference Warehouse Warehouse1.Warehouse;
         Reference WarehouseItem Warehouse1.WarehouseItem;
         Integer Quantity;
 
-        ChangesOnLinkedItems Warehouse1.GoodsReceival.Warehouse;
-        ChangesOnLinkedItems Warehouse1.GoodsDisptach.Warehouse;
-        ChangesOnLinkedItems Warehouse1.GoodsRelocation.WarehouseFrom;
-        ChangesOnLinkedItems Warehouse1.GoodsRelocation.WarehouseTo;
+        // Ovako je rješeno u Shipment.rhe, no ovdje nailazim na problem što warehouse ne naslijeđuje WarehouseEvent kao što je slučaj u shipment.rhe
+        //ChangesOnLinkedItems Warehouse1.GoodsRecieval.Warehouse;
+        //ChangesOnLinkedItems Warehouse1.GoodsDisptach.Warehouse;
+        //ChangesOnLinkedItems Warehouse1.GoodsRelocation.WarehouseFrom;
+        //ChangesOnLinkedItems Warehouse1.GoodsRelocation.WarehouseTo;
+
+        // napraviti neki custom filter koji prati WarehouseEvents gdje se pojavljuju trenutni Warehouse i WarehouseItem
+        //ChangesOnChangedItems ...
+
+        // Referencirati WarehouseEvent i pomoću toga ga pratiti
+        //Reference WarehouseEvent Warehouse1.WarehouseEvent;
+        //ChangesOnReferenced 'WarehouseEvent.Warehouse';
 
         AutodetectSqlDependencies;
     }
 
     Entity WarehouseCurrentState
     {
-        ComputedFrom Warehouse1.ComputeWarehouseCurrentQuantity
+        ComputedFrom Warehouse1.ComputeWarehouseCurrentState
         {
-            //KeepSynchronized;
+            KeepSynchronized;
+            KeyProperties 'Warehouse WarehouseItem';
             AllProperties;
         }
+        
+        UniqueMultiple 'WarehouseItem Warehouse' { Clustered; }
     }
 }

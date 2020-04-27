@@ -8,14 +8,16 @@ Module Warehouse1
 
     Entity WarehouseItem
     {
-        Reference Warehouse { Detail; }
         ShortString Name;
     }
 
-    Browse WarehouseGrid Warehouse1.Warehouse
+    Browse WarehouseCurrentStateGrid Warehouse1.WarehouseCurrentState
     {
-        Take Name;
-        Take WarehouseItem 'Extension_WarehouseCurrentState.WarehouseItem';
-        Take CurrentQuantity 'Extension_WarehouseCurrentState.Quantity';
+        Take 'Warehouse.Name';
+        Take 'WarehouseItem.Name';
+        Take Quantity; 
     }
+    //grid bi mogao prikazivati stanje pojedinog artikla za skladišta na kojima se nalazi.
+    //to može onda biti Browse WarehouseCurrentStateGrid Warehouse1.WarehouseCurrentState.
+    //dakle, grid prikazuje zapise iz tablice WarehouseCurrentState, ali na user-friendly način s nazivom artikla umjesto guid-a
 }
