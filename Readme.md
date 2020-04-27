@@ -1,13 +1,37 @@
 # Bookstore
 
 Bookstore is a demo application for Rhetos development platform.
+This project can be used as a *prototype* for new Rhetos applications,
+regarding its project structure and content.
 
-You can use it as a *prototype* for a new Rhetos application.
+* For the most part, this application is developed by following tutorial articles
+  from official [Rhetos Wiki](https://github.com/Rhetos/Rhetos/wiki).
+
+The Bookstore application in this demo is **a business service** (Bookstore.Service)
+that implements business features and database.
+
+* It does not contain front-end implementation. This is typically a part of the N-tier
+  enterprise system where a front-end is developed as a separate application
+  (for example, an Angular web app).
+* It exposes all business features through REST API.
+  Other web protocols can be included with additional Rhetos plugins packages.
+
+Project structure (see *Bookstore.sln*):
+
+* **Bookstore.Service** - Main application (business service).
+* Bookstore.Service.Test - Integration tests.
+* Bookstore.Concepts - Custom concepts library that extend Rhetos DSL programming language
+  with features specific to this application.
+* Bookstore.Algorithms - Example of a stand-alone library of custom features that the service uses.
+* Bookstore.Algorithms.Test - Unit tests.
+* Bookstore.Playground - Example of a command-line utility that uses the generated business
+  object model from Bookstore.Service.
+
 Aside from the project structure, please note the following key components that
 most Rhetos applications should contain:
 
-1. The build script `Build.ps1`, that does everything needed to produce the application binaries from the source:
-   1. It checks for installed prerequisites (MSBuild, NuGet, database connection string, ...).
+1. The build script `Build.ps1`, that does everything needed to produce the application binaries from the source in command prompt:
+   1. It checks for installed prerequisites (MSBuild, database connection string, ...).
    2. Runs `MSBuild` to build all application components (new custom DSL concepts,
       and an external algorithm implemented in a separate DLL).
    3. Runs `rhetos.exe dbupdate` command to update the database.
