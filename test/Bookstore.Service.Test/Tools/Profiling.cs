@@ -16,7 +16,7 @@ namespace Bookstore.Service.Test.Tools
         public static void StartupTime(TestContext testContext)
         {
             var sw = Stopwatch.StartNew();
-            using (var rhetos = new BookstoreRhetos())
+            using (var rhetos = BookstoreRhetos.GetIocContainer())
             {
                 var repository = rhetos.Resolve<Common.DomRepository>();
                 var book = new Bookstore.Book { Code = Guid.NewGuid().ToString(), Title = "abc" };

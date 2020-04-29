@@ -19,7 +19,7 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void AutomaticallyUpdateNumberOfComments()
         {
-            using (var rhetos = new BookstoreRhetos())
+            using (var rhetos = BookstoreRhetos.GetIocContainer())
             {
                 var repository = rhetos.Resolve<Common.DomRepository>();
 
@@ -54,7 +54,7 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void CommonMisspellingValidation()
         {
-            using (var rhetos = new BookstoreRhetos())
+            using (var rhetos = BookstoreRhetos.GetIocContainer())
             {
                 var repository = rhetos.Resolve<Common.DomRepository>();
 

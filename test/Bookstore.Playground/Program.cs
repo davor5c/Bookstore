@@ -17,9 +17,8 @@ namespace Bookstore.Playground
         static void Main(string[] args)
         {
             ConsoleLogger.MinLevel = EventType.Info; // Use EventType.Trace for more detailed log.
-            Directory.SetCurrentDirectory(FindRhetosServerFolder());
             // Set commitChanges parameter to COMMIT or ROLLBACK the data changes.
-            using (var container = new RhetosTestContainer(commitChanges: false))
+            using (var container = new RhetosProcessContainer(FindRhetosServerFolder).CreateTransactionScope(false))
             {
                 var context = container.Resolve<Common.ExecutionContext>();
                 var repository = context.Repository;

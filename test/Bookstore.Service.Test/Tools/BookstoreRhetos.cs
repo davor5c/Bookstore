@@ -1,27 +1,25 @@
 ﻿using Autofac;
 using Rhetos.Configuration.Autofac;
 using Rhetos.Logging;
-using Rhetos.Security;
 using Rhetos.TestCommon;
 using Rhetos.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bookstore.Service.Test.Tools
 {
-    public class BookstoreRhetos : RhetosTestContainer
+    public class BookstoreRhetos
     {
-        public BookstoreRhetos(bool commitChanges = false)
-            : base(commitChanges, FindRhetosServerFolder())
+        private static Lazy<RhetosProcessContainer> _rhetosProcessContainer = new Lazy<RhetosProcessContainer>(() => new RhetosProcessContainer(FindBookstoreServiceFolder), true);
+
+        public static RhetosTransactionScopeContainer GetIocContainer(bool commitChanges = false, Action<ContainerBuilder> configureContainer = null)
         {
             ConsoleLogger.MinLevel = EventType.Info; // Use "Trace" for more detailed log.
+            return _rhetosProcessContainer.Value.CreateTransactionScope(commitChanges, configureContainer);
         }
 
-        private static string FindRhetosServerFolder()
+        private static string FindBookstoreServiceFolder()
         {
             string rhetosServerSubfolder = @"src\Bookstore.Service";
 
@@ -39,25 +37,26 @@ namespace Bookstore.Service.Test.Tools
         }
 
         /// <summary>
-        /// Reports all entries for the internal Rhetos system log to the given list of strings.
-        /// This method should be called before any object is resolved from the container.
+        /// Creates a delegate to report all entries for the internal Rhetos system log to the given list of strings.
+        /// Pass the created delegate to <see cref="GetIocContainer"/> to customize the Dependency Injection container.
         /// </summary>
-        public void AddLogMonitor(List<string> log, EventType minLevel = EventType.Trace)
+        public static Action<ContainerBuilder> CreateLogMonitorDelegate(List<string> log, EventType minLevel = EventType.Trace)
         {
-            InitializeSession += builder =>
+            return builder =>
                 builder.RegisterInstance(new ConsoleLogProvider((eventType, eventName, message) =>
                 {
                     log.Add("[" + eventType + "] " + (eventName != null ? (eventName + ": ") : "") + message());
                 }))
                 .As<ILogProvider>();
         }
-        
+
         /// <summary>
-        /// Overrides the default user name.
+        /// Creates a delegate to override the default user name.
+        /// Pass the created delegate to <see cref="GetIocContainer"/> to customize the Dependency Injection container.
         /// </summary>
-        public void SetCurrentUser(string username)
+        public static Action<ContainerBuilder> CreateSetCurrentUserDelegate(string username)
         {
-            InitializeSession += builder =>
+            return builder =>
                 builder.RegisterInstance(new TestUserInfo(username))
                     .As<IUserInfo>();
         }

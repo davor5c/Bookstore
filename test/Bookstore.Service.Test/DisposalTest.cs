@@ -16,7 +16,7 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void ImportantBookExplanation()
         {
-            using (var rhetos = new BookstoreRhetos())
+            using (var rhetos = BookstoreRhetos.GetIocContainer())
             {
                 var repository = rhetos.Resolve<Common.DomRepository>();
 
@@ -36,7 +36,7 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void HighRating()
         {
-            using (var rhetos = new BookstoreRhetos())
+            using (var rhetos = BookstoreRhetos.GetIocContainer())
             {
                 var repository = rhetos.Resolve<Common.DomRepository>();
 
@@ -62,7 +62,7 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void UncertainWords()
         {
-            using (var rhetos = new BookstoreRhetos())
+            using (var rhetos = BookstoreRhetos.GetIocContainer())
             {
                 var repository = rhetos.Resolve<Common.DomRepository>();
 
@@ -90,7 +90,7 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void ExplanationTooLong()
         {
-            using (var rhetos = new BookstoreRhetos())
+            using (var rhetos = BookstoreRhetos.GetIocContainer())
             {
                 var repository = rhetos.Resolve<Common.DomRepository>();
 
@@ -107,7 +107,7 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void ExplanationSpecialCharacters()
         {
-            using (var rhetos = new BookstoreRhetos())
+            using (var rhetos = BookstoreRhetos.GetIocContainer())
             {
                 var repository = rhetos.Resolve<Common.DomRepository>();
 

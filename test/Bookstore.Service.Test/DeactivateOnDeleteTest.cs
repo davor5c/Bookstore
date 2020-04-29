@@ -13,7 +13,7 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void SimpleDeactivateOnDeleteTest()
         {
-            using (var rhetos = new BookstoreRhetos())
+            using (var rhetos = BookstoreRhetos.GetIocContainer())
             {
                 var repository = rhetos.Resolve<Common.DomRepository>();
 
