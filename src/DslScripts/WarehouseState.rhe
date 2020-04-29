@@ -6,18 +6,12 @@ Module Warehouse1
         Reference WarehouseItem Warehouse1.WarehouseItem;
         Integer Quantity;
 
-        // Ovako je rješeno u Shipment.rhe, no ovdje nailazim na problem što warehouse ne naslijeđuje WarehouseEvent kao što je slučaj u shipment.rhe
-        //ChangesOnLinkedItems Warehouse1.GoodsRecieval.Warehouse;
-        //ChangesOnLinkedItems Warehouse1.GoodsDisptach.Warehouse;
-        //ChangesOnLinkedItems Warehouse1.GoodsRelocation.WarehouseFrom;
-        //ChangesOnLinkedItems Warehouse1.GoodsRelocation.WarehouseTo;
-
-        // napraviti neki custom filter koji prati WarehouseEvents gdje se pojavljuju trenutni Warehouse i WarehouseItem
-        //ChangesOnChangedItems ...
-
-        // Referencirati WarehouseEvent i pomoću toga ga pratiti
-        //Reference WarehouseEvent Warehouse1.WarehouseEvent;
-        //ChangesOnReferenced 'WarehouseEvent.Warehouse';
+        ChangesOnChangedItems Warehouse1.GoodsReceival 'FilterCriteria' 'changedItems =>
+            new FilterCriteria("WarehouseItemID", "In", changedItems.Select(item => item.WarehouseItemID).Distinct().ToList())';
+        ChangesOnChangedItems Warehouse1.GoodsDisptach 'FilterCriteria' 'changedItems =>
+            new FilterCriteria("WarehouseItemID", "In", changedItems.Select(item => item.WarehouseItemID).Distinct().ToList())';
+        ChangesOnChangedItems Warehouse1.GoodsRelocation 'FilterCriteria' 'changedItems =>
+            new FilterCriteria("WarehouseItemID", "In", changedItems.Select(item => item.WarehouseItemID).Distinct().ToList())';
 
         AutodetectSqlDependencies;
     }
