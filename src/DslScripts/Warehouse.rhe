@@ -11,13 +11,11 @@ Module Warehouse1
         ShortString Name;
     }
 
+    // User-friendly display of the current quantity of each item for each warehouse.
     Browse WarehouseCurrentStateGrid Warehouse1.WarehouseCurrentState
     {
         Take 'Warehouse.Name';
         Take 'WarehouseItem.Name';
         Take Quantity; 
     }
-    //grid bi mogao prikazivati stanje pojedinog artikla za skladišta na kojima se nalazi.
-    //to može onda biti Browse WarehouseCurrentStateGrid Warehouse1.WarehouseCurrentState.
-    //dakle, grid prikazuje zapise iz tablice WarehouseCurrentState, ali na user-friendly način s nazivom artikla umjesto guid-a
 }
