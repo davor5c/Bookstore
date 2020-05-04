@@ -15,7 +15,7 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void DefaultTextFromScore()
         {
-            using (var rhetos = new BookstoreRhetos())
+            using (var rhetos = BookstoreRhetos.GetIocContainer())
             {
                 var repository = rhetos.Resolve<Common.DomRepository>();
 
@@ -37,7 +37,7 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void AppendTextIfScoreChanged()
         {
-            using (var rhetos = new BookstoreRhetos())
+            using (var rhetos = BookstoreRhetos.GetIocContainer())
             {
                 var repository = rhetos.Resolve<Common.DomRepository>();
 
@@ -70,7 +70,7 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void UpdateNumberOfReviews()
         {
-            using (var rhetos = new BookstoreRhetos())
+            using (var rhetos = BookstoreRhetos.GetIocContainer())
             {
                 var repository = rhetos.Resolve<Common.DomRepository>();
 
@@ -95,7 +95,7 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void DenyChangeOfLockedTitle()
         {
-            using (var rhetos = new BookstoreRhetos())
+            using (var rhetos = BookstoreRhetos.GetIocContainer())
             {
                 var repository = rhetos.Resolve<Common.DomRepository>();
 
