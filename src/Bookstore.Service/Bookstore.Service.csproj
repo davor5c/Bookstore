@@ -62,7 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DataMigration\1 - Add unique Topic Code.sql" />
-    <Content Include="Default.aspx" />
     <Content Include="DslScripts\SQL\BookDescription.sql" />
     <Content Include="DslScripts\SQL\ComputeBookInfo.sql" />
     <Content Include="DslScripts\SQL\ComputeShipmentCurrentState.sql" />
@@ -71,25 +70,19 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RhetosRuntime.cs" />
     <Compile Include="RhetosService.svc.cs">
       <DependentUpon>RhetosService.svc</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="rhetos-app.settings.json" />
-    <Content Include="rhetos-build.settings.json" />
     <Content Include="DslScripts\Batches.rhe" />
     <Content Include="DslScripts\Book.rhe" />
     <Content Include="DslScripts\BookInfo.rhe" />
@@ -103,6 +96,8 @@
     <Content Include="DslScripts\AdditionalExamples\DTO.rhe" />
     <Content Include="DslScripts\AdditionalExamples\ExampleComputed.rhe" />
     <Content Include="DslScripts\AdditionalExamples\ExampleFilters.rhe" />
+    <Content Include="rhetos-app.settings.json" />
+    <Content Include="rhetos-build.settings.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
