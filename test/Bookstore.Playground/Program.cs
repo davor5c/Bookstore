@@ -17,8 +17,7 @@ namespace Bookstore.Playground
         static void Main(string[] args)
         {
             ConsoleLogger.MinLevel = EventType.Info; // Use EventType.Trace for more detailed log.
-            // Set commitChanges parameter to COMMIT or ROLLBACK the data changes.
-            using (var container = new RhetosProcessContainer(FindRhetosServerFolder).CreateTransactionScope(false))
+            using (var container = new RhetosProcessContainer(FindRhetosServerFolder()).CreateTransactionScope())
             {
                 var context = container.Resolve<Common.ExecutionContext>();
                 var repository = context.Repository;
@@ -28,6 +27,8 @@ namespace Bookstore.Playground
 
                 repository.Bookstore.Book.Query().Take(3).ToList().Dump();
                 repository.Bookstore.Book.Load().Take(3).Dump();
+
+                //container.CommitChanges(); // Database transaction is rolled back by default.
             }
         }
 
@@ -40,7 +41,7 @@ namespace Bookstore.Playground
             while (!Directory.Exists(Path.Combine(folder.FullName, rhetosServerSubfolder)))
             {
                 if (folder.Parent == null)
-                    throw new ApplicationException($"Cannot find the Rhetos server folder '{rhetosServerSubfolder}' in '{startingFolder}' or any of its parent folders.");
+                    throw new ArgumentException($"Cannot find the Rhetos server folder '{rhetosServerSubfolder}' in '{startingFolder}' or any of its parent folders.");
 
                 folder = folder.Parent;
             }

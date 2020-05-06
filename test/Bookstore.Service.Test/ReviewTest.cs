@@ -15,9 +15,9 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void DefaultTextFromScore()
         {
-            using (var rhetos = BookstoreRhetos.GetIocContainer())
+            using (var container = BookstoreContainer.CreateTransactionScope())
             {
-                var repository = rhetos.Resolve<Common.DomRepository>();
+                var repository = container.Resolve<Common.DomRepository>();
 
                 var book = new Bookstore.Book { Title = nameof(DefaultTextFromScore) };
                 repository.Bookstore.Book.Insert(book);
@@ -37,9 +37,9 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void AppendTextIfScoreChanged()
         {
-            using (var rhetos = BookstoreRhetos.GetIocContainer())
+            using (var container = BookstoreContainer.CreateTransactionScope())
             {
-                var repository = rhetos.Resolve<Common.DomRepository>();
+                var repository = container.Resolve<Common.DomRepository>();
 
                 var book = new Bookstore.Book { Title = nameof(AppendTextIfScoreChanged) };
                 repository.Bookstore.Book.Insert(book);
@@ -70,9 +70,9 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void UpdateNumberOfReviews()
         {
-            using (var rhetos = BookstoreRhetos.GetIocContainer())
+            using (var container = BookstoreContainer.CreateTransactionScope())
             {
-                var repository = rhetos.Resolve<Common.DomRepository>();
+                var repository = container.Resolve<Common.DomRepository>();
 
                 var book = new Bookstore.Book { Title = nameof(UpdateNumberOfReviews) };
                 repository.Bookstore.Book.Insert(book);
@@ -95,9 +95,9 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void DenyChangeOfLockedTitle()
         {
-            using (var rhetos = BookstoreRhetos.GetIocContainer())
+            using (var container = BookstoreContainer.CreateTransactionScope())
             {
-                var repository = rhetos.Resolve<Common.DomRepository>();
+                var repository = container.Resolve<Common.DomRepository>();
 
                 var book1 = new Bookstore.Book { Title = "book1" };
                 var book2 = new Bookstore.Book { Title = "book2 locked" };

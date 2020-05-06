@@ -15,9 +15,9 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void PhoneNumbersShouldNotContainAlphabetCharactersTest()
         {
-            using (var rhetos = BookstoreRhetos.GetIocContainer())
+            using (var container = BookstoreContainer.CreateTransactionScope())
             {
-                var repository = rhetos.Resolve<Common.DomRepository>();
+                var repository = container.Resolve<Common.DomRepository>();
 
                 var person = new Person { Name = Guid.NewGuid().ToString(), MobilePhone = "07700-a00759" };
                 TestUtility.ShouldFail<UserException>(() => repository.Bookstore.Person.Insert(person),

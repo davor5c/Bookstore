@@ -13,9 +13,9 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void SimpleDeactivateOnDeleteTest()
         {
-            using (var rhetos = BookstoreRhetos.GetIocContainer())
+            using (var container = BookstoreContainer.CreateTransactionScope())
             {
-                var repository = rhetos.Resolve<Common.DomRepository>();
+                var repository = container.Resolve<Common.DomRepository>();
 
                 var book = new Book { Title = Guid.NewGuid().ToString() };
                 repository.Bookstore.Book.Insert(book);

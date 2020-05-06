@@ -14,9 +14,9 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void AlternativeSource()
         {
-            using (var rhetos = BookstoreRhetos.GetIocContainer())
+            using (var container = BookstoreContainer.CreateTransactionScope())
             {
-                var repository = rhetos.Resolve<Common.DomRepository>();
+                var repository = container.Resolve<Common.DomRepository>();
 
                 var wish1 = new Bookstore.WishList { BookTitle = "New book 1 " + RandomString() };
                 var wish2 = new Bookstore.WishList { BookTitle = "New book 2 " + RandomString(), HighPriority = true };
