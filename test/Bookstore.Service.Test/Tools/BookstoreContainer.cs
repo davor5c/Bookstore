@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using Rhetos.Configuration.Autofac;
+using Rhetos;
 using Rhetos.Logging;
 using Rhetos.TestCommon;
 using Rhetos.Utilities;
@@ -15,13 +15,13 @@ namespace Bookstore.Service.Test.Tools
     /// </summary>
     public static class BookstoreContainer
     {
-        private static readonly Lazy<RhetosProcessContainer> _rhetosProcessContainer = new Lazy<RhetosProcessContainer>(
-            () => new RhetosProcessContainer(FindBookstoreServiceFolder()), LazyThreadSafetyMode.ExecutionAndPublication);
+        private static readonly Lazy<ProcessContainer> _processContainer = new Lazy<ProcessContainer>(
+            () => new ProcessContainer(FindBookstoreServiceFolder()), LazyThreadSafetyMode.ExecutionAndPublication);
 
-        public static RhetosTransactionScopeContainer CreateTransactionScope(Action<ContainerBuilder> configureContainer = null)
+        public static TransactionScopeContainer CreateTransactionScope(Action<ContainerBuilder> configureContainer = null)
         {
             ConsoleLogger.MinLevel = EventType.Info; // Use EventType.Trace for more detailed log.
-            return _rhetosProcessContainer.Value.CreateTransactionScope(configureContainer);
+            return _processContainer.Value.CreateTransactionScopeContainer(configureContainer);
         }
 
         private static string FindBookstoreServiceFolder()

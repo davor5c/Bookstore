@@ -1,5 +1,5 @@
 ﻿using ConsoleDump;
-using Rhetos.Configuration.Autofac;
+using Rhetos;
 using Rhetos.Dom.DefaultConcepts;
 using Rhetos.Logging;
 using Rhetos.Utilities;
@@ -17,7 +17,7 @@ namespace Bookstore.Playground
         static void Main(string[] args)
         {
             ConsoleLogger.MinLevel = EventType.Info; // Use EventType.Trace for more detailed log.
-            using (var container = new RhetosProcessContainer(FindRhetosServerFolder()).CreateTransactionScope())
+            using (var container = new ProcessContainer(FindRhetosServerFolder()).CreateTransactionScopeContainer())
             {
                 var context = container.Resolve<Common.ExecutionContext>();
                 var repository = context.Repository;
@@ -32,6 +32,9 @@ namespace Bookstore.Playground
             }
         }
 
+        /// <summary>
+        /// This utility is not executed within the main application, so we need to locate it first.
+        /// </summary>
         private static string FindRhetosServerFolder()
         {
             string rhetosServerSubfolder = @"src\Bookstore.Service";

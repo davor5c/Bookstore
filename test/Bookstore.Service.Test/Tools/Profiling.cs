@@ -22,7 +22,7 @@ namespace Bookstore.Service.Test.Tools
                 var book = new Bookstore.Book { Code = Guid.NewGuid().ToString(), Title = "abc" };
                 repository.Bookstore.Book.Insert(book);
             }
-            Console.WriteLine($"Rhetos service startup time: {sw.Elapsed}");
+            Console.WriteLine($"Application startup time: {sw.Elapsed}");
         }
     }
 }
