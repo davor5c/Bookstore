@@ -11,19 +11,27 @@ using System.Threading;
 namespace Bookstore.Service.Test.Tools
 {
     /// <summary>
-    /// Dependency Injection container for Bookstore application.
+    /// Dependency Injection container for Bookstore unit tests.
     /// </summary>
     public static class BookstoreContainer
     {
         private static readonly Lazy<ProcessContainer> _processContainer = new Lazy<ProcessContainer>(
             () => new ProcessContainer(FindBookstoreServiceFolder()), LazyThreadSafetyMode.ExecutionAndPublication);
 
-        public static TransactionScopeContainer CreateTransactionScope(Action<ContainerBuilder> configureContainer = null)
+        /// <summary>
+        /// This method creates a thread-safe lifetime scope DI container to isolate unit of work in a separate database transaction.
+        /// To commit changes to database, call <see cref="TransactionScopeContainer.CommitChanges"/> at the end of the 'using' block.
+        /// </summary>
+        public static TransactionScopeContainer CreateTransactionScope(Action<ContainerBuilder> registerCustomComponents = null)
         {
             ConsoleLogger.MinLevel = EventType.Info; // Use EventType.Trace for more detailed log.
-            return _processContainer.Value.CreateTransactionScopeContainer(configureContainer);
+            return _processContainer.Value.CreateTransactionScopeContainer(registerCustomComponents);
         }
 
+        /// <summary>
+        /// Unit tests can be executed at different disk locations depending on whether they are run at the solution or project level, from Visual Studio or another utility.
+        /// Therefore, instead of providing a simple relative path, this method searches for the main application location.
+        /// </summary>
         private static string FindBookstoreServiceFolder()
         {
             var startingFolder = new DirectoryInfo(Environment.CurrentDirectory);
@@ -44,7 +52,7 @@ namespace Bookstore.Service.Test.Tools
         /// Reports all entries from Rhetos system log to the given list of strings.
         /// Pass the created delegate to <see cref="CreateTransactionScope"/> to customize the Dependency Injection container.
         /// </summary>
-        public static Action<ContainerBuilder> CreateLogMonitorDelegate(List<string> log, EventType minLevel = EventType.Trace)
+        public static Action<ContainerBuilder> ConfigureLogMonitor(List<string> log, EventType minLevel = EventType.Trace)
         {
             return builder =>
                 builder.RegisterInstance(new ConsoleLogProvider((eventType, eventName, message) =>
@@ -59,7 +67,7 @@ namespace Bookstore.Service.Test.Tools
         /// Override the default application user (current process account) for testing.
         /// Pass the created delegate to <see cref="CreateTransactionScope"/> to customize the Dependency Injection container.
         /// </summary>
-        public static Action<ContainerBuilder> CreateSetCurrentUserDelegate(string username)
+        public static Action<ContainerBuilder> ConfigureApplicationUser(string username)
         {
             return builder =>
                 builder.RegisterInstance(new TestUserInfo(username)).As<IUserInfo>();
