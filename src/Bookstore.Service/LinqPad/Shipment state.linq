@@ -51,10 +51,10 @@
 
 void Main()
 {
-    ConsoleLogger.MinLevel = EventType.Trace; // Use "Trace" for more details log.
-    var rhetosServerPath = Path.Combine(Path.GetDirectoryName(Util.CurrentQueryPath), "..");
-    Directory.SetCurrentDirectory(rhetosServerPath);
-    using (var container = new RhetosTestContainer(commitChanges: false)) // Use this parameter to COMMIT or ROLLBACK the data changes.
+    string applicationFolder = Path.GetDirectoryName(Util.CurrentQueryPath);
+    ConsoleLogger.MinLevel = EventType.Trace; // Use EventType.Trace for more detailed log.
+    
+    using (var container = ProcessContainer.CreateTransactionScopeContainer(applicationFolder))
     {
         var context = container.Resolve<Common.ExecutionContext>();
         var repository = context.Repository;
@@ -95,5 +95,7 @@ void Main()
         // 2. Insert, update or delete records in ShipmentCurrentState to match the results from ComputeShipmentCurrentState.
 
         repository.Bookstore.ShipmentCurrentState.RecomputeFromComputeShipmentCurrentState(needsUpdating);
+        
+        //container.CommitChanges(); // Database transaction is rolled back by default.
     }
 }

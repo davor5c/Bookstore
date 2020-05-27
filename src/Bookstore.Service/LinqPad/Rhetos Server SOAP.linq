@@ -1,11 +1,11 @@
 <Query Kind="Program">
-  <Reference Relative="bin\Rhetos.AspNetFormsAuth.dll">bin\Rhetos.AspNetFormsAuth.dll</Reference>
-  <Reference Relative="bin\Rhetos.Dom.DefaultConcepts.Interfaces.dll">bin\Rhetos.Dom.DefaultConcepts.Interfaces.dll</Reference>
-  <Reference Relative="bin\Rhetos.Interfaces.dll">bin\Rhetos.Interfaces.dll</Reference>
-  <Reference Relative="bin\Rhetos.Processing.DefaultCommands.Interfaces.dll">bin\Rhetos.Processing.DefaultCommands.Interfaces.dll</Reference>
-  <Reference Relative="bin\Rhetos.Processing.Interfaces.dll">bin\Rhetos.Processing.Interfaces.dll</Reference>
-  <Reference Relative="bin\Rhetos.Security.Interfaces.dll">bin\Rhetos.Security.Interfaces.dll</Reference>
-  <Reference Relative="bin\Bookstore.Service.dll">bin\Bookstore.Service.dll</Reference>
+  <Reference Relative="..\bin\Rhetos.AspNetFormsAuth.dll">..\bin\Rhetos.AspNetFormsAuth.dll</Reference>
+  <Reference Relative="..\bin\Rhetos.Dom.DefaultConcepts.Interfaces.dll">..\bin\Rhetos.Dom.DefaultConcepts.Interfaces.dll</Reference>
+  <Reference Relative="..\bin\Rhetos.Interfaces.dll">..\bin\Rhetos.Interfaces.dll</Reference>
+  <Reference Relative="..\bin\Rhetos.Processing.DefaultCommands.Interfaces.dll">..\bin\Rhetos.Processing.DefaultCommands.Interfaces.dll</Reference>
+  <Reference Relative="..\bin\Rhetos.Processing.Interfaces.dll">..\bin\Rhetos.Processing.Interfaces.dll</Reference>
+  <Reference Relative="..\bin\Rhetos.Security.Interfaces.dll">..\bin\Rhetos.Security.Interfaces.dll</Reference>
+  <Reference Relative="..\bin\Bookstore.Service.dll">..\bin\Bookstore.Service.dll</Reference>
   <Reference>&lt;RuntimeDirectory&gt;\System.DirectoryServices.AccountManagement.dll</Reference>
   <Reference>&lt;RuntimeDirectory&gt;\System.DirectoryServices.dll</Reference>
   <Reference>&lt;RuntimeDirectory&gt;\System.Runtime.Serialization.dll</Reference>
