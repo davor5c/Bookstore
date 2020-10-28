@@ -83,30 +83,42 @@ that we apply to keep their complexity under control:
 
 Configure user authentication for your application:
 
-* Option A) *(Recommended for quick-start)* Enable **anonymous access** by creating
- `rhetos-app.local.settings.json` in Bookstore.Service project folder, with the following content:
- `{ "Rhetos": { "AppSecurity": { "AllClaimsForAnonymous": true } } }`.
-* Option B) If you want to use **Windows authentication with IIS**:
-  * Run Visual Studio *as Administrator*. Open project properties => Web => Change from "ISS Express" to "Local IIS". On save answer Yes.
-  * Open IIS Manager => Find your application => Authentication => Disable Anonymous, Enable Windows Authentication.
-  * Open IIS Manager => Find your application => Basic settings => Change application pool to new RhetosAppPool that is configured to run with your development account (see IIS Setup)
-  * In the table `Common.Principal` insert a record which has the `Name` column set to your username
-  * Create file `rhetos-app.local.settings.json` in project folder, with the following content: `{ "Rhetos": { "AppSecurity": { "AllClaimsForUsers": "username@computername" } } }`, for your account and your machine name, to simplify testing. See instructions in
+* Option A) *(Recommended for quick-start)* **Enable anonymous access**:
+  * Create file `rhetos-app.local.settings.json` in project folder, with the following content:
+    `{ "Rhetos": { "AppSecurity": { "AllClaimsForAnonymous": true } } }`.
+    This is an environment-specific file, it should not be added to the Visual Studio project or source control.
+* Option B) **Windows authentication with IIS**:
+  * Run Visual Studio *as Administrator*. Project properties => Web =>
+    Change from "ISS Express" to "Local IIS". On save answer Yes.
+  * Open IIS Manager => Find and select your web application.
+    * Authentication => Disable Anonymous, Enable Windows Authentication.
+    * Basic settings => Change application pool
+      to new RhetosAppPool that is configured to run with your development account
+      (see [IIS Setup](Development-environment-setup#iis-setup))
+  * Create file `rhetos-app.local.settings.json` in project folder, with the following content:
+    `{ "Rhetos": { "AppSecurity": { "AllClaimsForUsers": "account@computername" } } }`,
+    for your account and your machine name, to simplify testing. See the instructions in
     [Suppressing permissions in a development environment](Basic-permissions#suppressing-permissions-in-a-development-environment).
-* Option C) If you want to use **Windows authentication with IIS Express**:
+    This is an environment-specific file, it should not be added to the Visual Studio project or source control.
+  * In the table `Common.Principal` insert a record which has the `Name` column set to your username.
+* Option C) **Windows authentication with IIS Express**:
   * Edit `.vs\<solution name>\config\applicationhost.config`
     * in element `anonymousAuthentication` set `enabled` attribute to `false`.
     * in element `windowsAuthentication` set `enabled` attribute to `true`.
-  * In the table `Common.Principal` insert a record which has the `Name` column set to your username
-  * Create file `rhetos-app.local.settings.json` in project folder, with the following content: `{ "Rhetos": { "AppSecurity": { "AllClaimsForUsers": "username@computername" } } }`, for your account and your machine name, to simplify testing. See instructions in
+  * Create file `rhetos-app.local.settings.json` in project folder, with the following content:
+    `{ "Rhetos": { "AppSecurity": { "AllClaimsForUsers": "account@computername" } } }`,
+    for your account and your machine name, to simplify testing. See the instructions in
     [Suppressing permissions in a development environment](Basic-permissions#suppressing-permissions-in-a-development-environment).
+    This is an environment-specific file, it should not be added to the Visual Studio project or source control.
+  * In the table `Common.Principal` insert a record which has the `Name` column set to your username.
 
 Open Bookstore.sln in Visual Studio, right-click project "Bookstore.Service" and select "Set as Startup Project".
 
-Start the web application with Debug => Start Debugging **(F5)**.
+Start the web application in Visual Studio with Debug => Start Debugging **(F5)**.
 
-* Rhetos application homepage should open in browser, displaying Installed packages and Server status.
-* In the browser address bar append `/rest/Bookstore/Book/` to display the list of records from the database table Bookstore.Book.
+* Web browser should open automatically, displaying "Installed packages" list and "Server status".
+  * If using Windows Authentication, check that "User identity" displays your account name.
+* In the browser append `/rest/Common/Claim/` to the base URL. It should return list of records from the database table Bookstore.Book in JSON format.
 * See [Troubleshooting](https://github.com/Rhetos/Rhetos/wiki/Creating-new-WCF-Rhetos-application#troubleshooting) section to resolve any errors.
 
 ## Contributions
