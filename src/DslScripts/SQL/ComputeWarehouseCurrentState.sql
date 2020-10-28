@@ -1,3 +1,10 @@
-SELECT NEWID() AS ID, WarehouseID, WarehouseItemID, SUM(Quantity) Quantity
-FROM Warehouse1.WarehouseEvent
-GROUP BY WarehouseID, WarehouseItemID;
+SELECT
+    ID = NEWID(),
+    WarehouseItemID,
+    WarehouseID,
+    Quantity = SUM(Quantity)
+FROM
+    Warehouse1.WarehouseEvent
+GROUP BY
+    WarehouseItemID,
+    WarehouseID

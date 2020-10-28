@@ -8,6 +8,7 @@ Module Warehouse1
         Integer Quantity;
     }
 
+    // Business event of adding items to the warehouse.
     Entity GoodsReceival
     {
         DateTime EffectiveSince { CreationTime; }
@@ -18,6 +19,7 @@ Module Warehouse1
         Is Warehouse1.WarehouseEvent;
     }
 
+    // Business event of removing items from the warehouse.
     Entity GoodsDisptach
     {
         DateTime EffectiveSince { CreationTime; }
@@ -31,6 +33,7 @@ Module Warehouse1
         }
     }
 
+    // Business event of moving items from one warehouse to another.
     Entity GoodsRelocation
     {
         DateTime EffectiveSince { CreationTime; }

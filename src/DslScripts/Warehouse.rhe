@@ -6,6 +6,7 @@ Module Warehouse1
         DateTime CreatedAt { CreationTime; }
     }
 
+    // Goods that can be stored in the warehouse.
     Entity WarehouseItem
     {
         ShortString Name;

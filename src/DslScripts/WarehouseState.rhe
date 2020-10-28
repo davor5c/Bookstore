@@ -2,8 +2,8 @@ Module Warehouse1
 {
     SqlQueryable ComputeWarehouseCurrentState <SQL\ComputeWarehouseCurrentState.sql>
     {
-        Reference Warehouse Warehouse1.Warehouse;
         Reference WarehouseItem Warehouse1.WarehouseItem;
+        Reference Warehouse Warehouse1.Warehouse;
         Integer Quantity;
 
         ChangesOnChangedItems Warehouse1.GoodsReceival 'FilterCriteria' 'changedItems =>
@@ -21,7 +21,7 @@ Module Warehouse1
         ComputedFrom Warehouse1.ComputeWarehouseCurrentState
         {
             KeepSynchronized;
-            KeyProperties 'Warehouse WarehouseItem';
+            KeyProperties 'WarehouseItem Warehouse';
             AllProperties;
         }
         
