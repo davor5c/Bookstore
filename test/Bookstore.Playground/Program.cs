@@ -17,9 +17,9 @@ namespace Bookstore.Playground
         static void Main(string[] args)
         {
             ConsoleLogger.MinLevel = EventType.Info; // Use EventType.Trace for more detailed log.
-            using (var container = new ProcessContainer(FindRhetosServerFolder()).CreateTransactionScopeContainer())
+            using (var scope = new ProcessContainer(FindRhetosServerFolder()).CreateTransactionScopeContainer())
             {
-                var context = container.Resolve<Common.ExecutionContext>();
+                var context = scope.Resolve<Common.ExecutionContext>();
                 var repository = context.Repository;
 
                 // See usage examples on Rhetos wiki:
@@ -28,7 +28,7 @@ namespace Bookstore.Playground
                 repository.Bookstore.Book.Query().Take(3).ToList().Dump();
                 repository.Bookstore.Book.Load().Take(3).Dump();
 
-                //container.CommitChanges(); // Database transaction is rolled back by default.
+                //scope.CommitChanges(); // Database transaction is rolled back by default.
             }
         }
 

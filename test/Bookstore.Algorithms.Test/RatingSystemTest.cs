@@ -48,7 +48,7 @@ namespace Bookstore.Algorithms.Test
         public void NoBooks()
         {
             var ratingSystem = new RatingSystem();
-            var results = ratingSystem.ComputeRating(new RatingInput[] { });
+            var results = ratingSystem.ComputeRating(Array.Empty<RatingInput>());
             Assert.AreEqual(0, results.Count());
         }
     }

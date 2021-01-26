@@ -6,7 +6,6 @@ using Rhetos.TestCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Bookstore.Service.Test
 {
@@ -20,9 +19,9 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void AutomaticallyUpdateNumberOfComments()
         {
-            using (var container = BookstoreContainer.CreateTransactionScope())
+            using (var scope = TestScope.Create())
             {
-                var repository = container.Resolve<Common.DomRepository>();
+                var repository = scope.Resolve<Common.DomRepository>();
 
                 var book = new Book { Title = Guid.NewGuid().ToString() };
                 repository.Bookstore.Book.Insert(book);
@@ -55,9 +54,9 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void CommonMisspellingValidation()
         {
-            using (var container = BookstoreContainer.CreateTransactionScope())
+            using (var scope = TestScope.Create())
             {
-                var repository = container.Resolve<Common.DomRepository>();
+                var repository = scope.Resolve<Common.DomRepository>();
 
                 var book = new Book { Title = "x 'curiousity' y" };
 
@@ -75,11 +74,11 @@ namespace Bookstore.Service.Test
 
             var systemLog = new List<string>();
 
-            using (var container = BookstoreContainer.CreateTransactionScope(
-                BookstoreContainer.ConfigureLogMonitor(systemLog)
-                + BookstoreContainer.ConfigureApplicationUser("TestUserName")))
+            using (var scope = TestScope.Create(builder => builder
+                .ConfigureLogMonitor(systemLog)
+                .ConfigureApplicationUser("TestUserName")))
             {
-                var context = container.Resolve<Common.ExecutionContext>();
+                var context = scope.Resolve<Common.ExecutionContext>();
                 var repository = context.Repository;
                 var currentApplicationUser = context.UserInfo;
 

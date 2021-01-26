@@ -13,9 +13,9 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void SimpleDeactivateOnDeleteTest()
         {
-            using (var container = BookstoreContainer.CreateTransactionScope())
+            using (var scope = TestScope.Create())
             {
-                var repository = container.Resolve<Common.DomRepository>();
+                var repository = scope.Resolve<Common.DomRepository>();
 
                 var book = new Book { Title = Guid.NewGuid().ToString() };
                 repository.Bookstore.Book.Insert(book);

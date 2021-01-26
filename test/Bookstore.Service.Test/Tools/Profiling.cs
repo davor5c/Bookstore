@@ -16,9 +16,9 @@ namespace Bookstore.Service.Test.Tools
         public static void StartupTime(TestContext testContext)
         {
             var sw = Stopwatch.StartNew();
-            using (var container = BookstoreContainer.CreateTransactionScope())
+            using (var scope = TestScope.Create())
             {
-                var repository = container.Resolve<Common.DomRepository>();
+                var repository = scope.Resolve<Common.DomRepository>();
                 var book = new Bookstore.Book { Code = Guid.NewGuid().ToString(), Title = "abc" };
                 repository.Bookstore.Book.Insert(book);
             }

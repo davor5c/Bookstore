@@ -48,7 +48,8 @@
     <Compile Include="PhoneNumberTest.cs" />
     <Compile Include="DisposalTest.cs" />
     <Compile Include="ReviewTest.cs" />
-    <Compile Include="Tools\BookstoreContainer.cs" />
+    <Compile Include="Tools\TestScopeContainerBuilderExtensions.cs" />
+    <Compile Include="Tools\TestScope.cs" />
     <Compile Include="BookTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\Profiling.cs" />

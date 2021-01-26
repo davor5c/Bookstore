@@ -16,9 +16,9 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void ImportantBookExplanation()
         {
-            using (var container = BookstoreContainer.CreateTransactionScope())
+            using (var scope = TestScope.Create())
             {
-                var repository = container.Resolve<Common.DomRepository>();
+                var repository = scope.Resolve<Common.DomRepository>();
 
                 var book = new Book { Title = "Very important book" };
                 repository.Bookstore.Book.Insert(book);
@@ -36,9 +36,9 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void HighRating()
         {
-            using (var container = BookstoreContainer.CreateTransactionScope())
+            using (var scope = TestScope.Create())
             {
-                var repository = container.Resolve<Common.DomRepository>();
+                var repository = scope.Resolve<Common.DomRepository>();
 
                 var book1 = new Book { Title = "Simple book" };
                 var book2 = new Book { Title = "Super great book" };
@@ -62,9 +62,9 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void UncertainWords()
         {
-            using (var container = BookstoreContainer.CreateTransactionScope())
+            using (var scope = TestScope.Create())
             {
-                var repository = container.Resolve<Common.DomRepository>();
+                var repository = scope.Resolve<Common.DomRepository>();
 
                 // Removing old data to make this test independent.
                 var old = repository.Bookstore.UncertainWord.Load();
@@ -90,9 +90,9 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void ExplanationTooLong()
         {
-            using (var container = BookstoreContainer.CreateTransactionScope())
+            using (var scope = TestScope.Create())
             {
-                var repository = container.Resolve<Common.DomRepository>();
+                var repository = scope.Resolve<Common.DomRepository>();
 
                 var book = new Book { Title = "Some book" };
                 repository.Bookstore.Book.Insert(book);
@@ -107,9 +107,9 @@ namespace Bookstore.Service.Test
         [TestMethod]
         public void ExplanationSpecialCharacters()
         {
-            using (var container = BookstoreContainer.CreateTransactionScope())
+            using (var scope = TestScope.Create())
             {
-                var repository = container.Resolve<Common.DomRepository>();
+                var repository = scope.Resolve<Common.DomRepository>();
 
                 var book = new Book { Title = "Some book" };
                 repository.Bookstore.Book.Insert(book);
