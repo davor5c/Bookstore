@@ -10,6 +10,7 @@ namespace Bookstore.Service.Test.Tools
 {
     /// <summary>
     /// Helper class that manages Dependency Injection container for unit tests.
+    /// The container can be customized for each unit test scope.
     /// </summary>
     public static class TestScope
     {
