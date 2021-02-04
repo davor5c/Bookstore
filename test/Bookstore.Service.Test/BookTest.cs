@@ -1,4 +1,5 @@
 ﻿using Bookstore.Service.Test.Tools;
+using Common.Queryable;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhetos;
 using Rhetos.Dom.DefaultConcepts;
@@ -58,11 +59,32 @@ namespace Bookstore.Service.Test
             {
                 var repository = scope.Resolve<Common.DomRepository>();
 
-                var book = new Book { Title = "x 'curiousity' y" };
+                var book = new Book { Title = "x curiousity y" };
 
                 TestUtility.ShouldFail<UserException>(
                     () => repository.Bookstore.Book.Insert(book),
                     "It is not allowed to enter misspelled word");
+            }
+        }
+
+        [TestMethod]
+        public void CommonMisspellingValidation_DirectFilter()
+        {
+            using (var scope = TestScope.Create())
+            {
+                var repository = scope.Resolve<Common.DomRepository>();
+
+                var books = new[]
+                {
+                    new Bookstore_Book { Title = "spirit" },
+                    new Bookstore_Book { Title = "opportunity" },
+                    new Bookstore_Book { Title = "curiousity" },
+                    new Bookstore_Book { Title = "curiousity2" }
+                }.AsQueryable();
+
+                var invalidBooks = repository.Bookstore.Book.Filter(books, new CommonMisspelling());
+
+                Assert.AreEqual("curiousity, curiousity2", TestUtility.DumpSorted(invalidBooks, book => book.Title));
             }
         }
 
@@ -96,6 +118,7 @@ namespace Bookstore.Service.Test
                 repository.Bookstore.Book.Insert(book);
 
                 string systemLogReport = string.Join(Environment.NewLine, systemLog);
+                Console.WriteLine(systemLogReport);
                 TestUtility.AssertContains(systemLogReport, new[]
                 {
                     "BookInfo",
