@@ -19,7 +19,12 @@ namespace Bookstore.Service.Test
 
                 var book = new Book { Title = Guid.NewGuid().ToString() };
                 repository.Bookstore.Book.Insert(book);
-                repository.Bookstore.Book.Delete(book);
+                var deleteBooks = new[] { book };
+                repository.Bookstore.Book.Save(null, null, deleteBooks, checkUserPermissions: true);
+                // The above line calls 'Save' method, instead of a simpler 'Delete' method, to provide more control over the parameters.
+                // As convention, the checkUserPermissions parameter is true for operations that are directly called from web API.
+                // DeactivateOnDelete is implemented to override only those delete requests, while calling directly Delete method
+                // internally will actually delete the records (checkUserPermissions is false by default).
 
                 var deactivatedBook = repository.Bookstore.Book.Load(x => x.ID == book.ID).FirstOrDefault();
                 Assert.IsNotNull(deactivatedBook, "The record should not be deleted from the database.");

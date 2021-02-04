@@ -15,20 +15,21 @@ namespace Bookstore.Concepts
         {
             var info = (DeactivateOnDeleteInfo)conceptInfo;
 
-            var code = String.Format(
-            @"var deactivated = deleted.ToList();
+            string moduleName = info.Deactivatable.Entity.Module.Name;
+            string entityName = info.Deactivatable.Entity.Name;
 
-            foreach(var item in deleted)
-                item.Active = false;
+            var code = $@"if (checkUserPermissions) // DeactivateOnDelete is applied only on direct calls from web API.
+            {{
+                foreach (var item in deleted)
+                    item.Active = false;
 
-            updated = updated.Concat(deleted).ToArray();
-            updatedNew = updatedNew.Concat(deleted).ToArray();
+                updatedNew = updatedNew.Concat(deleted).ToArray();
+                updated = updated.Concat(deleted).ToArray();
 
-            deleted = new Common.Queryable.{0}_{1}[]{{}};
-            deletedIds = new {0}.{1}[]{{}};
-            ",
-                info.Deactivatable.Entity.Module.Name,
-                info.Deactivatable.Entity.Name);
+                deletedIds = Array.Empty<{moduleName}.{entityName}>();
+                deleted = Array.Empty<Common.Queryable.{moduleName}_{entityName}>();
+            }}
+            ";
 
             codeBuilder.InsertCode(code, WritableOrmDataStructureCodeGenerator.OldDataLoadedTag, info.Deactivatable.Entity);
         }
