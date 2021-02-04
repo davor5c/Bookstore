@@ -82,9 +82,7 @@
       <DependentUpon>RhetosService.svc</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="DslScripts\Batches.rhe" />
     <Content Include="DslScripts\Book.rhe" />

@@ -2,7 +2,7 @@
 
 Module Bookstore
 {
-    // ComputeBookRating computes some information about the book by using C# implementation from an external dll.
+    // ComputeBookRating computes some information about the book by using C# implementation from an external class.
     // The result is persisted (as a cache) in Entity BookRating, and updated automatically.
 
     Computed ComputeBookRating 'repository =>
@@ -27,8 +27,7 @@ Module Bookstore
                         });
 
                 // Calling the algorithm implemented in the external class "RatingSystem"
-                var ratingSystem = new Bookstore.Service.RatingSystem();
-                var ratings = ratingSystem.ComputeRating(ratingInput);
+                var ratings = new Bookstore.Service.RatingSystem().ComputeRating(ratingInput);
 
                 // Mapping the results to the "ComputeBookRating" output:
                 return ratings
