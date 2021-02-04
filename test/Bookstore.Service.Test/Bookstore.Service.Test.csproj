@@ -47,6 +47,7 @@
     <Compile Include="DeactivateOnDeleteTest.cs" />
     <Compile Include="PhoneNumberTest.cs" />
     <Compile Include="DisposalTest.cs" />
+    <Compile Include="RatingSystemTest.cs" />
     <Compile Include="ReviewTest.cs" />
     <Compile Include="Tools\TestScopeContainerBuilderExtensions.cs" />
     <Compile Include="Tools\TestScope.cs" />

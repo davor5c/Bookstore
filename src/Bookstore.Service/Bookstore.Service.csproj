@@ -70,6 +70,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\RatingInput.cs" />
+    <Compile Include="Algorithms\RatingResult.cs" />
+    <Compile Include="Algorithms\RatingSystem.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -120,10 +123,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bookstore.Algorithms\Bookstore.Algorithms.csproj">
-      <Project>{ac79ddcf-2d5e-41a7-b593-609e601c91d1}</Project>
-      <Name>Bookstore.Algorithms</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Bookstore.Concepts\Bookstore.Concepts.csproj">
       <Project>{1fc8a5e9-ceef-4fdb-b781-eda06b14817c}</Project>
       <Name>Bookstore.Concepts</Name>

@@ -22,8 +22,6 @@ Project structure (see *Bookstore.sln*):
 * Bookstore.Service.Test - Integration tests.
 * Bookstore.Concepts - Custom concepts library that extend Rhetos DSL programming language
   with features specific to this application.
-* Bookstore.Algorithms - Example of a stand-alone library of custom features that the service uses.
-* Bookstore.Algorithms.Test - Unit tests.
 * Bookstore.Playground - Example of a command-line utility that uses the generated business
   object model from Bookstore.Service.
 
@@ -55,16 +53,20 @@ The build output is a web application in `src\Bookstore.Service` subfolder.
 
 Automated tests are executed by running `.\Test.ps1` in PowerShell console.
 
+The tests are located in projects *Bookstore.Service.Test*, within Bookstore solution.
+
 There are two kinds of tests in this project:
 
-1. **Standard unit tests** (`test\Bookstore.Algorithms.Test`)
+1. **Standard unit tests**
    that test the algorithm implemented in external assembly.
     * These tests are very fast and independent of the deployment environment.
-2. **Integration tests** (`test\Bookstore.Service.Test`)
+    * For example see RatingSystemTest class.
+2. **Integration tests**
    that test the generated applications together with the database.
     * These tests can test full business processes, including the business logic
       that is implemented in the database, but are slower and need a database to run
       (the database connection is set up earlier during the Build).
+    * For example see BookTest class.
 
 There are some important considerations for the integration tests
 that we apply to keep their complexity under control:

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bookstore.Algorithms
+namespace Bookstore.Service
 {
     public class RatingResult
     {

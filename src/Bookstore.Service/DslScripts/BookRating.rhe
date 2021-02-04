@@ -19,7 +19,7 @@ Module Bookstore
                 // Collecting the input data from the database:
                 var ratingInput = repository.Bookstore.Book.Query(booksIds)
                     .Select(b =>
-                        new Bookstore.Algorithms.RatingInput
+                        new Bookstore.Service.RatingInput
                         {
                             BookId = b.ID,
                             Title = b.Title,
@@ -27,7 +27,7 @@ Module Bookstore
                         });
 
                 // Calling the algorithm implemented in the external class "RatingSystem"
-                var ratingSystem = new Bookstore.Algorithms.RatingSystem();
+                var ratingSystem = new Bookstore.Service.RatingSystem();
                 var ratings = ratingSystem.ComputeRating(ratingInput);
 
                 // Mapping the results to the "ComputeBookRating" output:
@@ -39,9 +39,6 @@ Module Bookstore
         ChangesOnBaseItem;
         ChangesOnChangedItems Bookstore.ForeignBook 'IEnumerable<Guid>' 'changedItems => changedItems.Select(fb => fb.ID)';
     }
-
-    // The generated application must reference the external dll that contains RatingSystem class.
-    ExternalReference 'Bookstore.Algorithms.RatingSystem, Bookstore.Algorithms';
 
     Entity BookRating
     {

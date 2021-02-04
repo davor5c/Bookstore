@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Bookstore.Algorithms.Test
+namespace Bookstore.Service.Test
 {
     [TestClass]
     public class RatingSystemTest
