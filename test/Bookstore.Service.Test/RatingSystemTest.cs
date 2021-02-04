@@ -41,9 +41,8 @@ namespace Bookstore.Service.Test
 
             var ratings = RatingSystem.ComputeRating(booksIds, books.AsQueryable(), people.AsQueryable());
 
-            Assert.AreEqual(
-                "0.00, 1.00, 101.00, 121.00",
-                string.Join(", ", ratings.Select(r => r.Rating.Value.ToString("f2", CultureInfo.InvariantCulture))));
+            string report = string.Join(", ", ratings.Select(r => r.Rating.Value.ToString("f2", CultureInfo.InvariantCulture)));
+            Assert.AreEqual("0.00, 1.00, 101.00, 121.00", report);
         }
 
         [TestMethod]
