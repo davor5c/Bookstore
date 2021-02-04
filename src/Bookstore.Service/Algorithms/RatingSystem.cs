@@ -1,15 +1,35 @@
-﻿using System;
+﻿using Common.Queryable;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bookstore.Service
 {
-    public class RatingSystem
+    public static class RatingSystem
     {
-        public IEnumerable<RatingResult> ComputeRating(IEnumerable<RatingInput> books)
+        public static ComputeBookRating[] ComputeRating(
+            IEnumerable<Guid> booksIds,
+            IQueryable<Bookstore_Book> booksQuery,
+            IQueryable<Bookstore_Person> personQuery)
         {
-            var ratingResults = new List<RatingResult>();
+            var ratingResults = new List<ComputeBookRating>();
 
-            foreach (var book in books)
+            var booksData = booksQuery.Where(book => booksIds.Contains(book.ID))
+                .Select(book => new
+                {
+                    BookId = book.ID,
+                    book.AuthorID,
+                    book.Title,
+                    IsForeign = book.Extension_ForeignBook != null
+                })
+                .ToList();
+
+            var top3Names = personQuery.OrderByDescending(p => p.Name.Length)
+                .Select(p => p.ID)
+                .Take(3)
+                .ToHashSet();
+
+            foreach (var book in booksData)
             {
                 decimal rating = 0;
 
@@ -22,10 +42,13 @@ namespace Bookstore.Service
                 if (book.IsForeign)
                     rating *= 1.2m;
 
-                ratingResults.Add(new RatingResult { BookId = book.BookId, Value = rating });
+                if (book.AuthorID != null && top3Names.Contains(book.AuthorID.Value))
+                    rating += 1;
+
+                ratingResults.Add(new ComputeBookRating { ID = book.BookId, Rating = rating });
             }
 
-            return ratingResults;
+            return ratingResults.ToArray();
         }
     }
 }

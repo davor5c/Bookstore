@@ -15,25 +15,10 @@ Module Bookstore
         Decimal Rating;
 
         FilterBy 'IEnumerable<Guid>' '(repository, booksIds) =>
-            {
-                // Collecting the input data from the database:
-                var ratingInput = repository.Bookstore.Book.Query(booksIds)
-                    .Select(b =>
-                        new Bookstore.Service.RatingInput
-                        {
-                            BookId = b.ID,
-                            Title = b.Title,
-                            IsForeign = b.Extension_ForeignBook.ID != null
-                        });
-
-                // Calling the algorithm implemented in the external class "RatingSystem"
-                var ratings = new Bookstore.Service.RatingSystem().ComputeRating(ratingInput);
-
-                // Mapping the results to the "ComputeBookRating" output:
-                return ratings
-                    .Select(rating => new ComputeBookRating { ID = rating.BookId, Rating = rating.Value })
-                    .ToArray();
-            }';
+            Bookstore.Service.RatingSystem.ComputeRating(
+                booksIds,
+                repository.Bookstore.Book.Query(),
+                repository.Bookstore.Person.Query())';
         
         ChangesOnBaseItem;
         ChangesOnChangedItems Bookstore.ForeignBook 'IEnumerable<Guid>' 'changedItems => changedItems.Select(fb => fb.ID)';

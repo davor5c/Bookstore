@@ -27,7 +27,7 @@ namespace Bookstore.Service.Test
                 var review3 = new Bookstore.Review { BookID = book.ID, Score = 5 };
                 repository.Bookstore.Review.Insert(review1, review2, review3);
 
-                var reviews = repository.Bookstore.Review.Load(new[] { review1.ID, review2.ID, review3.ID });
+                var reviews = repository.Bookstore.Review.Query(new[] { review1.ID, review2.ID, review3.ID });
                 Assert.AreEqual(
                     "1 - I don't like it, 3 - OK, 5 - I like it",
                     TestUtility.DumpSorted(reviews, r => r.Score + " - " + r.Text));
@@ -53,7 +53,7 @@ namespace Bookstore.Service.Test
                 repository.Bookstore.Review.Insert(reviews);
 
                 // Reload before editing.
-                reviews = repository.Bookstore.Review.Load(reviews.Select(r => r.ID))
+                reviews = repository.Bookstore.Review.Query(reviews.Select(r => r.ID))
                     .OrderBy(r => r.Score).ToArray();
                 reviews[0].Score = 3;
                 reviews[1].Score = 5;

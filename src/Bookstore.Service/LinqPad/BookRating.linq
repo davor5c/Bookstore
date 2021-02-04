@@ -62,12 +62,13 @@ void Main()
         repository.Bookstore.BookRating.Load().Dump();
         repository.Bookstore.ComputeBookRating.Load().Dump();
 
-        var book = repository.Bookstore.Book.Load().First();
-        book.Title += " great";
-        repository.Bookstore.Book.Update(book);
+        var books = repository.Bookstore.Book.Load();
+		foreach (var book in books)
+			book.Title += " great";
+        repository.Bookstore.Book.Update(books);
 
-        repository.Bookstore.BookRating.Load().Dump();
-        repository.Bookstore.ComputeBookRating.Load().Dump();
+		repository.Bookstore.ComputeBookRating.Load().Dump();
+		repository.Bookstore.BookRating.Load().Dump();
         
         //container.CommitChanges(); // Database transaction is rolled back by default.
     }
