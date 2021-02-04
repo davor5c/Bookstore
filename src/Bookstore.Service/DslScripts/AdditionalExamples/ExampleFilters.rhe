@@ -135,7 +135,7 @@ Module Bookstore
         Take NumberOfComments 'Extension_BookInfo.NumberOfComments';
 
         // This query is an alternative data source for BookGrid.
-        // Instead of reading data from the `Bookstore.Book`, it provide the new data from WantedBooks.
+        // Instead of reading data from the `Bookstore.Book`, it provides the new data from WantedBooks.
         Query 'Bookstore.WantedBooks' 'parameter =>
             {
                 var wishList = _domRepository.Bookstore.WishList.Query();

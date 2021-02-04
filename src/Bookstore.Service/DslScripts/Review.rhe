@@ -4,7 +4,7 @@ Module Bookstore
 {
     // This file contains examples of low-level feature implementation.
     // Most examples here are not best practices for Rhetos application development,
-    // high-level concept should be used instead, for validations, default values and computatios.
+    // high-level concept should be used instead for validations, default values and computations.
     Entity Review
     {
         Reference Book { Required; }
