@@ -7,6 +7,7 @@ using Rhetos.TestCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Bookstore.Service.Test
 {
@@ -124,6 +125,70 @@ namespace Bookstore.Service.Test
                     "BookInfo",
                     "BookRating"
                 });
+            }
+        }
+
+        /// <summary>
+        /// This type of tests verify that there are not issues with deadlocks or incorrect computed data on parallel operations.
+        /// This test also demonstrate how to manage (rare) situations when test needs to commit data into database.
+        /// </summary>
+        [TestMethod]
+        public void ParallelCodeGeneration()
+        {
+            DeleteUnitTestBooks(); // This test needs to commit changes, so it is required to clean up any remaining previous test data, in case the test was canceled without ClassCleanup.
+
+            // Prepare test data:
+
+            var books = new[]
+            {
+                // Using specific prefix to reduce chance of conflicts with any existing data.
+                new Book { Code = $"{UnitTestBookCodePrefix}+++", Title = Guid.NewGuid().ToString() },
+                new Book { Code = $"{UnitTestBookCodePrefix}+++", Title = Guid.NewGuid().ToString() },
+                new Book { Code = $"{UnitTestBookCodePrefix}ABC+", Title = Guid.NewGuid().ToString() },
+                new Book { Code = $"{UnitTestBookCodePrefix}ABC+", Title = Guid.NewGuid().ToString() }
+            };
+
+            // Insert in parallel:
+
+            for (int retry = 0; retry < 3; retry++) // Running the test multiple times to avoid false positive, since the results are nondeterministic.
+            {
+                Parallel.ForEach(books, book =>
+                {
+                    // Each scope represent one web request of the main application, executed in its own separate transaction.
+                    // The main application should support parallel web requests.
+                    using (var scope = TestScope.Create())
+                    {
+                        var repository = scope.Resolve<Common.DomRepository>();
+                        repository.Bookstore.Book.Insert(book);
+                        scope.CommitChanges(); // Changes are committed to database, to make the test with parallel transactions more realistic.
+                    }
+                });
+
+                // Review the inserted data:
+
+                using (var scope = TestScope.Create())
+                {
+                    var repository = scope.Resolve<Common.DomRepository>();
+                    var booksFromDb = repository.Bookstore.Book.Load(book => book.Code.StartsWith(UnitTestBookCodePrefix));
+                    Assert.AreEqual(
+                        $"{UnitTestBookCodePrefix}001, {UnitTestBookCodePrefix}002, {UnitTestBookCodePrefix}ABC1, {UnitTestBookCodePrefix}ABC2",
+                        TestUtility.DumpSorted(booksFromDb, book => book.Code));
+                }
+
+                DeleteUnitTestBooks();
+            }
+        }
+
+        private const string UnitTestBookCodePrefix = "UnitTestBooks";
+
+        private void DeleteUnitTestBooks()
+        {
+            using (var scope = TestScope.Create())
+            {
+                var repository = scope.Resolve<Common.DomRepository>();
+                var testBooks = repository.Bookstore.Book.Load(book => book.Code.StartsWith(UnitTestBookCodePrefix));
+                repository.Bookstore.Book.Delete(testBooks);
+                scope.CommitChanges();
             }
         }
     }
