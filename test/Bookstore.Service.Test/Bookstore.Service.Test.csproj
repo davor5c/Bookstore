@@ -44,7 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BookGridTest.cs" />
+    <Compile Include="RowPermisionsTest.cs" />
     <Compile Include="DeactivateOnDeleteTest.cs" />
+    <Compile Include="Tools\FakeMailSender.cs" />
     <Compile Include="PhoneNumberTest.cs" />
     <Compile Include="DisposalTest.cs" />
     <Compile Include="RatingSystemTest.cs" />

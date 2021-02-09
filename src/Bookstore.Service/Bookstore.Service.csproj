@@ -70,7 +70,10 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithms\RatingSystem.cs" />
+    <Compile Include="MailNotifications\IMailSender.cs" />
+    <Compile Include="MailNotifications\MailOptions.cs" />
+    <Compile Include="Rating\RatingSystem.cs" />
+    <Compile Include="MailNotifications\SmtpMailSender.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -97,6 +100,8 @@
     <Content Include="DslScripts\AdditionalExamples\ExampleFilters.rhe" />
     <Content Include="rhetos-app.settings.json" />
     <Content Include="rhetos-build.settings.json" />
+    <Content Include="DslScripts\MailNotifications.rhe" />
+    <Content Include="DslScripts\AdditionalExamples\DemoRowPermissions2.rhe" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -106,13 +111,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Rhetos.CommonConcepts">
-      <Version>4.2.0</Version>
+      <Version>4.3.0-dev*</Version>
     </PackageReference>
     <PackageReference Include="Rhetos.RestGenerator">
       <Version>4.0.0</Version>
     </PackageReference>
     <PackageReference Include="Rhetos.Wcf">
-      <Version>4.2.0</Version>
+      <Version>4.3.0-dev*</Version>
     </PackageReference>
     <PackageReference Include="System.Net.Http">
       <Version>4.3.4</Version>

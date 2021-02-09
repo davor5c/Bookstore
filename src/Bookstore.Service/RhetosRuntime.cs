@@ -88,6 +88,10 @@ namespace Rhetos
 
             registerCustomComponents?.Invoke(builder);
 
+            // Registering custom components for Bookstore application:
+            builder.RegisterType<Bookstore.SmtpMailSender>().As<Bookstore.IMailSender>(); // Application uses SMTP implementation for sending mails. The registration will be overridden in unit tests by fake component.
+            builder.Register(context => context.Resolve<IConfiguration>().GetOptions<Bookstore.MailOptions>()).SingleInstance(); // Standard pattern for registering options class.
+
             return builder.Build();
         }
     }

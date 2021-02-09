@@ -1,0 +1,44 @@
+﻿// This script demonstrates usage of component that is managed by dependency injection container (sending e-mails, e.g.),
+// and can be easily overridden in unit tests with fake implementation (stub or mock) that implements same interface (IMailSender).
+
+Module Bookstore
+{
+    // Extending entity Book with automatic mail notifications.
+    Entity Book
+    {
+        SaveMethod
+        {
+            AfterSave SendMailForEachNewBook
+            '
+                var emailAddresses = _domRepository.Common.Principal
+                    .Query(principal => !string.IsNullOrEmpty(principal.NewBookNotificationEmailAddress))
+                    .Select(principal => principal.NewBookNotificationEmailAddress)
+                    .ToList();
+
+                foreach (var book in insertedNew)
+                    _mailSender.SendMail($"New book: {book.Title}", emailAddresses);
+            ';
+        }
+
+        // Add the _mailSender property (of type IMailSender, resolved from DI container) to the Book repository class,
+        // so that it can be used in filters, SaveMethod, and other business features on the Book entity.
+        RepositoryUses '_mailSender' 'Bookstore.IMailSender';
+
+        // DISCLAIMER: The example above only demonstrates usage of dependency injection in DSL scripts
+        // and fake components in unit tests.
+        // In business applications, a much better approach for sending e-mails would be to
+        // write the new book notification to event queue, or new e-mail commands to task queue,
+        // then use a background service to send e-mails asynchronously. That approach would prevent blocking
+        // the book insert operations, and allow for advanced task management such as retrying and status reporting.
+    }
+}
+
+Module Common
+{
+    Entity Principal
+    {
+        // Extending entity Principal that represents a user of the application (from CommonConcepts package)
+        // with mail notification settings information.
+        ShortString NewBookNotificationEmailAddress;
+    }
+}

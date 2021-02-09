@@ -1,4 +1,5 @@
-﻿using Bookstore.Service.Test.Tools;
+﻿using Autofac;
+using Bookstore.Service.Test.Tools;
 using Common.Queryable;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhetos;
@@ -93,38 +94,56 @@ namespace Bookstore.Service.Test
         public void OverrideSystemComponentsForTesting()
         {
             // Application's DI container can be configured with custom components.
-            // For example, system log monitor and custom application user information.
-
+            // For example, system log monitor and fake mail sender as 'mock' objects
+            // for testing Book entity insert operation.
+            
             var systemLog = new List<string>();
+            var mailSenderMock = new FakeMailSender();
 
-            using (var scope = TestScope.Create(builder => builder
-                .ConfigureLogMonitor(systemLog)
-                .ConfigureApplicationUser("TestUserName")))
+            using (var scope = TestScope.Create(builder =>
+                {
+                    builder.ConfigureLogMonitor(systemLog); // Overrides system logging, see the code inside ConfigureLogMonitor.
+                    builder.RegisterInstance(mailSenderMock).As<IMailSender>(); // Override IMailSender implementation from mail application.
+                }))
             {
                 var context = scope.Resolve<Common.ExecutionContext>();
                 var repository = context.Repository;
-                var currentApplicationUser = context.UserInfo;
 
-                // Check if the application user matches the custom user information provided above.
+                // Initializing data in order to have clean setup for testing mail notifications and log analysis.
 
-                Assert.AreEqual("TestUserName", currentApplicationUser.UserName);
+                var testUserWithMail = new Common.Principal
+                {
+                    Name = "TestUserWithMail_" + Guid.NewGuid(),
+                    NewBookNotificationEmailAddress = "testemail@example.com"
+                };
+                repository.Common.Principal.Insert(testUserWithMail);
+
+                systemLog.Clear();
+
+                // Inserting a new book:
+
+                var book = new Book { Title = "TestBook" };
+                repository.Bookstore.Book.Insert(book);
 
                 // Inserting a book should automatically generate records in computed tables BookInfo and BookRating.
                 // Here we can analyze the system log (see CreateLogMonitorDelegate) and review if it contains entries
                 // for automatic update of those tables.
 
-                systemLog.Clear();
-
-                var book = new Book { Title = "TestBook" };
-                repository.Bookstore.Book.Insert(book);
-
                 string systemLogReport = string.Join(Environment.NewLine, systemLog);
-                Console.WriteLine(systemLogReport);
+                Console.WriteLine(systemLogReport); // Developers can manually review log in test output.
                 TestUtility.AssertContains(systemLogReport, new[]
                 {
-                    "BookInfo",
-                    "BookRating"
+                    "ComputeBookInfo",
+                    "ComputeBookRating"
                 });
+
+                // Inserting a book should result with sending a notification mail.
+                // Using out fake IMailSender implementation to test if the insert operation triggered the notification.
+
+                var sentEmail = mailSenderMock.MailLog // Expecting only one notification e-mail.
+                    .Single(mail => mail.ToEmailAddress == testUserWithMail.NewBookNotificationEmailAddress);
+
+                TestUtility.AssertContains(sentEmail.Message, book.Title);
             }
         }
 
