@@ -58,14 +58,14 @@ The tests are located in projects *Bookstore.Service.Test*, within Bookstore sol
 There are two kinds of tests in this project:
 
 1. **Standard unit tests**
-   that test the algorithm implemented in external assembly.
+   that test the features implemented in stand-alone classes and methods, without accessing the database.
     * These tests are very fast and independent of the deployment environment.
     * For example see RatingSystemTest class.
 2. **Integration tests**
-   that test the generated applications together with the database.
+   that test the application together with the database.
     * These tests can test full business processes, including the business logic
       that is implemented in the database, but are slower and need a database to run
-      (the database connection is set up earlier during the Build).
+      (the database connection is set up in the application settings).
     * For example see BookTest class.
 
 There are some important considerations for the integration tests
@@ -74,12 +74,12 @@ that we apply to keep their complexity under control:
 * Each test should insert its own data and not rely on pre-existing data in the database,
   or on the data inserted by other tests.
 * Each test should clear its data when finished.
-  This is done automatically by `RhetosTestContainer`,
-  see that the constructor parameter `commitChanges` is `false` by default,
-  which means that the SQL transaction will be rolled back at the end of the `using` block.
+  This is done automatically by `TestScope`: SQL transaction is rolled back by default
+  at the end of the `using` block, unless `CommitChanges` method is called on the scope
+  (at the end of the using block).
 * The tests should not be affected by the existing data in the database.
   They can be executed on an empty database (after the application is deployed to it),
-  or on database with some user-entered data.
+  or on a database with some data previously entered by user.
 
 ## Run the application
 
