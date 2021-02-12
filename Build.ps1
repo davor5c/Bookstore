@@ -4,13 +4,12 @@
 
 "=== Setup ==="
 $ErrorActionPreference = 'Stop'
-$msbuild, $vstest = .\tools\Build\Find-VisualStudio.ps1
 .\tools\Build\Test-RhetosPrerequisites.ps1
 
 "=== Build ==="
-& $msbuild 'Bookstore.sln' /t:restore /t:rebuild /p:Configuration=Debug /p:RhetosDeploy=False /verbosity:minimal
+& dotnet build 'Bookstore.sln' -p:Configuration=Debug -p:RhetosDeploy=False --verbosity minimal
 if ($LastExitCode -ne 0) { throw "MSBuild failed." }
 
 "=== Deploy ==="
-& '.\src\Bookstore.Service\bin\rhetos.exe' dbupdate
+& '.\src\Bookstore.Service\bin\Debug\net5.0\rhetos.exe' dbupdate '.\src\Bookstore.Service\bin\Debug\net5.0\Bookstore.Service.dll'
 if ($LastExitCode -ne 0) { throw "rhetos dbupdate failed." }

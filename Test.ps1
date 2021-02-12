@@ -4,8 +4,7 @@
 
 "=== Setup ==="
 $ErrorActionPreference = 'Stop'
-$msbuild, $vstest = .\tools\Build\Find-VisualStudio.ps1
 
-"=== Run tests ==="
-& $vstest 'test\Bookstore.Service.Test\bin\Debug\Bookstore.Service.Test.dll'
-if ($LastExitCode -ne 0) { throw "vstest failed." }
+"=== Run all tests ==="
+& dotnet test Bookstore.sln --no-build
+if ($LastExitCode -ne 0) { throw "MSTest failed." }

@@ -1,11 +1,11 @@
-$templateConnectionStringsPath = Resolve-Path "$PSScriptRoot\..\Configs\Templates\Template.ConnectionStrings.config"
+$templateAppLocalSettingsPath = Resolve-Path "$PSScriptRoot\..\Configs\Templates\Template.rhetos-app.local.settings.json"
 $serverFolderLocation = Resolve-Path "$PSScriptRoot\..\..\src\Bookstore.Service"
-$connectionStringsPath = "$serverFolderLocation\ConnectionStrings.config"
+$appLocalSettingsPath = "$serverFolderLocation\rhetos-app.local.settings.json"
 
-if (!(Test-Path $connectionStringsPath))
+if (!(Test-Path $appLocalSettingsPath))
 {
   $msg = "Bookstore Prerequisites: Database connection string is not configured." `
-    + " Please create a Bookstore database, copy '$templateConnectionStringsPath' file" `
-    + " to '$connectionStringsPath', and setup the connection string in that file."
+    + " Please create a Bookstore database, copy '$templateAppLocalSettingsPath' file" `
+    + " to '$appLocalSettingsPath', and setup the connection string in that file."
   throw $msg
 }

@@ -1,0 +1,7 @@
+{
+    "ConnectionStrings": {
+      "ServerConnectionString": {
+        "ConnectionString": "Data Source=ENTER_SQL_SERVER_NAME;Initial Catalog=ENTER_RHETOS_DATABASE_NAME;Integrated Security=true;"
+      }
+    }
+}
