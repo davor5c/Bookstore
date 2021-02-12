@@ -1,7 +1,6 @@
 {
   "Rhetos": {
     "Build": {
-      "GenerateAppSettings": true,
       "BuildResourcesFolder": true
     }
   }
