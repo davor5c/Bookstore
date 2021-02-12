@@ -26,34 +26,13 @@ namespace Bookstore.Service.Test.Tools
         public static TransactionScopeContainer Create(Action<ContainerBuilder> registerCustomComponents = null)
         {
             ConsoleLogger.MinLevel = EventType.Info; // Use EventType.Trace for more detailed log.
-            return _container.Value.CreateTransactionScopeContainer(registerCustomComponents);
+            return RhetosHost.CreateScope(registerCustomComponents);
         }
 
         /// <summary>
         /// Reusing a single shared static DI container between tests, to reduce initialization time for each test.
         /// Each test should create a child scope with <see cref="TestScope.Create"/> method to start a 'using' block.
         /// </summary>
-        private static readonly Lazy<ProcessContainer> _container = new Lazy<ProcessContainer>(
-            () => new ProcessContainer(FindBookstoreServiceFolder()), LazyThreadSafetyMode.ExecutionAndPublication);
-
-        /// <summary>
-        /// Unit tests can be executed at different disk locations depending on whether they are run at the solution or project level, from Visual Studio or another utility.
-        /// Therefore, instead of providing a simple relative path, this method searches for the main application location.
-        /// </summary>
-        private static string FindBookstoreServiceFolder()
-        {
-            var startingFolder = new DirectoryInfo(Environment.CurrentDirectory);
-            string rhetosServerSubfolder = @"src\Bookstore.Service";
-
-            var folder = startingFolder;
-            while (!Directory.Exists(Path.Combine(folder.FullName, rhetosServerSubfolder)))
-            {
-                if (folder.Parent == null)
-                    throw new ArgumentException($"Cannot find the Rhetos server folder '{rhetosServerSubfolder}' in '{startingFolder}' or any of its parent folders.");
-                folder = folder.Parent;
-            }
-
-            return Path.Combine(folder.FullName, rhetosServerSubfolder);
-        }
+        private static readonly RhetosHost RhetosHost = RhetosHost.FindBuilder(Path.GetFullPath(@"..\..\..\..\..\src\Bookstore.Service\bin\Debug\net5.0\Bookstore.Service.dll")).Build();
     }
 }
