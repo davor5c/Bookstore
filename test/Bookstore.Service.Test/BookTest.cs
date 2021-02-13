@@ -179,7 +179,7 @@ namespace Bookstore.Service.Test
                     {
                         var repository = scope.Resolve<Common.DomRepository>();
                         repository.Bookstore.Book.Insert(book);
-                        scope.CommitChanges(); // Changes are committed to database, to make the test with parallel transactions more realistic.
+                        scope.CommitAndClose(); // Changes are committed to database, to make the test with parallel transactions more realistic.
                     }
                 });
 
@@ -207,7 +207,7 @@ namespace Bookstore.Service.Test
                 var repository = scope.Resolve<Common.DomRepository>();
                 var testBooks = repository.Bookstore.Book.Load(book => book.Code.StartsWith(UnitTestBookCodePrefix));
                 repository.Bookstore.Book.Delete(testBooks);
-                scope.CommitChanges();
+                scope.CommitAndClose();
             }
         }
     }

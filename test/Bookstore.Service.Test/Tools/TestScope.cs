@@ -17,16 +17,16 @@ namespace Bookstore.Service.Test.Tools
         /// <summary>
         /// Creates a thread-safe lifetime scope DI container (service provider)
         /// to isolate unit of work with a <b>separate database transaction</b>.
-        /// To commit changes to database, call <see cref="TransactionScopeContainer.CommitChanges"/> at the end of the 'using' block.
+        /// To commit changes to database, call <see cref="UnitOfWorkScope.CommitAndClose"/> at the end of the 'using' block.
         /// </summary>
         /// <remarks>
         /// Use helper methods in <see cref="TestScopeContainerBuilderExtensions"/> to configuring components
         /// from the <paramref name="registerCustomComponents"/> delegate.
         /// </remarks>
-        public static TransactionScopeContainer Create(Action<ContainerBuilder> registerCustomComponents = null)
+        public static UnitOfWorkScope Create(Action<ContainerBuilder> registerCustomComponents = null)
         {
             ConsoleLogger.MinLevel = EventType.Info; // Use EventType.Trace for more detailed log.
-            return _container.Value.CreateTransactionScopeContainer(registerCustomComponents);
+            return _container.Value.CreateScope(registerCustomComponents);
         }
 
         /// <summary>

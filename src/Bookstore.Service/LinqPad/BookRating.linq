@@ -54,9 +54,9 @@ void Main()
     string applicationFolder = Path.GetDirectoryName(Util.CurrentQueryPath);
     ConsoleLogger.MinLevel = EventType.Trace; // Use EventType.Trace for more detailed log.
     
-    using (var container = ProcessContainer.CreateTransactionScopeContainer(applicationFolder))
+    using (var scope = ProcessContainer.CreateScope(applicationFolder))
     {
-        var context = container.Resolve<Common.ExecutionContext>();
+        var context = scope.Resolve<Common.ExecutionContext>();
         var repository = context.Repository;
 
         repository.Bookstore.BookRating.Load().Dump();
@@ -70,6 +70,6 @@ void Main()
 		repository.Bookstore.ComputeBookRating.Load().Dump();
 		repository.Bookstore.BookRating.Load().Dump();
         
-        //container.CommitChanges(); // Database transaction is rolled back by default.
+        //scope.CommitAndClose(); // Database transaction is rolled back by default.
     }
 }
