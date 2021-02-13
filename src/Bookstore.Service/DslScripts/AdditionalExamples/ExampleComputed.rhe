@@ -50,7 +50,4 @@ Module Bookstore
     {
         ShortString Name;
     }
-
-    ExternalReference 'Newtonsoft.Json.JsonConvert, Newtonsoft.Json';
-    ExternalReference 'System.Net.Http.HttpClient, System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a';
 }
