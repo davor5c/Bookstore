@@ -12,7 +12,11 @@ namespace Bookstore.Playground
         static void Main(string[] args)
         {
             ConsoleLogger.MinLevel = EventType.Info; // Use EventType.Trace for more detailed log.
-            using (var scope = RhetosHost.CreateScope())
+
+            string rhetosHostAssemblyPath = @"..\..\..\..\..\src\Bookstore.Service\bin\Debug\net5.0\Bookstore.Service.dll";
+            var rhetosHost = RhetosHost.FindBuilder(rhetosHostAssemblyPath).Build();
+
+            using (var scope = rhetosHost.CreateScope())
             {
                 var context = scope.Resolve<Common.ExecutionContext>();
                 var repository = context.Repository;
@@ -26,7 +30,5 @@ namespace Bookstore.Playground
                 //scope.CommitChanges(); // Database transaction is rolled back by default.
             }
         }
-
-        private static readonly RhetosHost RhetosHost = RhetosHost.FindBuilder(Path.GetFullPath(@"..\..\..\..\..\src\Bookstore.Service\bin\Debug\net5.0\Bookstore.Service.dll")).Build();
     }
 }
