@@ -5,6 +5,7 @@ using Rhetos.Logging;
 using Rhetos.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Bookstore.Playground
@@ -15,7 +16,7 @@ namespace Bookstore.Playground
         {
             ConsoleLogger.MinLevel = EventType.Info; // Use EventType.Trace for more detailed log.
 
-            string rhetosHostAssemblyPath = @"..\..\..\..\..\src\Bookstore.Service\bin\Debug\net5.0\Bookstore.Service.dll";
+            string rhetosHostAssemblyPath = Path.GetFullPath(@"..\..\..\..\..\src\Bookstore.Service\bin\Debug\net5.0\Bookstore.Service.dll");
             var rhetosHost = RhetosHost.FindBuilder(rhetosHostAssemblyPath).Build();
 
             using (var scope = rhetosHost.CreateScope())
