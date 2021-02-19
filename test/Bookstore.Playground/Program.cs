@@ -1,13 +1,15 @@
 ﻿using ConsoleDump;
 using Rhetos;
+using Rhetos.Dom.DefaultConcepts;
 using Rhetos.Logging;
 using Rhetos.Utilities;
-using System.IO;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Bookstore.Playground
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args)
         {
@@ -24,10 +26,10 @@ namespace Bookstore.Playground
                 // See usage examples on Rhetos wiki:
                 // https://github.com/Rhetos/Rhetos/wiki/Using-the-Domain-Object-Model
 
-                repository.Bookstore.Book.Query().Take(3).ToList().Dump();
-                repository.Bookstore.Book.Load().Take(3).Dump();
+                repository.Bookstore.Book.Load().Take(3).Dump("Book.Load() returns simple objects");
+                repository.Bookstore.Book.Query().Take(3).ToList().Dump("Book.Query() returns queryable objects with navigation properties");
 
-                //scope.CommitChanges(); // Database transaction is rolled back by default.
+                //scope.CommitAndClose(); // Database transaction is rolled back by default.
             }
         }
     }

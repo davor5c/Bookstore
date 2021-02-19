@@ -11,6 +11,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookstore.Service.Test", "t
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookstore.Playground", "test\Bookstore.Playground\Bookstore.Playground.csproj", "{EDC6CD1F-515B-4719-8429-27CF4E4EBB7E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{07CDC0F8-9B9C-4197-8D5A-56287B53A004}"
+	ProjectSection(SolutionItems) = preProject
+		src\Bookstore.nuspec = src\Bookstore.nuspec
+		Build.ps1 = Build.ps1
+		Readme.md = Readme.md
+		tools\Build\Remove-AllBinaries.ps1 = tools\Build\Remove-AllBinaries.ps1
+		tools\Configs\Templates\Template.rhetos-app.local.settings.json = tools\Configs\Templates\Template.rhetos-app.local.settings.json
+		tools\Build\Test-CleanBuild.ps1 = tools\Build\Test-CleanBuild.ps1
+		tools\Build\Test-RhetosPrerequisites.ps1 = tools\Build\Test-RhetosPrerequisites.ps1
+		Test.ps1 = Test.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

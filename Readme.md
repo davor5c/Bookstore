@@ -75,7 +75,7 @@ that we apply to keep their complexity under control:
   or on the data inserted by other tests.
 * Each test should clear its data when finished.
   This is done automatically by `TestScope`: SQL transaction is rolled back by default
-  at the end of the `using` block, unless `CommitChanges` method is called on the scope
+  at the end of the `using` block, unless `CommitAndClose` method is called on the scope
   (at the end of the using block).
 * The tests should not be affected by the existing data in the database.
   They can be executed on an empty database (after the application is deployed to it),
