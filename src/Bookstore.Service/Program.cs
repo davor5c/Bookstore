@@ -18,12 +18,13 @@ namespace Bookstore.Service
         public static IRhetosHostBuilder CreateRhetosHostBuilder()
         {
             return new RhetosHostBuilder()
-                .ConfigureConfiguration(builder =>
-                {
-                    builder.AddJsonFile(RhetosAppEnvironment.LocalConfigurationFileName);
-                })
+                .ConfigureRhetosHostDefaults()
+                .ConfigureConfiguration(builder => builder
+                    .AddJsonFile("rhetos-app.settings.json")
+                    .AddJsonFile("rhetos-app.local.settings.json"))
                 .ConfigureContainer(builder =>
                 {
+                    // Configuring standard Rhetos system services to work with unit tests:
                     builder.RegisterType<ProcessUserInfo>().As<IUserInfo>();
                     builder.RegisterType<ConsoleLogProvider>().As<ILogProvider>();
                     // Registering custom components for Bookstore application:
