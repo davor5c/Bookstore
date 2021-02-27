@@ -2,6 +2,7 @@ using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.IISIntegration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -56,6 +57,8 @@ namespace Bookstore.Service
                     o.BaseRoute = "rest";
                     o.GroupNameMapper = (conceptInfo, name) => "rhetos"; // OpenAPI document name.
                 });
+
+            services.AddAuthentication(IISDefaults.AuthenticationScheme);
 
             // TODO: Configuring Authentication and Authorization.
             //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
