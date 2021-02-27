@@ -349,3 +349,4 @@ src/Bookstore.Service/Logs
 src/Bookstore.Service/Resources
 src/Bookstore.Service/ConnectionStrings.config
 src/Bookstore.Service/ExternalAppSettings.config
+*.local.json

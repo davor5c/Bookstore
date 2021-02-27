@@ -1,36 +1,45 @@
 ﻿using Autofac;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Rhetos;
-using Rhetos.Logging;
-using Rhetos.Security;
-using Rhetos.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Bookstore.Service
 {
     public static class Program
     {
-        public static void Main()
+        public static void Main(string[] args)
         {
+            CreateHostBuilder(args).Build().Run();
         }
 
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
+
         /// <summary>
-        /// Provides basic runtime infrastructure for Rhetos framework: configuration settings and system components registration.
+        /// Provides the runtime configuration for Rhetos CLI utilities:
+        /// configuration settings and system components registration.
         /// </summary>
         public static IRhetosHostBuilder CreateRhetosHostBuilder()
         {
-            return new RhetosHostBuilder()
-                .ConfigureRhetosHostDefaults()
-                .ConfigureConfiguration(builder => builder
-                    .AddJsonFile("rhetos-app.settings.json")
-                    .AddJsonFile("rhetos-app.local.settings.json"))
-                .ConfigureContainer(builder =>
-                {
-                    // Configuring standard Rhetos system services to work with unit tests:
-                    builder.RegisterType<ProcessUserInfo>().As<IUserInfo>();
-                    builder.RegisterType<ConsoleLogProvider>().As<ILogProvider>();
-                    // Registering custom components for Bookstore application:
-                    builder.RegisterType<Bookstore.SmtpMailSender>().As<Bookstore.IMailSender>(); // Application uses SMTP implementation for sending mails. The registration will be overridden in unit tests by fake component.
-                    builder.Register(context => context.Resolve<IConfiguration>().GetOptions<Bookstore.MailOptions>()).SingleInstance(); // Standard pattern for registering an options class.
-                });
+            // Extract web app configuration.
+            var host = CreateHostBuilder(null).Build();
+            var configuration = host.Services.GetRequiredService<IConfiguration>();
+            // Create RhetosHostBuilder and configure it.
+            var rhetosHostBuilder = new RhetosHostBuilder();
+            Startup.ConfigureRhetosHostBuilder(rhetosHostBuilder, configuration);
+            return rhetosHostBuilder;
+
         }
     }
 }
