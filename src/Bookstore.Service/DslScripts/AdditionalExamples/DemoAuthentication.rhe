@@ -1,0 +1,9 @@
+﻿Module DemoAuthentication
+{
+    // Returns basic authentication information on current user.
+    Computed UserInfoReport 'repository => AuthenticationReporting.GetReport(_executionContext.UserInfo)'
+    {
+        ShortString Key;
+        ShortString Value;
+    }
+}
