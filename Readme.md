@@ -14,12 +14,13 @@ that implements business features and database.
   enterprise system where a front-end is developed as a separate application
   (for example, an Angular web app).
 * It exposes all business features through REST API.
-  Other web protocols can be included with additional Rhetos plugins packages.
+  Other web protocols can be included with additional Rhetos plugins packages,
+  or by implementing custom controllers.
 
-Project structure (see *Bookstore.sln*):
+## Project structure (Bookstore.sln)
 
 * **Bookstore.Service** - Main application (business service).
-* Bookstore.Service.Test - Integration tests.
+* Bookstore.Service.Test - Unit tests and integration tests.
 * Bookstore.Concepts - Custom concepts library that extend Rhetos DSL programming language
   with features specific to this application.
 * Bookstore.Playground - Example of a command-line utility that uses the generated business
@@ -40,14 +41,6 @@ most Rhetos applications should contain:
 To build this application from source, run `.\Build.ps1` in PowerShell console.
 
 * If the build fails, check the error message for instructions to setup any missing prerequisites.
-* For additional information on build and development environment see
-  [Development Environment Setup](https://github.com/Rhetos/Rhetos/wiki/Development-Environment-Setup).
-
-The build output is a web application in `src\Bookstore.Service` subfolder.
-
-* To setup the **IIS web application** follow the instructions in "IIS setup" chapter at
-  [Development Environment Setup](https://github.com/Rhetos/Rhetos/wiki/Development-Environment-Setup),
-  using `src\Bookstore.Service` for Rhetos server folder.
 
 ## Unit testing
 
@@ -83,45 +76,17 @@ that we apply to keep their complexity under control:
 
 ## Run the application
 
-Configure user authentication for your application:
-
-* Option A) *(Recommended for quick-start)* **Enable anonymous access**:
-  * Create file `rhetos-app.local.settings.json` in project folder, with the following content:
-    `{ "Rhetos": { "AppSecurity": { "AllClaimsForAnonymous": true } } }`.
-    This is an environment-specific file, it should not be added to the Visual Studio project or source control.
-* Option B) **Windows authentication with IIS**:
-  * Run Visual Studio *as Administrator*. Project properties => Web =>
-    Change from "ISS Express" to "Local IIS". On save answer Yes.
-  * Open IIS Manager => Find and select your web application.
-    * Authentication => Disable Anonymous, Enable Windows Authentication.
-    * Basic settings => Change application pool
-      to new RhetosAppPool that is configured to run with your development account
-      (see [IIS Setup](Development-environment-setup#iis-setup))
-  * Create file `rhetos-app.local.settings.json` in project folder, with the following content:
-    `{ "Rhetos": { "AppSecurity": { "AllClaimsForUsers": "account@computername" } } }`,
-    for your account and your machine name, to simplify testing. See the instructions in
-    [Suppressing permissions in a development environment](Basic-permissions#suppressing-permissions-in-a-development-environment).
-    This is an environment-specific file, it should not be added to the Visual Studio project or source control.
-  * In the table `Common.Principal` insert a record which has the `Name` column set to your username.
-* Option C) **Windows authentication with IIS Express**:
-  * Edit `.vs\<solution name>\config\applicationhost.config`
-    * in element `anonymousAuthentication` set `enabled` attribute to `false`.
-    * in element `windowsAuthentication` set `enabled` attribute to `true`.
-  * Create file `rhetos-app.local.settings.json` in project folder, with the following content:
-    `{ "Rhetos": { "AppSecurity": { "AllClaimsForUsers": "account@computername" } } }`,
-    for your account and your machine name, to simplify testing. See the instructions in
-    [Suppressing permissions in a development environment](Basic-permissions#suppressing-permissions-in-a-development-environment).
-    This is an environment-specific file, it should not be added to the Visual Studio project or source control.
-  * In the table `Common.Principal` insert a record which has the `Name` column set to your username.
-
 Open Bookstore.sln in Visual Studio, right-click project "Bookstore.Service" and select "Set as Startup Project".
-
 Start the web application in Visual Studio with Debug => Start Debugging **(F5)**.
 
-* Web browser should open automatically, displaying "Installed packages" list and "Server status".
-  * If using Windows Authentication, check that "User identity" displays your account name.
+* Web browser should open automatically, displaying Swagger UI with available REST API methods.
+* Note that anonymous authentication is configured by default.
+  User authentication may be added to the application in order to test Rhetos authorization features
+  such as row peromissions.
+
+Testing:
+
 * In the browser append `/rest/Common/Claim/` to the base URL. It should return list of records from the database table Bookstore.Book in JSON format.
-* See [Troubleshooting](https://github.com/Rhetos/Rhetos/wiki/Creating-new-WCF-Rhetos-application#troubleshooting) section to resolve any errors.
 
 ## Contributions
 
