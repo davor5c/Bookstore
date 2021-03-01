@@ -40,7 +40,9 @@ most Rhetos applications should contain:
 
 To build this application from source, run `.\Build.ps1` in PowerShell console.
 
-* If the build fails, check the error message for instructions to setup any missing prerequisites.
+The first build will result with an **error message**, with instructions to complete the **initial setup**:
+Create an empty test database and enter the database connection string
+in the machine-specific configuration file specified in the message.
 
 ## Unit testing
 
