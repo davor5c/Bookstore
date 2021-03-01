@@ -9,11 +9,11 @@ namespace DemoAuthentication
         {
             return new UserInfoReport[]
             {
-                new UserInfoReport { Key = "UserName", Value = GetValueOrException(() => userInfo.UserName) },
+                new UserInfoReport { Key = "Report", Value = GetValueOrException(() => userInfo.Report()) },
                 new UserInfoReport { Key = "Type", Value = userInfo.GetType().ToString() },
                 new UserInfoReport { Key = "IsUserRecognized", Value = GetValueOrException(() => userInfo.IsUserRecognized) },
+                new UserInfoReport { Key = "UserName", Value = GetValueOrException(() => userInfo.UserName) },
                 new UserInfoReport { Key = "Workstation", Value = GetValueOrException(() => userInfo.Workstation) },
-                new UserInfoReport { Key = "Report", Value = GetValueOrException(() => userInfo.Report()) },
             };
         }
 
