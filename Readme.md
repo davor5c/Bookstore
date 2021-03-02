@@ -17,6 +17,28 @@ that implements business features and database.
   Other web protocols can be included with additional Rhetos plugins packages,
   or by implementing custom controllers.
 
+## Build
+
+To build this application from source, run `.\Build.ps1` in PowerShell console.
+
+The first build will result with an **error message**, with instructions to complete the **initial setup**:
+Create an empty test database and enter the database connection string
+in the machine-specific configuration file specified in the message.
+
+## Run the application
+
+Open Bookstore.sln in Visual Studio, right-click project "Bookstore.Service" and select "Set as Startup Project".
+Start the web application in Visual Studio with Debug => Start Debugging **(F5)**.
+
+* Web browser should open automatically, displaying Swagger UI with available REST API methods.
+* Note that anonymous authentication is configured by default.
+  User authentication may be added to the application in order to test Rhetos authorization features
+  such as row permissions.
+
+Testing:
+
+* In the browser append `/rest/Common/Claim/` to the base URL. It should return list of records from the database table Bookstore.Book in JSON format.
+
 ## Project structure (Bookstore.sln)
 
 * **Bookstore.Service** - Main application (business service).
@@ -35,14 +57,6 @@ most Rhetos applications should contain:
       and an external algorithm implemented in a separate DLL).
    3. Runs `rhetos.exe dbupdate` command to update the database.
 2. The test script `Test.ps1`. It builds and runs the automated unit tests and the integration tests.
-
-## Build
-
-To build this application from source, run `.\Build.ps1` in PowerShell console.
-
-The first build will result with an **error message**, with instructions to complete the **initial setup**:
-Create an empty test database and enter the database connection string
-in the machine-specific configuration file specified in the message.
 
 ## Unit testing
 
@@ -75,20 +89,6 @@ that we apply to keep their complexity under control:
 * The tests should not be affected by the existing data in the database.
   They can be executed on an empty database (after the application is deployed to it),
   or on a database with some data previously entered by user.
-
-## Run the application
-
-Open Bookstore.sln in Visual Studio, right-click project "Bookstore.Service" and select "Set as Startup Project".
-Start the web application in Visual Studio with Debug => Start Debugging **(F5)**.
-
-* Web browser should open automatically, displaying Swagger UI with available REST API methods.
-* Note that anonymous authentication is configured by default.
-  User authentication may be added to the application in order to test Rhetos authorization features
-  such as row peromissions.
-
-Testing:
-
-* In the browser append `/rest/Common/Claim/` to the base URL. It should return list of records from the database table Bookstore.Book in JSON format.
 
 ## Contributions
 
