@@ -26,15 +26,14 @@ namespace Bookstore.Service.Test.Tools
         public static UnitOfWorkScope Create(Action<ContainerBuilder> registerCustomComponents = null)
         {
             ConsoleLogger.MinLevel = EventType.Info; // Use EventType.Trace for more detailed log.
-            return _container.Value.CreateScope(registerCustomComponents);
+            return _container.CreateScope(registerCustomComponents);
         }
 
         /// <summary>
         /// Reusing a single shared static DI container between tests, to reduce initialization time for each test.
         /// Each test should create a child scope with <see cref="TestScope.Create"/> method to start a 'using' block.
         /// </summary>
-        private static readonly Lazy<ProcessContainer> _container = new Lazy<ProcessContainer>(
-            () => new ProcessContainer(FindBookstoreServiceFolder()), LazyThreadSafetyMode.ExecutionAndPublication);
+        private static readonly ProcessContainer _container = new ProcessContainer(FindBookstoreServiceFolder());
 
         /// <summary>
         /// Unit tests can be executed at different disk locations depending on whether they are run at the solution or project level, from Visual Studio or another utility.
