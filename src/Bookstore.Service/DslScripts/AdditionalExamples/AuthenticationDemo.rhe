@@ -1,4 +1,4 @@
-﻿Module DemoAuthentication
+﻿Module AuthenticationDemo
 {
     // Returns basic authentication information on current user.
     Computed UserInfoReport 'repository => AuthenticationReporting.GetReport(_executionContext.UserInfo)'

@@ -39,7 +39,6 @@ namespace Bookstore.Service
             var rhetosHostBuilder = new RhetosHostBuilder();
             Startup.ConfigureRhetosHostBuilder(rhetosHostBuilder, configuration);
             return rhetosHostBuilder;
-
         }
     }
 }

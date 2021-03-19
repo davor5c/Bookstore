@@ -1,7 +1,7 @@
 ﻿using Rhetos.Utilities;
 using System;
 
-namespace DemoAuthentication
+namespace AuthenticationDemo
 {
     public static class AuthenticationReporting
     {
