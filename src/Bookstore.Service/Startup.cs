@@ -1,6 +1,9 @@
 using Autofac;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Rhetos;
+using Rhetos.Host.AspNet;
 using Rhetos.Logging;
 using Rhetos.Security;
 using System;
@@ -57,20 +61,13 @@ namespace Bookstore.Service
                     o.GroupNameMapper = (conceptInfo, name) => "rhetos"; // OpenAPI document name.
                 });
 
-            // TODO: Configuring Authentication and Authorization.
-            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            //    .AddCookie(o => o.Events.OnRedirectToLogin = context =>
-            //    {
-            //        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-            //        return Task.CompletedTask;
-            //    });
-
-            //services.AddAuthorization(a =>
-            //{
-            //    a.FallbackPolicy = new AuthorizationPolicyBuilder(CookieAuthenticationDefaults.AuthenticationScheme)
-            //        .RequireAuthenticatedUser()
-            //        .Build();
-            //});
+            // Configuring Authentication.
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(o => o.Events.OnRedirectToLogin = context =>
+                {
+                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                    return Task.CompletedTask;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,12 +79,14 @@ namespace Bookstore.Service
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/rhetos/swagger.json", "Rhetos Rest Api");
+                    c.SwaggerEndpoint("/swagger/rhetos/swagger.json", "Rhetos REST API");
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "TestApp v1");
                 });
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
