@@ -15,6 +15,9 @@ Module Bookstore
 
         ItemFilter CommonMisspelling 'book => book.Title.Contains("curiousity")';
         InvalidData CommonMisspelling 'It is not allowed to enter misspelled word "curiousity". Please use "curiosity" instead.';
+
+        Reference CreatedBy Common.Principal { CreatedBy; }
+        Logging { AllProperties; }
     }
 
     Entity Person

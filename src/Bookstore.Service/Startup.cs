@@ -55,6 +55,7 @@ namespace Bookstore.Service
             // Adding Rhetos to AspNetCore application.
             services.AddRhetos(rhetosHostBuilder => ConfigureRhetosHostBuilder(rhetosHostBuilder, Configuration))
                 .UseAspNetCoreIdentityUser()
+                .AddImpersonation()
                 .AddRestApi(o =>
                 {
                     o.BaseRoute = "rest";
