@@ -42,17 +42,17 @@ namespace Bookstore.Service.Controllers
         [HttpGet]
         public string DemoProcessingEngine()
         {
-            var result = processingEngine.Execute(new[] {
+            var processingResult = processingEngine.Execute(new[] {
                 new ReadCommandInfo
                 {
                     DataSource = "AuthenticationDemo.UserInfoReport",
                     ReadRecords = true
-                }}).CommandResults.Single();
+                }});
 
-            if (!result.Success)
-                return result.Message;
+            if (!processingResult.Success)
+                return $"UserMessage:{processingResult.UserMessage}{Environment.NewLine}SystemMessage:{processingResult.SystemMessage}";
 
-            var records = (IEnumerable<AuthenticationDemo.UserInfoReport>)((ReadCommandResult)result.Data.Value).Records;
+            var records = (IEnumerable<AuthenticationDemo.UserInfoReport>)((ReadCommandResult)processingResult.CommandResults.Single().Data.Value).Records;
 
             return "UserInfo:" + Environment.NewLine
                 + string.Join(Environment.NewLine, records.Select(record => $"{record.Key}: {record.Value}"));
