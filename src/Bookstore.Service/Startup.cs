@@ -84,6 +84,8 @@ namespace Bookstore.Service
                 });
             }
 
+            app.UseRhetosRestApi();
+
             app.UseRouting();
 
             app.UseAuthentication();
@@ -114,14 +116,10 @@ namespace Bookstore.Service
                     .AddJsonFile("rhetos-app.local.settings.json"))
                 .ConfigureContainer(builder =>
                 {
-                    // Configuring standard Rhetos system services to work with unit tests:
-                    builder.RegisterType<ProcessUserInfo>().As<Rhetos.Utilities.IUserInfo>();
-                    builder.RegisterType<Rhetos.Utilities.ConsoleLogProvider>().As<ILogProvider>();
                     // Registering custom components for Bookstore application:
                     builder.RegisterType<Bookstore.SmtpMailSender>().As<Bookstore.IMailSender>(); // Application uses SMTP implementation for sending mails. The registration will be overridden in unit tests by fake component.
                     builder.Register(context => context.Resolve<Rhetos.Utilities.IConfiguration>().GetOptions<Bookstore.MailOptions>()).SingleInstance(); // Standard pattern for registering an options class.
                 });
-
         }
     }
 }
