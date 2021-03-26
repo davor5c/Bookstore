@@ -1,0 +1,23 @@
+﻿Module RhetosHttpNotifications
+{
+	// Hardcoded EventType; NO NEED? We can implement GetEventTypes web methods that returns all enum elements as strings.
+
+	Entity Subscription
+	{
+		ShortString EventType { Required; SqlIndex { Clustered; } }
+		LongString CallbackUrl { Required; }
+		LongString Description;
+
+		Implements 'Rhetos.HttpNotifications.IHttpNotificationsSubscription, Bookstore.Concepts' { RegisteredImplementation; }
+	}
+
+	Action SendHttpNotification '(parameter, repository, userInfo)
+		=> _logProvider.GetLogger("SendHttpNotification").Write(Rhetos.Logging.EventType.Info, () => $"ID: {parameter.NotificationId}, URL: {parameter.Url}, Payload: {parameter.Payload}")'
+	{
+		Guid NotificationId; // TODO: Do we need this? It might allow idempotency on subscriber side.
+		LongString Url;
+		LongString Payload;
+
+		RepositoryUses '_logProvider' 'Rhetos.Logging.ILogProvider';
+	}
+}

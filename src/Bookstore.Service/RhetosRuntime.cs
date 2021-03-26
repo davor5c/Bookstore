@@ -18,8 +18,10 @@
 */
 
 using Autofac;
+using Rhetos.Events;
 using Rhetos.Extensibility;
 using Rhetos.HomePage;
+using Rhetos.HttpNotifications;
 using Rhetos.Logging;
 using Rhetos.Security;
 using Rhetos.Utilities;
@@ -91,6 +93,13 @@ namespace Rhetos
             // Registering custom components for Bookstore application:
             builder.RegisterType<Bookstore.SmtpMailSender>().As<Bookstore.IMailSender>(); // Application uses SMTP implementation for sending mails. The registration will be overridden in unit tests by fake component.
             builder.Register(context => context.Resolve<IConfiguration>().GetOptions<Bookstore.MailOptions>()).SingleInstance(); // Standard pattern for registering options class.
+            builder.RegisterType<Bookstore.BookHelper>().InstancePerLifetimeScope();
+            // Rhetos.Events:
+            builder.RegisterType<EventProcessing>().As<IEventProcessing>().InstancePerLifetimeScope();
+            // Rhetos.HttpNotifications:
+            builder.RegisterType<HttpNotificationsDispatcher>().InstancePerLifetimeScope();
+            builder.Register(context => context.Resolve<IConfiguration>().GetOptions<HttpNotificationsOptions>()).SingleInstance(); // Standard pattern for registering options class.
+            builder.RegisterType<Subscriptions>().As<ISubscriptions>().InstancePerLifetimeScope();
 
             return builder.Build();
         }

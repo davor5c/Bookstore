@@ -15,6 +15,24 @@ Module Bookstore
 
         ItemFilter CommonMisspelling 'book => book.Title.Contains("curiousity")';
         InvalidData CommonMisspelling 'It is not allowed to enter misspelled word "curiousity". Please use "curiosity" instead.';
+
+        SaveMethod
+        {
+            AfterSave EmitCrudEvents '_bookHelper.EmitCrudEvents(insertedNew, updatedNew, deletedIds);';
+
+            // EmitsCrudEvents => macro: BusinessEventType Bookstore_Book_InsertedAny, SaveMethod AfterSave.
+
+            // BusinessEventType Bookstore_Book_InsertedAny
+            // SaveMethod AfterSave.
+
+            // HttpNotificationsForCrudEvents;
+            // Instead of handling events, we might directly call HttpNotifications here.
+            // Downside is that app developer will need to make many changes it there is a need for a different implementation of notifications instead of HttpNotifications.
+            // Also, custom HttpNotifications will mostly contain code that registers custom event types, which is a code small that hint that user actually wants to
+            // specify a new event type, not a new HttpNotification.
+        }
+
+        RepositoryUses '_bookHelper' 'Bookstore.BookHelper';
     }
 
     Entity Person

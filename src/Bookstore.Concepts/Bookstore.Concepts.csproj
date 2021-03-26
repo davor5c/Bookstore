@@ -52,6 +52,7 @@
     <Compile Include="DeactivateOnDeleteCodeGenerator.cs" />
     <Compile Include="DeactivateOnDeleteInfo.cs" />
     <Compile Include="ComplexProperty.cs" />
+    <Compile Include="IHttpNotificationsSubscription.cs" />
     <Compile Include="PhoneNumberInfo.cs" />
     <Compile Include="PhoneNumberMacro.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
