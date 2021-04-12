@@ -36,6 +36,10 @@ namespace Bookstore.Service
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
+                //By default the type name is used for the schema id.
+                //This can generate a conflict if we have multiple entites with the same name but in different modules
+                //so we are using the full type name for the schema id.
+                c.CustomSchemaIds(type => type.FullName);
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TestApp", Version = "v1" });
                 // Adding Rhetos REST API to Swagger with document name "rhetos".
                 c.SwaggerDoc("rhetos", new OpenApiInfo { Title = "Rhetos REST API", Version = "v1" });
