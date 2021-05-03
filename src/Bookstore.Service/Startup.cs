@@ -38,7 +38,10 @@ namespace Bookstore.Service
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TestApp", Version = "v1" });
                 // Adding Rhetos REST API to Swagger with document name "rhetos".
-                c.SwaggerDoc("rhetos", new OpenApiInfo { Title = "Rhetos REST API", Version = "v1" });
+                c.SwaggerDoc("Bookstore", new OpenApiInfo { Title = "Bookstore REST API", Version = "v1" });
+                c.SwaggerDoc("Common", new OpenApiInfo { Title = "Common REST API", Version = "v1" });
+                c.SwaggerDoc("AuthenticationDemo", new OpenApiInfo { Title = "AuthenticationDemo REST API", Version = "v1" });
+                c.SwaggerDoc("DemoRowPermissions2", new OpenApiInfo { Title = "DemoRowPermissions2 REST API", Version = "v1" });
             });
 
             // Using NewtonsoftJson for backward-compatibility with older versions of Rhetos.RestGenerator:
@@ -59,7 +62,6 @@ namespace Bookstore.Service
                 .AddRestApi(o =>
                 {
                     o.BaseRoute = "rest";
-                    o.GroupNameMapper = (conceptInfo, name) => "rhetos"; // OpenAPI document name.
                 });
 
             // Configuring Authentication.
@@ -80,8 +82,11 @@ namespace Bookstore.Service
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/rhetos/swagger.json", "Rhetos REST API");
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "TestApp v1");
+                    c.SwaggerEndpoint("/swagger/Bookstore/swagger.json", "Bookstore REST API");
+                    c.SwaggerEndpoint("/swagger/Common/swagger.json", "Common REST API");
+                    c.SwaggerEndpoint("/swagger/AuthenticationDemo/swagger.json", "AuthenticationDemo REST API");
+                    c.SwaggerEndpoint("/swagger/DemoRowPermissions2/swagger.json", "DemoRowPermissions2 REST API");
                 });
             }
 
