@@ -34,13 +34,16 @@ namespace Bookstore.Service.Test.Tools
         /// Each test should create a child scope with <see cref="TestScope.Create"/> method to start a 'using' block.
         /// </summary>
         private static readonly RhetosHost _rhetosHost = RhetosHost
-            .FindBuilder(Path.GetFullPath(@"..\..\..\..\..\src\Bookstore.Service\bin\Debug\net5.0\Bookstore.Service.dll"))
-            .ConfigureContainer(builder =>
+            .Find(Path.GetFullPath(@"..\..\..\..\..\src\Bookstore.Service\bin\Debug\net5.0\Bookstore.Service.dll"), ConfigureRhetosHostBuilder);
+
+        private static void ConfigureRhetosHostBuilder(IRhetosHostBuilder rhetosHostBuilder)
+        {
+            rhetosHostBuilder.ConfigureContainer(builder =>
             {
                 // Configuring standard Rhetos system services to work with unit tests:
                 builder.RegisterType<ProcessUserInfo>().As<IUserInfo>();
                 builder.RegisterType<ConsoleLogProvider>().As<ILogProvider>();
-            })
-            .Build();
+            });
+        }
     }
 }

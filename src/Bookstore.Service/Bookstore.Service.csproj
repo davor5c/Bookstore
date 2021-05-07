@@ -14,6 +14,8 @@
     <PackageReference Include="Rhetos.Host" Version="5.0.0-dev*" />
     <PackageReference Include="Rhetos.Host.AspNet" Version="5.0.0-dev*" />
     <PackageReference Include="Rhetos.RestGenerator" Version="5.0.0-dev*" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
