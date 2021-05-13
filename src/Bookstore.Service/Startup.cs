@@ -103,7 +103,7 @@ namespace Bookstore.Service
         {
             rhetosHostBuilder
                 .ConfigureRhetosAppDefaults()
-                .UseBuilderLogProvider(new Rhetos.Host.Net.Logging.RhetosBuilderDefaultLogProvider()) // Delegate RhetosHost logging to standard NetCore targets.
+                .UseBuilderLogProviderFromHost(serviceProvider)
                 .ConfigureConfiguration(builder => builder
                     .MapNetCoreConfiguration(Configuration)
                     // The "local" file is intended for developer/machine-specific database connection string, and other test settings.
