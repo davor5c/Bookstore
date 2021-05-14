@@ -1,22 +1,14 @@
 using Autofac;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Rhetos;
-using Rhetos.Host.AspNet;
-using Rhetos.Logging;
-using Rhetos.Security;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bookstore.Service
@@ -54,8 +46,9 @@ namespace Bookstore.Service
                 });
 
             // Adding Rhetos to AspNetCore application.
-            services.AddRhetos(rhetosHostBuilder => ConfigureRhetosHostBuilder(rhetosHostBuilder, Configuration))
-                .UseAspNetCoreIdentityUser()
+            services.AddRhetosHost(ConfigureRhetosHostBuilder)
+                .AddAspNetCoreIdentityUser()
+                .AddLoggingIntegration()
                 .AddImpersonation()
                 .AddRestApi(o =>
                 {
@@ -106,13 +99,13 @@ namespace Bookstore.Service
         /// Common use is to call this from Program.CreateRhetosHostBuilder method which is by convention consumed by
         /// Rhetos tools.
         /// </summary>
-        public static void ConfigureRhetosHostBuilder(IRhetosHostBuilder rhetosHostBuilder, IConfiguration configuration)
+        private void ConfigureRhetosHostBuilder(IServiceProvider serviceProvider, IRhetosHostBuilder rhetosHostBuilder)
         {
             rhetosHostBuilder
-                .ConfigureRhetosHostDefaults()
+                .ConfigureRhetosAppDefaults()
                 .UseBuilderLogProvider(new Rhetos.Host.Net.Logging.RhetosBuilderDefaultLogProvider()) // Delegate RhetosHost logging to standard NetCore targets.
                 .ConfigureConfiguration(builder => builder
-                    .MapNetCoreConfiguration(configuration)
+                    .MapNetCoreConfiguration(Configuration)
                     // The "local" file is intended for developer/machine-specific database connection string, and other test settings.
                     // It should not be committed to source control (see .gitignore).
                     .AddJsonFile("rhetos-app.local.settings.json"))

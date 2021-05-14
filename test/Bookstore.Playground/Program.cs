@@ -1,10 +1,9 @@
-﻿using ConsoleDump;
+﻿using Autofac;
+using ConsoleDump;
 using Rhetos;
-using Rhetos.Dom.DefaultConcepts;
 using Rhetos.Logging;
+using Rhetos.Security;
 using Rhetos.Utilities;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -16,7 +15,7 @@ namespace Bookstore.Playground
         {
             ConsoleLogger.MinLevel = EventType.Info; // Use EventType.Trace for more detailed log.
             string rhetosHostAssemblyPath = Path.GetFullPath(@"..\..\..\..\..\src\Bookstore.Service\bin\Debug\net5.0\Bookstore.Service.dll");
-            var rhetosHost = RhetosHost.FindBuilder(rhetosHostAssemblyPath).Build();
+            var rhetosHost = RhetosHost.Find(rhetosHostAssemblyPath, RhetosHostBuilderConfiguration);
             using (var scope = rhetosHost.CreateScope())
             {
                 var context = scope.Resolve<Common.ExecutionContext>();
@@ -30,6 +29,14 @@ namespace Bookstore.Playground
 
                 //scope.CommitAndClose(); // Database transaction is rolled back by default.
             }
+        }
+
+        static void RhetosHostBuilderConfiguration(IRhetosHostBuilder rhetosHostBuilder)
+        {
+            rhetosHostBuilder.ConfigureContainer(containerBuilder =>
+            {
+                containerBuilder.RegisterType<ProcessUserInfo>().As<IUserInfo>();
+            });
         }
     }
 }
