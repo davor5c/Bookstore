@@ -24,17 +24,21 @@ namespace Bookstore.Service.Test
 
             var books = new[]
             {
-                new Bookstore_Book { Title = "abc", AuthorID = people[0].ID },
-                new Bookstore_Book { Title = "abc foreign", AuthorID = people[1].ID },
-                new Bookstore_Book { Title = "super abc", AuthorID = people[2].ID },
-                new Bookstore_Book { Title = "super abc foreign", AuthorID = people[3].ID },
+                new Bookstore_Book { Title = "abc", AuthorID = people[0].ID},
+                new Bookstore_Book { 
+                    Title = "abc foreign", AuthorID = people[1].ID,
+                    Extension_ForeignBook = new Bookstore_ForeignBook() },
+                new Bookstore_Book { Title = "super abc", AuthorID = people[2].ID},
+                new Bookstore_Book {
+                    Title = "super abc foreign", AuthorID = people[3].ID,
+                    Extension_ForeignBook = new Bookstore_ForeignBook() },
             };
 
             foreach (var book in books)
             {
                 book.ID = Guid.NewGuid();
-                if (book.Title.Contains("foreign"))
-                    book.Extension_ForeignBook = new Bookstore_ForeignBook { ID = book.ID };
+                if (book.Extension_ForeignBook != null)
+                    book.Extension_ForeignBook.ID = book.ID;
             }
 
             var booksIds = books.Select(b => b.ID).ToList();
