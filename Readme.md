@@ -17,11 +17,11 @@ that implements business features and database.
   Other web protocols can be included with additional Rhetos plugins packages,
   or by implementing custom controllers.
 
-## Build
+## Build and initial setup
 
-To build this application from source, run `.\Build.ps1` in PowerShell console.
+To build this application from source, run `.\Build.ps1` and `.\Test.bat` in PowerShell console.
 
-The first build will result with an **error message**, with instructions to complete the **initial setup**:
+The first test run will result with an **error message**, with instructions to complete the **initial setup**:
 Create an empty test database and enter the database connection string
 in the machine-specific configuration file specified in the message.
 

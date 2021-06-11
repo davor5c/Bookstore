@@ -4,12 +4,8 @@
 
 "=== Setup ==="
 $ErrorActionPreference = 'Stop'
-.\tools\Build\Test-RhetosPrerequisites.ps1
 
 "=== Build ==="
+# Disabled database update (RhetosDeploy) in build script. It will be executed later when testing.
 & dotnet build 'Bookstore.sln' -p:Configuration=Debug -p:RhetosDeploy=False --verbosity minimal
 if ($LastExitCode -ne 0) { throw "MSBuild failed." }
-
-"=== Deploy ==="
-& '.\src\Bookstore.Service\bin\Debug\net5.0\rhetos.exe' dbupdate '.\src\Bookstore.Service\bin\Debug\net5.0\Bookstore.Service.dll'
-if ($LastExitCode -ne 0) { throw "rhetos dbupdate failed." }
