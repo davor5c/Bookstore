@@ -74,8 +74,7 @@ void Main()
 {
     ConsoleLogger.MinLevel = EventType.Info; // Use EventType.Trace for more detailed log.
     string rhetosHostAssemblyPath = Path.Combine(Path.GetDirectoryName(Util.CurrentQueryPath), @"..\bin\Debug\net5.0\Bookstore.Service.dll");
-    var container = new Rhetos.ProcessContainer(rhetosHostAssemblyPath);
-    using (var scope = container.CreateScope())
+    using (var scope = LinqPadRhetosHost.CreateScope(rhetosHostAssemblyPath))
     {
         var context = scope.Resolve<Common.ExecutionContext>();
         var repository = context.Repository;

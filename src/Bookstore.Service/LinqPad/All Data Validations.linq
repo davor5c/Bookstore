@@ -69,8 +69,7 @@ In order to be useful on large applications, this script should be extended to h
 void Main()
 {
 	string rhetosHostAssemblyPath = Path.Combine(Path.GetDirectoryName(Util.CurrentQueryPath), @"..\bin\Debug\net5.0\Bookstore.Service.dll");
-	var container = new Rhetos.ProcessContainer(rhetosHostAssemblyPath);
-	using (var scope = container.CreateScope())
+	using (var scope = LinqPadRhetosHost.CreateScope(rhetosHostAssemblyPath))
 	{
 		var dslModel = scope.Resolve<IDslModel>();
 		var genericRepositories = scope.Resolve<GenericRepositories>();
