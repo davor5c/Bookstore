@@ -8,4 +8,4 @@ $ErrorActionPreference = 'Stop'
 "=== Build ==="
 # Disabled database update (RhetosDeploy) in build script. It will be executed later when testing.
 & dotnet build 'Bookstore.sln' -p:Configuration=Debug -p:RhetosDeploy=False
-if ($LastExitCode -ne 0) { throw "MSBuild failed." }
+if ($LastExitCode -ne 0) { throw "dotnet build failed." }

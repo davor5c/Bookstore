@@ -12,4 +12,4 @@ if ($LastExitCode -ne 0) { throw "rhetos dbupdate failed." }
 
 "=== Run all tests ==="
 & dotnet test Bookstore.sln --no-build
-if ($LastExitCode -ne 0) { throw "MSTest failed." }
+if ($LastExitCode -ne 0) { throw "dotnet test failed." }
