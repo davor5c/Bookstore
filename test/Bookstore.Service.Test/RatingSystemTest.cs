@@ -19,23 +19,17 @@ namespace Bookstore.Service.Test
                 new Bookstore_Person { Name = "AAA" },
                 new Bookstore_Person { Name = "AAAA" },
             };
+
             foreach (var person in people)
                 person.ID = Guid.NewGuid();
 
             var books = new[]
             {
-                new Bookstore_Book { Title = "abc", AuthorID = people[0].ID },
-                new Bookstore_Book { Title = "abc foreign", AuthorID = people[1].ID },
-                new Bookstore_Book { Title = "super abc", AuthorID = people[2].ID },
-                new Bookstore_Book { Title = "super abc foreign", AuthorID = people[3].ID },
+                NewBook("abc", people[0]),
+                NewBook("abc foreign", people[1]),
+                NewBook("super abc", people[2]),
+                NewBook("super abc foreign", people[3]),
             };
-
-            foreach (var book in books)
-            {
-                book.ID = Guid.NewGuid();
-                if (book.Title.Contains("foreign"))
-                    book.Extension_ForeignBook = new Bookstore_ForeignBook { ID = book.ID };
-            }
 
             var booksIds = books.Select(b => b.ID).ToList();
 
@@ -43,6 +37,24 @@ namespace Bookstore.Service.Test
 
             string report = string.Join(", ", ratings.Select(r => r.Rating.Value.ToString("f2", CultureInfo.InvariantCulture)));
             Assert.AreEqual("0.00, 1.00, 101.00, 121.00", report);
+        }
+
+        /// <summary>
+        /// Creates a fake *queryable* book.
+        /// </summary>
+        static Bookstore_Book NewBook(string title, Bookstore_Person author)
+        {
+            Guid bookId = Guid.NewGuid();
+            return new Bookstore_Book
+            {
+                ID = bookId,
+                Title = title,
+                AuthorID = author.ID,
+                Author = author,
+                Extension_ForeignBook = title.Contains("foreign")
+                    ? new Bookstore_ForeignBook { ID = bookId }
+                    : null
+            };
         }
 
         [TestMethod]
