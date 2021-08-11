@@ -84,8 +84,8 @@ namespace Bookstore.Service
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/rhetos/swagger.json", "Rhetos REST API");
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "TestApp v1");
+                    c.SwaggerEndpoint("/Bookstore.Service/swagger/rhetos/swagger.json", "Rhetos REST API");
+                    c.SwaggerEndpoint("/Bookstore.Service/swagger/v1/swagger.json", "TestApp v1");
                 });
             }
 

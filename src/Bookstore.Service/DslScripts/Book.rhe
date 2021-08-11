@@ -86,9 +86,12 @@ Module Bookstore
         Take Code;
         Take Title;
         Take 'Author.Name';
+        Take AuthorID;
         Take TranslatorName 'Extension_ForeignBook.Translator.Name';
         Take Description 'Extension_BookDescription.Description';
         Take NumberOfComments 'Extension_BookInfo.NumberOfComments';
+        Take Active;
+        Take Price;
     }
 
     SqlQueryable BookDescription <SQL\BookDescription.sql>
