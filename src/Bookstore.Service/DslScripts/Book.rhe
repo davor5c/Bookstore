@@ -72,6 +72,12 @@ Module Bookstore
 
         UniqueMultiple 'Book Topic';
     }
+    
+    ComplexStructure BookTopicComplex Bookstore.Book
+    {
+        Detail Bookstore.BookTopic Topics;
+        CreateSave;
+    }
 
     //==============================================================
     // There are different types of data structures (objects with properties)

@@ -69,7 +69,8 @@ namespace Bookstore.Service
                 {
                     o.BaseRoute = "rest";
                     o.GroupNameMapper = (conceptInfo, controller, oldName) => "rhetos"; // OpenAPI document name.
-                });
+                })
+                .AddComplexEntity();
 
             // Configuring Authentication.
             services.AddAuthentication(IISDefaults.AuthenticationScheme);
